@@ -4,74 +4,82 @@
     <meta charset="UTF-8">
     <title>BlackWhale | 60节TIKTOK UGC AI创作系统课</title>
     <style>
-        :root { --blue: #0057ff; --apple-grad: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
-        body { background: #fff; color: #1d1d1f; font-family: "SF Pro Display", "PingFang SC", sans-serif; margin: 0; overflow-x: hidden; }
+        :root { --blue: #0057ff; --aurora: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); }
+        body { background: #fff; color: #1d1d1f; font-family: "SF Pro Display", sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* 流光背景与进入动效 */
         .hero { height: 95vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }
-        .hero::before { content: ""; position: absolute; width: 200%; height: 200%; background: var(--apple-grad); background-size: 400% 400%; opacity: 0.06; animation: gradientBG 15s ease infinite; z-index: 1; }
-        @keyframes gradientBG { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-        .float-img { position: absolute; width: 155px; height: 155px; object-fit: cover; border-radius: 22px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: 0.8s; z-index: 2; animation: breathe 6s infinite ease-in-out; }
-        .float-img:hover { transform: scale(1.15) rotate(2deg) !important; z-index: 100; }
-        @keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        .hero-content { z-index: 10; text-align: center; }
-        .hero h1 { font-size: 64px; font-weight: 800; margin: 0; letter-spacing: -2px; line-height: 1.1; }
-        .hero-list { text-align: left; display: inline-block; background: rgba(245,245,247,0.7); padding: 40px; border-radius: 28px; backdrop-filter: blur(15px); margin-top: 30px; }
-        .nav-bar { position: sticky; top: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); display: flex; width: 100%; height: 90px; border-bottom: 1px solid #f2f2f2; z-index: 1000; }
-        .nav-item { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 700; cursor: pointer; color: #86868b; transition: 0.3s; }
-        .nav-item.active { color: var(--blue); background: #f5f8ff; box-shadow: inset 0 -4px 0 var(--blue); }
-        .tab-content { display: none; padding: 60px 4%; animation: fadeIn 0.4s; }
+        .hero::before { content: ""; position: absolute; width: 200%; height: 200%; background: radial-gradient(circle at 50% 50%, rgba(0,87,255,0.05) 0%, rgba(255,255,255,0) 50%); animation: auroraFlow 20s infinite alternate; }
+        @keyframes auroraFlow { from { transform: translate(-10%, -10%) rotate(0deg); } to { transform: translate(10%, 10%) rotate(5deg); } }
+        
+        .float-img { position: absolute; width: 160px; height: 160px; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1); animation: enterUp 1.2s ease-out backwards, breathe 8s infinite ease-in-out; }
+        .float-img:hover { transform: scale(1.1) rotate(2deg) !important; z-index: 100; }
+        
+        .hero-content { z-index: 10; text-align: center; animation: enterUp 1s ease-out; }
+        .hero h1 { font-size: 68px; font-weight: 800; margin-bottom: 25px; letter-spacing: -2.5px; line-height: 1.1; }
+        
+        /* 文字排版优化：玻璃拟态 */
+        .hero-list { text-align: left; display: inline-block; background: rgba(255,255,255,0.4); padding: 40px; border-radius: 32px; backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.6); margin-bottom: 30px; }
+        .hero-list p { font-size: 18px; color: #424245; margin: 12px 0; font-weight: 500; }
+        
+        /* 联系按钮 */
+        .contact-btn { display: inline-flex; align-items: center; padding: 18px 45px; background: #1d1d1f; color: #fff; border-radius: 50px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.3s; text-decoration: none; border: none; }
+        .contact-btn:hover { transform: scale(1.05); background: var(--blue); box-shadow: 0 15px 30px rgba(0,87,255,0.3); }
+
+        .nav-bar { position: sticky; top: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); display: flex; width: 100%; height: 90px; border-bottom: 1px solid #f2f2f2; z-index: 1000; }
+        .nav-item { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; cursor: pointer; color: #86868b; transition: 0.3s; }
+        .nav-item.active { color: var(--blue); box-shadow: inset 0 -4px 0 var(--blue); }
+        
+        .tab-content { display: none; padding: 60px 5%; animation: fadeIn 0.5s; }
         .tab-content.active { display: block; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
-        .video-card { position: relative; background: #000; border-radius: 25px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: 0.4s; }
-        .video-card:hover { transform: scale(1.05); z-index: 5; }
-        .video-card video { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
-        .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: var(--blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; pointer-events: none; opacity: 0.8; }
-        /* 还原 v2.5 左右展示弹窗 */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }
-        .modal-body { width: 90%; max-width: 1300px; height: 85vh; background: #fff; border-radius: 35px; display: flex; overflow: hidden; }
-        .modal-left { flex: 1.5; background: #000; display: flex; align-items: center; justify-content: center; }
-        .modal-left video { max-width: 100%; height: 100%; }
-        .modal-right { flex: 1; padding: 50px; display: flex; flex-direction: column; }
-        .prompt-box { background: #f5f5f7; padding: 25px; border-radius: 20px; font-family: monospace; flex: 1; overflow-y: auto; white-space: pre-wrap; font-size: 15px; line-height: 1.6; color: #333; }
-        .btn-copy { margin-top: 20px; padding: 18px; background: var(--blue); color: #fff; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 16px; }
-        @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; }
+        .video-card { position: relative; background: #000; border-radius: 28px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .video-card:hover { transform: scale(1.06); }
+        .video-card video { width: 100%; height: 100%; object-fit: cover; }
+        
+        /* 二维码样式 */
+        .qr-side { position: fixed; right: 40px; bottom: 40px; z-index: 500; text-align: center; cursor: zoom-in; animation: enterUp 1.5s ease-out backwards; }
+        .qr-side img { width: 120px; border-radius: 20px; border: 5px solid #fff; box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+        #qrFull { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.95); backdrop-filter: blur(15px); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }
+        #qrFull img { width: 450px; border-radius: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.15); }
+
+        @keyframes enterUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 弹窗样式 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; }
+        .modal-body { width: 92%; max-width: 1350px; height: 85vh; background: #fff; border-radius: 40px; display: flex; overflow: hidden; }
+        .modal-left { flex: 1.6; background: #000; }
+        .modal-left video { width: 100%; height: 100%; object-fit: contain; }
+        .modal-right { flex: 1; padding: 60px; display: flex; flex-direction: column; }
+        .prompt-box { background: #f5f5f7; padding: 30px; border-radius: 24px; font-family: 'SF Mono', monospace; flex: 1; overflow-y: auto; line-height: 1.6; color: #1d1d1f; }
     </style>
 </head>
 <body>
     <div class="hero">
-        <img src="头图/0 (1).png" class="float-img" style="top:33%; left:10%; animation-delay:0.0s;"><img src="头图/0 (10).png" class="float-img" style="top:59%; right:17%; animation-delay:0.6s;"><img src="头图/0 (11).png" class="float-img" style="top:31%; left:14%; animation-delay:1.2s;"><img src="头图/0 (12).png" class="float-img" style="top:49%; right:11%; animation-delay:1.7999999999999998s;"><img src="头图/0 (13).png" class="float-img" style="top:64%; left:12%; animation-delay:2.4s;"><img src="头图/0 (14).png" class="float-img" style="top:50%; right:7%; animation-delay:3.0s;"><img src="头图/0 (15).png" class="float-img" style="top:55%; left:8%; animation-delay:3.5999999999999996s;"><img src="头图/0 (16).png" class="float-img" style="top:34%; right:17%; animation-delay:4.2s;"><img src="头图/0 (17).png" class="float-img" style="top:43%; left:2%; animation-delay:4.8s;"><img src="头图/0 (18).png" class="float-img" style="top:60%; right:17%; animation-delay:5.3999999999999995s;"><img src="头图/0 (19).png" class="float-img" style="top:23%; left:4%; animation-delay:6.0s;"><img src="头图/0 (20).png" class="float-img" style="top:18%; right:7%; animation-delay:6.6s;"><img src="头图/0 (21).png" class="float-img" style="top:71%; left:15%; animation-delay:7.199999999999999s;"><img src="头图/0 (22).png" class="float-img" style="top:38%; right:9%; animation-delay:7.8s;"><img src="头图/0 (23).png" class="float-img" style="top:44%; left:10%; animation-delay:8.4s;"><img src="头图/0 (24).png" class="float-img" style="top:18%; right:18%; animation-delay:9.0s;"><img src="头图/0 (25).png" class="float-img" style="top:46%; left:8%; animation-delay:9.6s;"><img src="头图/0 (3).png" class="float-img" style="top:75%; right:4%; animation-delay:10.2s;"><img src="头图/0 (4).png" class="float-img" style="top:62%; left:16%; animation-delay:10.799999999999999s;"><img src="头图/0 (5).png" class="float-img" style="top:60%; right:15%; animation-delay:11.4s;"><img src="头图/0 (6).png" class="float-img" style="top:57%; left:6%; animation-delay:12.0s;"><img src="头图/0 (7).png" class="float-img" style="top:21%; right:10%; animation-delay:12.6s;"><img src="头图/0 (8).png" class="float-img" style="top:60%; left:4%; animation-delay:13.2s;"><img src="头图/0 (9).png" class="float-img" style="top:46%; right:3%; animation-delay:13.799999999999999s;"><img src="头图/PVVS.png" class="float-img" style="top:71%; left:17%; animation-delay:14.399999999999999s;"><img src="头图/PvwK.png" class="float-img" style="top:61%; right:6%; animation-delay:15.0s;"><img src="头图/pWGI.png" class="float-img" style="top:33%; left:9%; animation-delay:15.6s;"><img src="头图/Pxsk.png" class="float-img" style="top:36%; right:8%; animation-delay:16.2s;"><img src="头图/PxUj.png" class="float-img" style="top:39%; left:7%; animation-delay:16.8s;"><img src="头图/qaJS.png" class="float-img" style="top:80%; right:6%; animation-delay:17.4s;"><img src="头图/qbfX.png" class="float-img" style="top:49%; left:14%; animation-delay:18.0s;"><img src="头图/qcDo.png" class="float-img" style="top:32%; right:8%; animation-delay:18.599999999999998s;"><img src="头图/qilk.png" class="float-img" style="top:17%; left:15%; animation-delay:19.2s;"><img src="头图/qjTc.png" class="float-img" style="top:32%; right:10%; animation-delay:19.8s;">
+        <img src="头图/0 (1).png" class="float-img" style="top:23%; left:10%; animation-delay:0.0s;"><img src="头图/0 (10).png" class="float-img" style="top:45%; right:17%; animation-delay:0.6s;"><img src="头图/0 (11).png" class="float-img" style="top:48%; left:3%; animation-delay:1.2s;"><img src="头图/0 (12).png" class="float-img" style="top:46%; right:14%; animation-delay:1.7999999999999998s;"><img src="头图/0 (13).png" class="float-img" style="top:64%; left:14%; animation-delay:2.4s;"><img src="头图/0 (14).png" class="float-img" style="top:57%; right:8%; animation-delay:3.0s;"><img src="头图/0 (15).png" class="float-img" style="top:26%; left:16%; animation-delay:3.5999999999999996s;"><img src="头图/0 (16).png" class="float-img" style="top:20%; right:15%; animation-delay:4.2s;"><img src="头图/0 (17).png" class="float-img" style="top:21%; left:11%; animation-delay:4.8s;"><img src="头图/0 (18).png" class="float-img" style="top:64%; right:3%; animation-delay:5.3999999999999995s;"><img src="头图/0 (19).png" class="float-img" style="top:55%; left:17%; animation-delay:6.0s;"><img src="头图/0 (20).png" class="float-img" style="top:58%; right:6%; animation-delay:6.6s;"><img src="头图/0 (21).png" class="float-img" style="top:40%; left:11%; animation-delay:7.199999999999999s;"><img src="头图/0 (22).png" class="float-img" style="top:65%; right:15%; animation-delay:7.8s;"><img src="头图/0 (23).png" class="float-img" style="top:44%; left:6%; animation-delay:8.4s;"><img src="头图/0 (24).png" class="float-img" style="top:18%; right:5%; animation-delay:9.0s;"><img src="头图/0 (25).png" class="float-img" style="top:57%; left:2%; animation-delay:9.6s;"><img src="头图/0 (3).png" class="float-img" style="top:55%; right:13%; animation-delay:10.2s;"><img src="头图/0 (4).png" class="float-img" style="top:79%; left:7%; animation-delay:10.799999999999999s;"><img src="头图/0 (5).png" class="float-img" style="top:45%; right:4%; animation-delay:11.4s;"><img src="头图/0 (6).png" class="float-img" style="top:53%; left:2%; animation-delay:12.0s;"><img src="头图/0 (7).png" class="float-img" style="top:48%; right:7%; animation-delay:12.6s;"><img src="头图/0 (8).png" class="float-img" style="top:42%; left:17%; animation-delay:13.2s;"><img src="头图/0 (9).png" class="float-img" style="top:74%; right:10%; animation-delay:13.799999999999999s;"><img src="头图/PVVS.png" class="float-img" style="top:71%; left:9%; animation-delay:14.399999999999999s;"><img src="头图/PvwK.png" class="float-img" style="top:26%; right:10%; animation-delay:15.0s;"><img src="头图/pWGI.png" class="float-img" style="top:76%; left:6%; animation-delay:15.6s;"><img src="头图/Pxsk.png" class="float-img" style="top:18%; right:13%; animation-delay:16.2s;"><img src="头图/PxUj.png" class="float-img" style="top:17%; left:4%; animation-delay:16.8s;"><img src="头图/qaJS.png" class="float-img" style="top:41%; right:16%; animation-delay:17.4s;"><img src="头图/qbfX.png" class="float-img" style="top:56%; left:13%; animation-delay:18.0s;"><img src="头图/qcDo.png" class="float-img" style="top:36%; right:18%; animation-delay:18.599999999999998s;"><img src="头图/qilk.png" class="float-img" style="top:37%; left:10%; animation-delay:19.2s;"><img src="头图/qjTc.png" class="float-img" style="top:79%; right:16%; animation-delay:19.8s;">
         <div class="hero-content">
             <h1>60节TIKTOK UGC带货<br>视频创作系统课</h1>
             <div class="hero-list">
-                <p>• 1，60节系统化UGC带货内容生成与AI创作（持续更新中）</p>
-                <p>• 2，系统化AI生文/图/视频/音频从基础、实操到进阶</p>
-                <p>• 3，原生感TIKTOK UGC带货视频一键批量生成工具</p>
-                <p>• 4，批量自产自然流橱窗矩阵与原生感UGC带货视频创作</p>
-            </div>
+                <p>🚀 60节系统化UGC带货内容生成与AI创作（持续更新）</p>
+                <p>🎨 系统化AI生文/图/视频/音频全流程实操</p>
+                <p>🛠 原生感TIKTOK UGC视频一键批量生成工具</p>
+                <p>📈 批量自产自然流橱窗矩阵与原生感素材创作</p>
+            </div><br>
+            <button class="contact-btn" onclick="toggleQR(true)">立即咨询加入 BlackWhale</button>
         </div>
     </div>
+    
     <div class="nav-bar">
         <div class="nav-item" onclick="showTab('ugc', this)">UGC实战案例</div>
-        <div class="nav-item active" onclick="showTab('sora', this)">Sora2创作案例</div>
+        <div class="nav-item active" onclick="showTab('sora', this)">Sora2创作案例 (100+)</div>
         <div class="nav-item" onclick="showTab('course', this)">课程大纲详情</div>
     </div>
-    <div id="ugc" class="tab-content"><div class="grid">
-            <div class="video-card" onclick="openModal('ugc/Task_021/video.mp4', 'Task_021', `详见课程内部解析`)">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                    <source src="ugc/Task_021/video.mp4" type="video/mp4">
-                </video>
-                <div class="play-btn">▶</div>
-                <div style="position:absolute; bottom:15px; left:15px; color:#fff; font-weight:700; font-size:14px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">Task_021</div>
-            </div></div></div>
-    <div id="sora" class="tab-content active"><div class="grid">
-            <div class="video-card" onclick="openModal('sora2/Task_001/video.mp4', 'Lerz Narco Perfume 251 Ugc Tiktok Video', `这是【251号】LERZ纳尔寇香水(光韵)，请生成一条用于美国tiktok的UGC带货视频，时长15秒内，不需要露
-脸`)">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                    <source src="sora2/Task_001/video.mp4" type="video/mp4">
-                </video>
-                <div class="play-btn">▶</div>
-                <div style="position:absolute; bottom:15px; left:15px; color:#fff; font-weight:700; font-size:14px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">Lerz Narco Perfume 251 Ugc Tiktok Video</div>
-            </div>
-            <div class="video-card" onclick="openModal('sora2/Task_002/video.mp4', 'Diy Cardboard Box Transformation Product Demo Craft Style', `[视频类型]: 产品演示
+
+    <div id="ugc" class="tab-content"><div class="grid"><div class="video-card" onclick="openModal('ugc/Task_021/video.mp4', 'Task_021', `详见课程内部策略库`)"><video muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="ugc/Task_021/video.mp4" type="video/mp4"></video><div style="position:absolute; bottom:20px; left:20px; color:#fff; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,0.5);">Task_021</div></div></div></div>
+    <div id="sora" class="tab-content active"><div class="grid"><div class="video-card" onclick="openModal('sora2/Task_001/video.mp4', 'Lerz Narco Perfume 251 Ugc Tiktok Video', `这是【251号】LERZ纳尔寇香水(光韵)，请生成一条用于美国tiktok的UGC带货视频，时长15秒内，不需要露
+脸`)"><video muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_001/video.mp4" type="video/mp4"></video><div style="position:absolute; bottom:20px; left:20px; color:#fff; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,0.5);">Lerz Narco Perfume 251 Ugc Tiktok Video</div></div><div class="video-card" onclick="openModal('sora2/Task_002/video.mp4', 'Diy Cardboard Box Transformation Product Demo Craft Style', `[视频类型]: 产品演示
 [结构]: 视频以杂乱的快递箱开场，快速切换展示DIY改造过程，然后慢镜头展示改造后的成品，最后定格在细节和宣传语上。
 [风格]: 写实手工风，明快撞色，生活化反差感，无夸张特效。
 [环境]: 玄关角落、桌面、阳台。
@@ -117,41 +125,24 @@
 
 [叠加层]:
 - 13秒时，右下角弹出橙色加粗卡通字体字幕：“纸箱变形记 环保超有趣”。
-- 无水印。`)">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                    <source src="sora2/Task_002/video.mp4" type="video/mp4">
-                </video>
-                <div class="play-btn">▶</div>
-                <div style="position:absolute; bottom:15px; left:15px; color:#fff; font-weight:700; font-size:14px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">Diy Cardboard Box Transformation Product Demo Craft Style</div>
-            </div>
-            <div class="video-card" onclick="openModal('sora2/Task_003/video.mp4', 'First Act Transition To Second Act Cardboard Dance From Second 13', `第一幕转场衔接背景和第二幕相似 第十三秒开始跳“纸箱变形记 环保超有趣”一直持续到结束`)">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                    <source src="sora2/Task_003/video.mp4" type="video/mp4">
-                </video>
-                <div class="play-btn">▶</div>
-                <div style="position:absolute; bottom:15px; left:15px; color:#fff; font-weight:700; font-size:14px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">First Act Transition To Second Act Cardboard Dance From Second 13</div>
-            </div>
-            <div class="video-card" onclick="openModal('sora2/Task_004/video.mp4', 'Young Woman Shows Phone Case With Festive Backdrop Malaysian Review', `禁止重新设计，禁止添加任何元素
+- 无水印。`)"><video muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_002/video.mp4" type="video/mp4"></video><div style="position:absolute; bottom:20px; left:20px; color:#fff; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,0.5);">Diy Cardboard Box Transformation Product Demo Craft Style</div></div><div class="video-card" onclick="openModal('sora2/Task_003/video.mp4', 'First Act Transition To Second Act Cardboard Dance From Second 13', `第一幕转场衔接背景和第二幕相似 第十三秒开始跳“纸箱变形记 环保超有趣”一直持续到结束`)"><video muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_003/video.mp4" type="video/mp4"></video><div style="position:absolute; bottom:20px; left:20px; color:#fff; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,0.5);">First Act Transition To Second Act Cardboard Dance From Second 13</div></div><div class="video-card" onclick="openModal('sora2/Task_004/video.mp4', 'Young Woman Shows Phone Case With Festive Backdrop Malaysian Review', `禁止重新设计，禁止添加任何元素
 禁止自动美化、重新设计、补细节
 不同镜头不允许自由想象，也不允许自动优化产品造型。
 要保持产品一致
-&quot;### 风格 这是一段生活化的、直接面向镜头的商品评测风格视频，采用清晰的数字拍摄手法。整体视觉美学呈现出明亮、欢快的氛围，带有温暖的色调和柔和的动感。色彩鲜艳，略显饱和，营造出一种亲切的消费品广告感。 ### 场景描述 (0s-15s): 一名留着深色长发的年轻女子，在节庆气氛浓厚的红色布景前，热情洋溢地向镜头展示一款戴着手机壳的手机背面。她面带微笑，手持产品，仿佛正在向观众介绍这款戴着手机壳的手机背面。背景是带有白色、绿色和橙色节日主题装饰的红色布料，营造出温馨愉悦的氛围。 ### 摄影 - **镜头:** 中景特写，静态拍摄，固定在与人物视线平齐的水平。 - **镜头:** 手机标准镜头，中等景深，确保手机壳和人物清晰可见，背景略微柔和。 - **灯光:** 柔和均匀的正面照明，可能来自环形灯或柔和的窗户光，营造明亮诱人的效果。背景灯光温暖，与节日装饰相得益彰。 - **情绪:** 信息性、引人入胜、友好、宣传性。 ### 动作 - 女子将戴着手机壳的手机背面举起，面带微笑地展示给镜头。 - 她用手势指向戴着手机壳的手机的背面。 - 她将手机壳略微转动，展示其柔软的材质。 - 她用手指触摸戴着手机壳的手机背面的细节，并指明摄像头区域的保护。 - 她将手机壳侧面朝向镜头，展示其边缘设计。 - 她再次展示戴着手机壳的手机的背面，确认其。 ### 要求马来西亚语语速加快1.8倍对话 “各位Samsung用户，以及刚买了新手机的朋友们，我知道现在很多人都在买新手机，所以你们也需要买一个手机壳。这款是软壳。我超爱这个波浪设计！它的边缘是不规则的，跟外面那些方方正正的壳不一样，拿在手上感觉更特别，而且握感也很好！不容易滑掉！摄像头这里有覆盖。它有摄像头镜头保护。我们有8种颜色可选，这款是的。” ### 背景音 安静的室内环境音，可能带有轻微的房间嗡嗡声。&quot; 禁止重新设计产品，禁止产品添加任何元素`)">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                    <source src="sora2/Task_004/video.mp4" type="video/mp4">
-                </video>
-                <div class="play-btn">▶</div>
-                <div style="position:absolute; bottom:15px; left:15px; color:#fff; font-weight:700; font-size:14px; text-shadow:0 2px 4px rgba(0,0,0,0.5);">Young Woman Shows Phone Case With Festive Backdrop Malaysian Review</div>
-            </div></div></div>
-    <div id="course" class="tab-content"><div style="max-width:1000px; margin:0 auto;"><img src="课程图/55节系统课程-长图（魏）.png" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.1);"></div></div>
-    
+&quot;### 风格 这是一段生活化的、直接面向镜头的商品评测风格视频，采用清晰的数字拍摄手法。整体视觉美学呈现出明亮、欢快的氛围，带有温暖的色调和柔和的动感。色彩鲜艳，略显饱和，营造出一种亲切的消费品广告感。 ### 场景描述 (0s-15s): 一名留着深色长发的年轻女子，在节庆气氛浓厚的红色布景前，热情洋溢地向镜头展示一款戴着手机壳的手机背面。她面带微笑，手持产品，仿佛正在向观众介绍这款戴着手机壳的手机背面。背景是带有白色、绿色和橙色节日主题装饰的红色布料，营造出温馨愉悦的氛围。 ### 摄影 - **镜头:** 中景特写，静态拍摄，固定在与人物视线平齐的水平。 - **镜头:** 手机标准镜头，中等景深，确保手机壳和人物清晰可见，背景略微柔和。 - **灯光:** 柔和均匀的正面照明，可能来自环形灯或柔和的窗户光，营造明亮诱人的效果。背景灯光温暖，与节日装饰相得益彰。 - **情绪:** 信息性、引人入胜、友好、宣传性。 ### 动作 - 女子将戴着手机壳的手机背面举起，面带微笑地展示给镜头。 - 她用手势指向戴着手机壳的手机的背面。 - 她将手机壳略微转动，展示其柔软的材质。 - 她用手指触摸戴着手机壳的手机背面的细节，并指明摄像头区域的保护。 - 她将手机壳侧面朝向镜头，展示其边缘设计。 - 她再次展示戴着手机壳的手机的背面，确认其。 ### 要求马来西亚语语速加快1.8倍对话 “各位Samsung用户，以及刚买了新手机的朋友们，我知道现在很多人都在买新手机，所以你们也需要买一个手机壳。这款是软壳。我超爱这个波浪设计！它的边缘是不规则的，跟外面那些方方正正的壳不一样，拿在手上感觉更特别，而且握感也很好！不容易滑掉！摄像头这里有覆盖。它有摄像头镜头保护。我们有8种颜色可选，这款是的。” ### 背景音 安静的室内环境音，可能带有轻微的房间嗡嗡声。&quot; 禁止重新设计产品，禁止产品添加任何元素`)"><video muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_004/video.mp4" type="video/mp4"></video><div style="position:absolute; bottom:20px; left:20px; color:#fff; font-weight:700; text-shadow:0 2px 10px rgba(0,0,0,0.5);">Young Woman Shows Phone Case With Festive Backdrop Malaysian Review</div></div></div></div>
+    <div id="course" class="tab-content"><div style="max-width:1100px; margin:0 auto;"><img src="课程图/55节系统课程-长图（魏）.png" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.05);"></div></div>
+
+    <div class="qr-side" onclick="toggleQR(true)"><img src="wechat_qr.png"><p style="font-weight:700; color:#888; margin-top:10px;">扫码咨询详情</p></div>
+    <div id="qrFull" onclick="toggleQR(false)"><img src="wechat_qr.png"></div>
+
     <div id="videoModal" class="modal" onclick="closeModal()">
         <div class="modal-body" onclick="event.stopPropagation()">
             <div class="modal-left"><video id="mVideo" controls autoplay></video></div>
             <div class="modal-right">
-                <h2 id="mTitle" style="margin-top:0; font-size:28px;"></h2>
-                <div style="font-weight:700; color:var(--blue); margin-bottom:15px; font-size:18px;">💡 提示词与详情解析:</div>
+                <h2 id="mTitle" style="font-size:32px; margin-top:0;"></h2>
+                <p style="color:var(--blue); font-weight:700;">💡 创作提示词与解析:</p>
                 <div class="prompt-box" id="mPrompt"></div>
-                <button class="btn-copy" onclick="copyText()">📋 复制提示词信息</button>
+                <button style="margin-top:25px; padding:20px; background:var(--blue); color:#fff; border:none; border-radius:15px; font-weight:700; cursor:pointer;" onclick="copyText()">复制提示词内容</button>
             </div>
         </div>
     </div>
@@ -170,14 +161,8 @@
             document.getElementById('videoModal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('videoModal').style.display = 'none'; document.getElementById('mVideo').pause(); }
-        function copyText() { 
-            const text = document.getElementById('mPrompt').innerText;
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = document.querySelector('.btn-copy');
-                btn.innerText = '✅ 已成功复制';
-                setTimeout(() => btn.innerText = '📋 复制提示词信息', 2000);
-            });
-        }
+        function toggleQR(show) { document.getElementById('qrFull').style.display = show ? 'flex' : 'none'; }
+        function copyText() { navigator.clipboard.writeText(document.getElementById('mPrompt').innerText).then(() => alert('✅ 内容已复制')); }
     </script>
 </body>
 </html>
