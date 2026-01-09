@@ -13,7 +13,7 @@ class DeployThread(QThread):
         self.parent = parent
 
     def run(self):
-        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🧪 启动 v2.3-测试2：注入液态高光引擎...")
+        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🧪 启动 v2.3-修复版：注入液态高光引擎 & 二维码组件...")
         counts = self.parent.build_index(self.log_signal)
         self.status_signal.emit({
             "ugc": counts['ugc'], "sora": counts['sora'],
@@ -24,7 +24,7 @@ class DeployThread(QThread):
 class PublisherTitanV23Liquid(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("BlackWhale Titan Evolved v2.3-测试2 (Liquid Aura)")
+        self.setWindowTitle("BlackWhale Titan Evolved v2.3-修复版 (Liquid Aura)")
         self.resize(1000, 850)
         self.setStyleSheet("background-color: #050505; color: #e0e0e0;")
         
@@ -37,7 +37,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         self.log.setStyleSheet("background: #0d0d0f; color: #00ffcc; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; font-family: 'Consolas';")
         layout.addWidget(self.log)
 
-        self.btn_go = QPushButton("✨ 执行 v2.3-测试2 (液态高光部署)")
+        self.btn_go = QPushButton("✨ 执行 v2.3-修复版 (部署液态网页)")
         self.btn_go.setFixedHeight(85)
         self.btn_go.setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ff007c, stop:1 #0057ff); color: white; font-size: 22px; font-weight: bold; border-radius: 20px; border: none; } QPushButton:hover { transform: scale(1.01); }")
         self.btn_go.clicked.connect(self.start_deploy)
@@ -94,7 +94,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         :root {{ --blue: #0057ff; }}
         body, html {{ background: #fff; color: #1d1d1f; font-family: "SF Pro Display", sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }}
         
-        /* 1. 液态高光波动背景 - 针对测试2优化 */
         .hero {{ height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }}
         
         .liquid-container {{ position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.4; filter: url(#liquid-filter); }}
@@ -110,7 +109,6 @@ class PublisherTitanV23Liquid(QMainWindow):
             100% {{ transform: translate(-50px, 100px) scale(0.9) rotate(180deg); }}
         }}
 
-        /* 2. 核心文本排版 */
         .hero-content {{ z-index: 10; text-align: center; animation: slideUpFade 1.2s cubic-bezier(0.2, 1, 0.3, 1); }}
         .hero h1 {{ font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; text-shadow: 0 10px 30px rgba(0,0,0,0.02); }}
         .hero-list {{ display: flex; flex-direction: column; gap: 12px; margin-bottom: 45px; }}
@@ -121,7 +119,6 @@ class PublisherTitanV23Liquid(QMainWindow):
 
         .float-img {{ position: absolute; width: 160px; height: 160px; object-fit: cover; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); transition: 0.8s; z-index: 2; animation: breathe 10s infinite ease-in-out; }}
         
-        /* 3. 页面流畅性优化 (100+ 视频支持) */
         .nav-bar {{ position: sticky; top: 0; background: rgba(255,255,255,0.75); backdrop-filter: blur(30px); display: flex; width: 100%; height: 95px; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1000; }}
         .nav-item {{ flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; cursor: pointer; color: #86868b; transition: 0.3s; }}
         .nav-item.active {{ color: #000; box-shadow: inset 0 -4px 0 #000; }}
@@ -134,7 +131,12 @@ class PublisherTitanV23Liquid(QMainWindow):
         .video-card:hover {{ transform: scale(1.04) translateY(-10px); z-index: 5; }}
         .video-card video {{ width: 100%; height: 100%; object-fit: cover; }}
 
-        /* 弹窗系统保持 v2.0 */
+        /* --- 修复项：二维码模态框样式 --- */
+        .qr-modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s ease; }}
+        .qr-container {{ background: #fff; padding: 30px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); text-align: center; transform: scale(0.9); transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1); }}
+        .qr-container img {{ width: 260px; height: 260px; border-radius: 20px; }}
+        .qr-container p {{ margin-top: 20px; color: #86868b; font-weight: 600; }}
+
         .modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 9999; align-items: center; justify-content: center; }}
         .modal-body {{ width: 95%; max-width: 1450px; height: 86vh; background: #fff; border-radius: 50px; display: flex; overflow: hidden; }}
         .modal-left {{ flex: 1.6; background: #000; }}
@@ -176,6 +178,13 @@ class PublisherTitanV23Liquid(QMainWindow):
         </div>
     </div>
     
+    <div id="qrModal" class="qr-modal" onclick="toggleQR(false)">
+        <div class="qr-container" onclick="event.stopPropagation()">
+            <img src="qr.png" alt="微信二维码">
+            <p>扫码咨询 BlackWhale 导师</p>
+        </div>
+    </div>
+
     <div class="nav-bar">
         <div class="nav-item" onclick="showTab('ugc', this)">UGC实战案例</div>
         <div class="nav-item active" onclick="showTab('sora', this)">Sora2 案例 (100+)</div>
@@ -199,6 +208,23 @@ class PublisherTitanV23Liquid(QMainWindow):
     </div>
 
     <script>
+        // --- 修复项：二维码切换逻辑 ---
+        function toggleQR(show) {{
+            const modal = document.getElementById('qrModal');
+            const container = modal.querySelector('.qr-container');
+            if(show) {{
+                modal.style.display = 'flex';
+                setTimeout(() => {{
+                    modal.style.opacity = '1';
+                    container.style.transform = 'scale(1)';
+                }}, 10);
+            }} else {{
+                modal.style.opacity = '0';
+                container.style.transform = 'scale(0.9)';
+                setTimeout(() => {{ modal.style.display = 'none'; }}, 300);
+            }}
+        }}
+
         function showTab(id, el) {{
             document.querySelectorAll('.tab-content').forEach(t => {{ t.style.display='none'; t.style.opacity='0'; }});
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -206,7 +232,6 @@ class PublisherTitanV23Liquid(QMainWindow):
             target.style.display = 'block';
             setTimeout(() => target.style.opacity = '1', 50);
             el.classList.add('active');
-            // 解决突兀感：如果已滚动，则平稳锚定在导航栏
             if(window.scrollY > 200) window.scrollTo({{top: window.innerHeight - 95, behavior: 'smooth'}});
         }}
         function openModal(vUrl, title, prompt) {{
@@ -238,19 +263,18 @@ class PublisherTitanV23Liquid(QMainWindow):
                     c = f.read()
                     if "标题:" in c: title = c.split("标题:")[1].split("提示词:")[0].strip()
                     if "提示词:" in c: prompt = c.split("提示词:")[1].strip().replace('"', '&quot;')
-            # 百级扩展核心：使用 loading="lazy" 确保 100+ 视频不消耗冗余内存
             cards += f'<div class="video-card" onclick="openModal(\'{v_rel}\', \'{title}\', `{prompt}`)"><video muted loop loading="lazy" onmouseover="this.play()" onmouseout="this.pause()"><source src="{v_rel}" type="video/mp4"></video></div>'
         return cards
 
     def git_sync(self, logger):
         try:
-            logger.emit("[3/3] 正在通过 Titan 引擎执行液态部署推送...")
+            logger.emit("[3/3] 正在执行推送同步...")
             def run_git(args): return subprocess.run(args, capture_output=True, text=True, encoding='utf-8', errors='ignore')
             run_git(["git", "config", "--global", "credential.helper", "store"])
             run_git(["git", "add", "."])
-            run_git(["git", "commit", "-m", f"Titan_v2.3_Liquid_Beta2_{datetime.now().strftime('%H%M')}"])
+            run_git(["git", "commit", "-m", f"Titan_v2.3_Liquid_QR_Fix_{datetime.now().strftime('%H%M')}"])
             res = run_git(["git", "push", "origin", "main"])
-            if res.returncode == 0: logger.emit("🎉 测试2部署成功！液态高光视觉已上线。")
+            if res.returncode == 0: logger.emit("🎉 部署成功！二维码组件已激活。")
             else: logger.emit(f"❌ 推送失败: {res.stderr}")
         except Exception as e: logger.emit(f"❌ 异常: {str(e)}")
         finally: self.btn_go.setEnabled(True)

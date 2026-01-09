@@ -13,7 +13,7 @@ class DeployThread(QThread):
         self.parent = parent
 
     def run(self):
-        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 注入脉冲流光引擎 v2.3...")
+        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🧪 启动 v2.3-测试2：注入液态高光引擎...")
         counts = self.parent.build_index(self.log_signal)
         self.status_signal.emit({
             "ugc": counts['ugc'], "sora": counts['sora'],
@@ -21,10 +21,10 @@ class DeployThread(QThread):
         })
         self.parent.git_sync(self.log_signal)
 
-class PublisherTitanV23(QMainWindow):
+class PublisherTitanV23Liquid(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("BlackWhale Titan Evolved v2.3 (Glow Pulse)")
+        self.setWindowTitle("BlackWhale Titan Evolved v2.3-测试2 (Liquid Aura)")
         self.resize(1000, 850)
         self.setStyleSheet("background-color: #050505; color: #e0e0e0;")
         
@@ -37,9 +37,9 @@ class PublisherTitanV23(QMainWindow):
         self.log.setStyleSheet("background: #0d0d0f; color: #00ffcc; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; font-family: 'Consolas';")
         layout.addWidget(self.log)
 
-        self.btn_go = QPushButton("✨ 执行 v2.3 脉冲流光部署 (支持 100+ 视频)")
+        self.btn_go = QPushButton("✨ 执行 v2.3-测试2 (液态高光部署)")
         self.btn_go.setFixedHeight(85)
-        self.btn_go.setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0057ff, stop:1 #00c6ff); color: white; font-size: 22px; font-weight: bold; border-radius: 20px; border: none; } QPushButton:hover { transform: scale(1.01); }")
+        self.btn_go.setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #ff007c, stop:1 #0057ff); color: white; font-size: 22px; font-weight: bold; border-radius: 20px; border: none; } QPushButton:hover { transform: scale(1.01); }")
         self.btn_go.clicked.connect(self.start_deploy)
         layout.addWidget(self.btn_go)
 
@@ -91,57 +91,78 @@ class PublisherTitanV23(QMainWindow):
     <meta charset="UTF-8">
     <title>BlackWhale | 数字化内容库</title>
     <style>
-        :root {{ --blue: #0057ff; --pink: #ff007c; }}
+        :root {{ --blue: #0057ff; }}
         body, html {{ background: #fff; color: #1d1d1f; font-family: "SF Pro Display", sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }}
         
-        /* 1. 脉冲流光背景 */
-        #pulseCanvas {{ position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.6; }}
+        /* 1. 液态高光波动背景 - 针对测试2优化 */
         .hero {{ height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }}
         
-        /* 2. 排版优化与进入动效 */
-        .hero-content {{ z-index: 10; text-align: center; animation: slideUpFade 1.2s cubic-bezier(0.2, 1, 0.3, 1); will-change: transform, opacity; }}
-        .hero h1 {{ font-size: 72px; font-weight: 800; margin: 0 0 30px 0; letter-spacing: -3px; line-height: 1.05; color: #000; }}
+        .liquid-container {{ position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.4; filter: url(#liquid-filter); }}
+        .blob {{ position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(60px); animation: move 25s infinite alternate ease-in-out; }}
+        .blob-1 {{ background: #e0e7ff; top: -10%; left: 10%; animation-delay: 0s; }}
+        .blob-2 {{ background: #fce7f3; bottom: -10%; right: 10%; animation-delay: -5s; }}
+        .blob-3 {{ background: #dcfce7; top: 40%; left: 50%; width: 500px; animation-delay: -10s; }}
+        .blob-4 {{ background: #fef9c3; top: 10%; right: 20%; width: 400px; animation-delay: -15s; }}
+
+        @keyframes move {{ 
+            0% {{ transform: translate(0,0) scale(1) rotate(0); }}
+            50% {{ transform: translate(100px, 50px) scale(1.1) rotate(90deg); }}
+            100% {{ transform: translate(-50px, 100px) scale(0.9) rotate(180deg); }}
+        }}
+
+        /* 2. 核心文本排版 */
+        .hero-content {{ z-index: 10; text-align: center; animation: slideUpFade 1.2s cubic-bezier(0.2, 1, 0.3, 1); }}
+        .hero h1 {{ font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; text-shadow: 0 10px 30px rgba(0,0,0,0.02); }}
         .hero-list {{ display: flex; flex-direction: column; gap: 12px; margin-bottom: 45px; }}
-        .hero-list p {{ font-size: 20px; color: #86868b; margin: 0; font-weight: 400; letter-spacing: -0.2px; }}
+        .hero-list p {{ font-size: 20px; color: #6e6e73; margin: 0; font-weight: 400; letter-spacing: -0.2px; }}
         
-        .contact-btn {{ display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: all 0.4s; text-decoration: none; border: none; }}
+        .contact-btn {{ display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; text-decoration: none; border: none; }}
         .contact-btn:hover {{ background: var(--blue); transform: scale(1.05); box-shadow: 0 25px 50px rgba(0,87,255,0.2); }}
 
-        .float-img {{ position: absolute; width: 160px; height: 160px; object-fit: cover; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); transition: 0.8s; z-index: 2; animation: breathe 8s infinite ease-in-out; }}
+        .float-img {{ position: absolute; width: 160px; height: 160px; object-fit: cover; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); transition: 0.8s; z-index: 2; animation: breathe 10s infinite ease-in-out; }}
         
-        /* 3. 解决突兀跳动：CSS 预设隐藏内容 */
+        /* 3. 页面流畅性优化 (100+ 视频支持) */
+        .nav-bar {{ position: sticky; top: 0; background: rgba(255,255,255,0.75); backdrop-filter: blur(30px); display: flex; width: 100%; height: 95px; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1000; }}
+        .nav-item {{ flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; cursor: pointer; color: #86868b; transition: 0.3s; }}
+        .nav-item.active {{ color: #000; box-shadow: inset 0 -4px 0 #000; }}
+
         .tab-content {{ display: none; opacity: 0; padding: 80px 5%; transition: opacity 0.6s ease; }}
         .tab-content.active {{ display: block; opacity: 1; }}
 
-        .nav-bar {{ position: sticky; top: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(30px); display: flex; width: 100%; height: 95px; border-bottom: 1px solid #f2f2f2; z-index: 1000; }}
-        .nav-item {{ flex: 1; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 700; cursor: pointer; color: #86868b; transition: 0.3s; }}
-        .nav-item.active {{ color: #000; box-shadow: inset 0 -4px 0 #000; }}
-
-        /* 4. 百级视频专项：网格与懒加载 */
-        .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }}
-        .video-card {{ position: relative; background: #000; border-radius: 35px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1); }}
-        .video-card:hover {{ transform: scale(1.03); z-index: 5; box-shadow: 0 40px 80px rgba(0,0,0,0.2); }}
+        .grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 45px; }}
+        .video-card {{ position: relative; background: #000; border-radius: 40px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.6s cubic-bezier(0.2, 1, 0.3, 1); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }}
+        .video-card:hover {{ transform: scale(1.04) translateY(-10px); z-index: 5; }}
         .video-card video {{ width: 100%; height: 100%; object-fit: cover; }}
 
-        /* 弹窗逻辑保持 v2.0 对分展示 */
-        .modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); z-index: 9999; align-items: center; justify-content: center; }}
-        .modal-body {{ width: 95%; max-width: 1440px; height: 85vh; background: #fff; border-radius: 45px; display: flex; overflow: hidden; }}
+        /* 弹窗系统保持 v2.0 */
+        .modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 9999; align-items: center; justify-content: center; }}
+        .modal-body {{ width: 95%; max-width: 1450px; height: 86vh; background: #fff; border-radius: 50px; display: flex; overflow: hidden; }}
         .modal-left {{ flex: 1.6; background: #000; }}
         .modal-left video {{ width: 100%; height: 100%; object-fit: contain; }}
-        .modal-right {{ flex: 1; padding: 60px; display: flex; flex-direction: column; overflow-y: auto; }}
-        .prompt-box {{ background: #f5f5f7; padding: 35px; border-radius: 30px; font-family: 'SF Mono', monospace; line-height: 1.8; color: #1d1d1f; font-size: 16px; flex-grow: 1; }}
+        .modal-right {{ flex: 1; padding: 65px; display: flex; flex-direction: column; overflow-y: auto; }}
+        .prompt-box {{ background: #f5f5f7; padding: 35px; border-radius: 30px; font-family: "SF Mono", monospace; line-height: 1.8; color: #1d1d1f; font-size: 16px; flex-grow: 1; }}
 
-        .qr-side {{ position: fixed; right: 40px; bottom: 40px; z-index: 500; cursor: zoom-in; }}
-        .qr-side img {{ width: 120px; border-radius: 22px; border: 5px solid #fff; box-shadow: 0 20px 50px rgba(0,0,0,0.12); }}
-        #qrFull {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.98); z-index: 10000; align-items: center; justify-content: center; cursor: zoom-out; }}
-
-        @keyframes slideUpFade {{ from {{ opacity: 0; transform: translateY(50px); }} to {{ opacity: 1; transform: translateY(0); }} }}
-        @keyframes breathe {{ 0%, 100% {{ transform: translateY(0) rotate(0); }} 50% {{ transform: translateY(-30px) rotate(1deg); }} }}
+        @keyframes slideUpFade {{ from {{ opacity: 0; transform: translateY(60px); }} to {{ opacity: 1; transform: translateY(0); }} }}
+        @keyframes breathe {{ 0%, 100% {{ transform: translateY(0) rotate(0deg); }} 50% {{ transform: translateY(-35px) rotate(1deg); }} }}
     </style>
 </head>
 <body>
+    <svg style="display:none;">
+        <filter id="liquid-filter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" seed="1">
+                <animate attributeName="baseFrequency" dur="30s" values="0.012;0.008;0.012" repeatCount="indefinite" />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" scale="80" />
+        </filter>
+    </svg>
+
     <div class="hero" id="home">
-        <canvas id="pulseCanvas"></canvas>
+        <div class="liquid-container">
+            <div class="blob blob-1"></div>
+            <div class="blob blob-2"></div>
+            <div class="blob blob-3"></div>
+            <div class="blob blob-4"></div>
+        </div>
         {hero_wall}
         <div class="hero-content">
             <h1>60节TikTok UGC带货<br>视频创作系统课</h1>
@@ -165,45 +186,19 @@ class PublisherTitanV23(QMainWindow):
     <div id="sora" class="tab-content active" style="display:block; opacity:1;"><div class="grid">{self.gen_cards(SORA_DIR, None, logger)}</div></div>
     <div id="course" class="tab-content"><div style="max-width:1150px; margin:0 auto;">{course_html}</div></div>
 
-    <div class="qr-side" onclick="toggleQR(true)"><img src="wechat_qr.png"></div>
-    <div id="qrFull" onclick="toggleQR(false)"><img src="wechat_qr.png"></div>
-
     <div id="videoModal" class="modal" onclick="closeModal()">
         <div class="modal-body" onclick="event.stopPropagation()">
             <div class="modal-left"><video id="mVideo" controls autoplay></video></div>
             <div class="modal-right">
-                <h2 id="mTitle" style="font-size:32px; margin:0 0 25px 0;"></h2>
-                <div style="font-weight:700; color:var(--blue); margin-bottom:15px;">💡 核心提示词与技术拆解:</div>
+                <h2 id="mTitle" style="font-size:35px; margin:0 0 25px 0;"></h2>
+                <div style="font-weight:700; color:var(--blue); margin-bottom:15px;">🔍 技术解析与提示词:</div>
                 <div class="prompt-box" id="mPrompt"></div>
-                <button style="margin-top:30px; padding:22px; background:var(--blue); color:#fff; border:none; border-radius:20px; font-weight:700; cursor:pointer;" onclick="copyText()">📋 复制解析内容</button>
+                <button style="margin-top:30px; padding:22px; background:#000; color:#fff; border:none; border-radius:20px; font-weight:700; cursor:pointer;" onclick="copyText()">📋 复制解析内容</button>
             </div>
         </div>
     </div>
 
     <script>
-        /* 脉冲流光 Canvas 引擎 */
-        const canvas = document.getElementById('pulseCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        function initCanvas() {{
-            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            for(let i=0; i<30; i++) particles.push({{ x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5, size: Math.random()*3+1 }});
-        }}
-        function drawPulse() {{
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {{
-                p.x += p.vx; p.y += p.vy;
-                if(p.x<0 || p.x>canvas.width) p.vx*=-1; if(p.y<0 || p.y>canvas.height) p.vy*=-1;
-                ctx.beginPath();
-                let grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size*10);
-                grad.addColorStop(0, 'rgba(0, 87, 255, 0.3)'); grad.addColorStop(1, 'rgba(255, 0, 124, 0)');
-                ctx.fillStyle = grad; ctx.arc(p.x, p.y, p.size*10, 0, Math.PI*2); ctx.fill();
-            }});
-            requestAnimationFrame(drawPulse);
-        }}
-        window.addEventListener('resize', initCanvas); initCanvas(); drawPulse();
-
-        /* 导航切换逻辑：解决跳动问题 */
         function showTab(id, el) {{
             document.querySelectorAll('.tab-content').forEach(t => {{ t.style.display='none'; t.style.opacity='0'; }});
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -211,7 +206,8 @@ class PublisherTitanV23(QMainWindow):
             target.style.display = 'block';
             setTimeout(() => target.style.opacity = '1', 50);
             el.classList.add('active');
-            if(window.scrollY > window.innerHeight) window.scrollTo({{top: window.innerHeight, behavior: 'smooth'}});
+            // 解决突兀感：如果已滚动，则平稳锚定在导航栏
+            if(window.scrollY > 200) window.scrollTo({{top: window.innerHeight - 95, behavior: 'smooth'}});
         }}
         function openModal(vUrl, title, prompt) {{
             document.getElementById('mVideo').src = vUrl;
@@ -220,8 +216,7 @@ class PublisherTitanV23(QMainWindow):
             document.getElementById('videoModal').style.display = 'flex';
         }}
         function closeModal() {{ document.getElementById('videoModal').style.display = 'none'; document.getElementById('mVideo').pause(); }}
-        function toggleQR(show) {{ document.getElementById('qrFull').style.display = show ? 'flex' : 'none'; }}
-        function copyText() {{ navigator.clipboard.writeText(document.getElementById('mPrompt').innerText).then(() => alert('已成功复制内容')); }}
+        function copyText() {{ navigator.clipboard.writeText(document.getElementById('mPrompt').innerText).then(() => alert('已成功复制')); }}
     </script>
 </body>
 </html>"""
@@ -237,28 +232,28 @@ class PublisherTitanV23(QMainWindow):
         for t in tasks:
             v_rel = f"{folder}/{t}/video.mp4"
             info_p = f"{folder}/{t}/info.txt"
-            title, prompt = t, fixed_prompt if fixed_prompt else "解析中..."
+            title, prompt = t, fixed_prompt if fixed_prompt else "内容库深度解析中..."
             if not fixed_prompt and os.path.exists(info_p):
                 with open(info_p, "r", encoding="utf-8", errors="ignore") as f:
                     c = f.read()
                     if "标题:" in c: title = c.split("标题:")[1].split("提示词:")[0].strip()
                     if "提示词:" in c: prompt = c.split("提示词:")[1].strip().replace('"', '&quot;')
-            # 增加 loading="lazy" 优化 100+ 视频加载
+            # 百级扩展核心：使用 loading="lazy" 确保 100+ 视频不消耗冗余内存
             cards += f'<div class="video-card" onclick="openModal(\'{v_rel}\', \'{title}\', `{prompt}`)"><video muted loop loading="lazy" onmouseover="this.play()" onmouseout="this.pause()"><source src="{v_rel}" type="video/mp4"></video></div>'
         return cards
 
     def git_sync(self, logger):
         try:
-            logger.emit("[3/3] 正在启动 Titan 增量同步系统...")
+            logger.emit("[3/3] 正在通过 Titan 引擎执行液态部署推送...")
             def run_git(args): return subprocess.run(args, capture_output=True, text=True, encoding='utf-8', errors='ignore')
             run_git(["git", "config", "--global", "credential.helper", "store"])
             run_git(["git", "add", "."])
-            run_git(["git", "commit", "-m", f"Titan_v2.3_Pulse_{datetime.now().strftime('%H%M')}"])
+            run_git(["git", "commit", "-m", f"Titan_v2.3_Liquid_Beta2_{datetime.now().strftime('%H%M')}"])
             res = run_git(["git", "push", "origin", "main"])
-            if res.returncode == 0: logger.emit("🎉 部署成功！v2.3 脉冲视觉版已实时上线。")
-            else: logger.emit(f"❌ Git 同步失败: {res.stderr}")
+            if res.returncode == 0: logger.emit("🎉 测试2部署成功！液态高光视觉已上线。")
+            else: logger.emit(f"❌ 推送失败: {res.stderr}")
         except Exception as e: logger.emit(f"❌ 异常: {str(e)}")
         finally: self.btn_go.setEnabled(True)
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv); win = PublisherTitanV23(); win.show(); sys.exit(app.exec())
+    app = QApplication(sys.argv); win = PublisherTitanV23Liquid(); win.show(); sys.exit(app.exec())

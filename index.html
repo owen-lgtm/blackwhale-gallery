@@ -7,7 +7,6 @@
         :root { --blue: #0057ff; }
         body, html { background: #fff; color: #1d1d1f; font-family: "SF Pro Display", sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* 1. 液态高光波动背景 - 针对测试2优化 */
         .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }
         
         .liquid-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.4; filter: url(#liquid-filter); }
@@ -23,7 +22,6 @@
             100% { transform: translate(-50px, 100px) scale(0.9) rotate(180deg); }
         }
 
-        /* 2. 核心文本排版 */
         .hero-content { z-index: 10; text-align: center; animation: slideUpFade 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
         .hero h1 { font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; text-shadow: 0 10px 30px rgba(0,0,0,0.02); }
         .hero-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 45px; }
@@ -34,7 +32,6 @@
 
         .float-img { position: absolute; width: 160px; height: 160px; object-fit: cover; border-radius: 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); transition: 0.8s; z-index: 2; animation: breathe 10s infinite ease-in-out; }
         
-        /* 3. 页面流畅性优化 (100+ 视频支持) */
         .nav-bar { position: sticky; top: 0; background: rgba(255,255,255,0.75); backdrop-filter: blur(30px); display: flex; width: 100%; height: 95px; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1000; }
         .nav-item { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; cursor: pointer; color: #86868b; transition: 0.3s; }
         .nav-item.active { color: #000; box-shadow: inset 0 -4px 0 #000; }
@@ -47,7 +44,12 @@
         .video-card:hover { transform: scale(1.04) translateY(-10px); z-index: 5; }
         .video-card video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 弹窗系统保持 v2.0 */
+        /* --- 修复项：二维码模态框样式 --- */
+        .qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s ease; }
+        .qr-container { background: #fff; padding: 30px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); text-align: center; transform: scale(0.9); transition: 0.4s cubic-bezier(0.2, 1, 0.3, 1); }
+        .qr-container img { width: 260px; height: 260px; border-radius: 20px; }
+        .qr-container p { margin-top: 20px; color: #86868b; font-weight: 600; }
+
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 9999; align-items: center; justify-content: center; }
         .modal-body { width: 95%; max-width: 1450px; height: 86vh; background: #fff; border-radius: 50px; display: flex; overflow: hidden; }
         .modal-left { flex: 1.6; background: #000; }
@@ -76,7 +78,7 @@
             <div class="blob blob-3"></div>
             <div class="blob blob-4"></div>
         </div>
-        <img src="头图/0 (1).png" class="float-img" style="top:30%; left:18%; animation-delay:0.0s;"><img src="头图/0 (10).png" class="float-img" style="top:40%; right:2%; animation-delay:0.6s;"><img src="头图/0 (11).png" class="float-img" style="top:25%; left:15%; animation-delay:1.2s;"><img src="头图/0 (12).png" class="float-img" style="top:48%; right:4%; animation-delay:1.7999999999999998s;"><img src="头图/0 (13).png" class="float-img" style="top:42%; left:17%; animation-delay:2.4s;"><img src="头图/0 (14).png" class="float-img" style="top:44%; right:8%; animation-delay:3.0s;"><img src="头图/0 (15).png" class="float-img" style="top:32%; left:2%; animation-delay:3.5999999999999996s;"><img src="头图/0 (16).png" class="float-img" style="top:23%; right:7%; animation-delay:4.2s;"><img src="头图/0 (17).png" class="float-img" style="top:35%; left:10%; animation-delay:4.8s;"><img src="头图/0 (18).png" class="float-img" style="top:21%; right:5%; animation-delay:5.3999999999999995s;"><img src="头图/0 (19).png" class="float-img" style="top:70%; left:18%; animation-delay:6.0s;"><img src="头图/0 (20).png" class="float-img" style="top:54%; right:4%; animation-delay:6.6s;"><img src="头图/0 (21).png" class="float-img" style="top:78%; left:18%; animation-delay:7.199999999999999s;"><img src="头图/0 (22).png" class="float-img" style="top:50%; right:18%; animation-delay:7.8s;"><img src="头图/0 (23).png" class="float-img" style="top:55%; left:8%; animation-delay:8.4s;"><img src="头图/0 (24).png" class="float-img" style="top:25%; right:15%; animation-delay:9.0s;"><img src="头图/0 (25).png" class="float-img" style="top:38%; left:18%; animation-delay:9.6s;"><img src="头图/0 (3).png" class="float-img" style="top:29%; right:11%; animation-delay:10.2s;"><img src="头图/0 (4).png" class="float-img" style="top:28%; left:3%; animation-delay:10.799999999999999s;"><img src="头图/0 (5).png" class="float-img" style="top:44%; right:7%; animation-delay:11.4s;"><img src="头图/0 (6).png" class="float-img" style="top:72%; left:11%; animation-delay:12.0s;"><img src="头图/0 (7).png" class="float-img" style="top:40%; right:11%; animation-delay:12.6s;"><img src="头图/0 (8).png" class="float-img" style="top:79%; left:14%; animation-delay:13.2s;"><img src="头图/0 (9).png" class="float-img" style="top:21%; right:18%; animation-delay:13.799999999999999s;"><img src="头图/PVVS.png" class="float-img" style="top:32%; left:10%; animation-delay:14.399999999999999s;"><img src="头图/PvwK.png" class="float-img" style="top:69%; right:18%; animation-delay:15.0s;"><img src="头图/pWGI.png" class="float-img" style="top:25%; left:6%; animation-delay:15.6s;"><img src="头图/Pxsk.png" class="float-img" style="top:31%; right:4%; animation-delay:16.2s;"><img src="头图/PxUj.png" class="float-img" style="top:17%; left:4%; animation-delay:16.8s;"><img src="头图/qaJS.png" class="float-img" style="top:80%; right:15%; animation-delay:17.4s;"><img src="头图/qbfX.png" class="float-img" style="top:78%; left:9%; animation-delay:18.0s;"><img src="头图/qcDo.png" class="float-img" style="top:58%; right:15%; animation-delay:18.599999999999998s;"><img src="头图/qilk.png" class="float-img" style="top:56%; left:8%; animation-delay:19.2s;"><img src="头图/qjTc.png" class="float-img" style="top:66%; right:18%; animation-delay:19.8s;">
+        <img src="头图/0 (1).png" class="float-img" style="top:35%; left:16%; animation-delay:0.0s;"><img src="头图/0 (10).png" class="float-img" style="top:46%; right:16%; animation-delay:0.6s;"><img src="头图/0 (11).png" class="float-img" style="top:60%; left:11%; animation-delay:1.2s;"><img src="头图/0 (12).png" class="float-img" style="top:28%; right:16%; animation-delay:1.7999999999999998s;"><img src="头图/0 (14).png" class="float-img" style="top:36%; left:12%; animation-delay:2.4s;"><img src="头图/0 (15).png" class="float-img" style="top:48%; right:18%; animation-delay:3.0s;"><img src="头图/0 (17).png" class="float-img" style="top:77%; left:13%; animation-delay:3.5999999999999996s;"><img src="头图/0 (18).png" class="float-img" style="top:53%; right:18%; animation-delay:4.2s;"><img src="头图/0 (19).png" class="float-img" style="top:59%; left:3%; animation-delay:4.8s;"><img src="头图/0 (22).png" class="float-img" style="top:68%; right:12%; animation-delay:5.3999999999999995s;"><img src="头图/0 (25).png" class="float-img" style="top:40%; left:12%; animation-delay:6.0s;"><img src="头图/0 (5).png" class="float-img" style="top:30%; right:13%; animation-delay:6.6s;"><img src="头图/0 (6).png" class="float-img" style="top:68%; left:14%; animation-delay:7.199999999999999s;"><img src="头图/0 (8).png" class="float-img" style="top:71%; right:4%; animation-delay:7.8s;"><img src="头图/0 (9).png" class="float-img" style="top:53%; left:2%; animation-delay:8.4s;"><img src="头图/3127b9d3-4e37-4200-88a7-c1ec10bbf7b7.png" class="float-img" style="top:47%; right:14%; animation-delay:9.0s;"><img src="头图/4155587b-2910-4081-b21c-8a2622d423cc.png" class="float-img" style="top:52%; left:11%; animation-delay:9.6s;"><img src="头图/53abe51e-4442-49cf-ad7f-92d70e05cc16.png" class="float-img" style="top:39%; right:13%; animation-delay:10.2s;"><img src="头图/649e9501-d7b5-4c09-a871-b7382b2974dd.png" class="float-img" style="top:52%; left:6%; animation-delay:10.799999999999999s;"><img src="头图/6af7a75f-1bef-45c4-906a-04d2744ed7d0.png" class="float-img" style="top:60%; right:14%; animation-delay:11.4s;"><img src="头图/7465753c-2ebc-4f35-831a-e33a1641a4fc.png" class="float-img" style="top:36%; left:2%; animation-delay:12.0s;"><img src="头图/7f8abd12-2fa6-40cf-9c55-18aabf898659.png" class="float-img" style="top:53%; right:13%; animation-delay:12.6s;"><img src="头图/7月20日(1).png" class="float-img" style="top:47%; left:8%; animation-delay:13.2s;"><img src="头图/7月20日.png" class="float-img" style="top:22%; right:15%; animation-delay:13.799999999999999s;"><img src="头图/7月2日(1).png" class="float-img" style="top:69%; left:3%; animation-delay:14.399999999999999s;"><img src="头图/7月2日.png" class="float-img" style="top:51%; right:2%; animation-delay:15.0s;"><img src="头图/a (1).png" class="float-img" style="top:38%; left:15%; animation-delay:15.6s;"><img src="头图/a (2).png" class="float-img" style="top:55%; right:9%; animation-delay:16.2s;"><img src="头图/a4bc100d-d0ac-4248-8a05-92a481e47209.png" class="float-img" style="top:35%; left:9%; animation-delay:16.8s;"><img src="头图/d2988fd7-d710-42c8-9698-2f6b82ac7aad.png" class="float-img" style="top:24%; right:18%; animation-delay:17.4s;"><img src="头图/PVVS.png" class="float-img" style="top:39%; left:7%; animation-delay:18.0s;"><img src="头图/PvwK.png" class="float-img" style="top:69%; right:13%; animation-delay:18.599999999999998s;"><img src="头图/pWGI.png" class="float-img" style="top:76%; left:10%; animation-delay:19.2s;"><img src="头图/Pxsk.png" class="float-img" style="top:79%; right:12%; animation-delay:19.8s;"><img src="头图/qaJS.png" class="float-img" style="top:56%; left:3%; animation-delay:20.4s;"><img src="头图/qilk.png" class="float-img" style="top:28%; right:18%; animation-delay:21.0s;"><img src="头图/wVnm.png" class="float-img" style="top:36%; left:5%; animation-delay:21.599999999999998s;"><img src="头图/xmbJ.png" class="float-img" style="top:60%; right:12%; animation-delay:22.2s;"><img src="头图/YOUv.png" class="float-img" style="top:45%; left:8%; animation-delay:22.8s;"><img src="头图/分镜3原图.png" class="float-img" style="top:43%; right:6%; animation-delay:23.4s;"><img src="头图/姿势图（1）.png" class="float-img" style="top:69%; left:7%; animation-delay:24.0s;"><img src="头图/姿势图（2）.png" class="float-img" style="top:79%; right:4%; animation-delay:24.599999999999998s;"><img src="头图/姿势图（3）.png" class="float-img" style="top:68%; left:14%; animation-delay:25.2s;"><img src="头图/白男 (139).jpeg" class="float-img" style="top:30%; right:9%; animation-delay:25.8s;"><img src="头图/白男 (143).jpeg" class="float-img" style="top:34%; left:14%; animation-delay:26.4s;"><img src="头图/白男 (159).jpeg" class="float-img" style="top:31%; right:11%; animation-delay:27.0s;">
         <div class="hero-content">
             <h1>60节TikTok UGC带货<br>视频创作系统课</h1>
             <div class="hero-list">
@@ -89,6 +91,13 @@
         </div>
     </div>
     
+    <div id="qrModal" class="qr-modal" onclick="toggleQR(false)">
+        <div class="qr-container" onclick="event.stopPropagation()">
+            <img src="qr.png" alt="微信二维码">
+            <p>扫码咨询 BlackWhale 导师</p>
+        </div>
+    </div>
+
     <div class="nav-bar">
         <div class="nav-item" onclick="showTab('ugc', this)">UGC实战案例</div>
         <div class="nav-item active" onclick="showTab('sora', this)">Sora2 案例 (100+)</div>
@@ -163,6 +172,23 @@
     </div>
 
     <script>
+        // --- 修复项：二维码切换逻辑 ---
+        function toggleQR(show) {
+            const modal = document.getElementById('qrModal');
+            const container = modal.querySelector('.qr-container');
+            if(show) {
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    modal.style.opacity = '1';
+                    container.style.transform = 'scale(1)';
+                }, 10);
+            } else {
+                modal.style.opacity = '0';
+                container.style.transform = 'scale(0.9)';
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            }
+        }
+
         function showTab(id, el) {
             document.querySelectorAll('.tab-content').forEach(t => { t.style.display='none'; t.style.opacity='0'; });
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -170,7 +196,6 @@
             target.style.display = 'block';
             setTimeout(() => target.style.opacity = '1', 50);
             el.classList.add('active');
-            // 解决突兀感：如果已滚动，则平稳锚定在导航栏
             if(window.scrollY > 200) window.scrollTo({top: window.innerHeight - 95, behavior: 'smooth'});
         }
         function openModal(vUrl, title, prompt) {
