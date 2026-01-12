@@ -8,264 +8,249 @@
         :root { --blue: #0057ff; }
         body, html { background: #fff; color: #1d1d1f; font-family: "SF Pro Display", -apple-system, sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* 响应式优化 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 38px !important; padding: 0 20px; }
             .float-img-container { display: none; }
             .grid { grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; padding: 15px !important; }
             .modal-body { flex-direction: column !important; height: 95vh !important; }
-            .nav-item { font-size: 14px !important; }
         }
 
         .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }
-        
-        .liquid-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.4; filter: url(#liquid-filter); }
-        .blob { position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(60px); animation: move 25s infinite alternate ease-in-out; }
-        .blob-1 { background: #e0e7ff; top: -10%; left: 10%; }
-        .blob-2 { background: #fce7f3; bottom: -10%; right: 10%; }
-
-        @keyframes move { 
-            0% { transform: translate(0,0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
-        }
-
-        .hero-content { z-index: 10; text-align: center; animation: slideUpFade 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
+        .hero-content { z-index: 10; text-align: center; }
         .hero h1 { font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; }
-        .hero-list p { font-size: 20px; color: #6e6e73; margin: 8px 0; }
         
-        .contact-btn { display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; }
+        /* 首页文字对齐要求 */
+        .hero-list p { font-size: 18px; color: #86868b; margin: 10px 0; font-weight: 400; }
+        
+        .contact-btn { display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; margin-top: 30px; }
         .contact-btn:hover { background: var(--blue); transform: scale(1.05); }
 
-        /* 首页小图优化项 */
-        .float-img-container { position: absolute; z-index: 2; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); animation: breathe 10s infinite ease-in-out; }
-        .float-img { width: 160px; height: auto; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: block; }
-        .float-img-container:hover { transform: scale(1.5) !important; z-index: 100; }
-        .ai-tag { font-size: 8px; color: rgba(0,0,0,0.2); display: block; text-align: center; margin-top: 5px; font-family: monospace; opacity: 0; transition: 0.3s; }
+        /* 首页小图优化：1:1容器，悬停原地放大显示全图 */
+        .float-img-container { position: absolute; z-index: 2; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .float-img { width: 150px; height: 150px; object-fit: cover; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: block; }
+        .float-img-container:hover { z-index: 100; }
+        .float-img-container:hover .float-img { transform: scale(1.3); object-fit: contain; background: #fff; }
+        .ai-tag { font-size: 8px; color: rgba(0,0,0,0.2); display: block; text-align: center; margin-top: 5px; font-family: monospace; opacity: 0; }
         .float-img-container:hover .ai-tag { opacity: 1; }
 
         .nav-bar { position: sticky; top: 0; background: rgba(255,255,255,0.75); backdrop-filter: blur(30px); display: flex; width: 100%; height: 95px; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1000; }
         .nav-item { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; cursor: pointer; color: #86868b; }
         .nav-item.active { color: #000; box-shadow: inset 0 -4px 0 #000; }
 
-        .tab-content { display: none; opacity: 0; padding: 80px 5%; transition: 0.6s; }
+        .tab-content { display: none; opacity: 0; padding: 60px 5%; transition: 0.5s; }
         .tab-content.active { display: block; opacity: 1; }
 
-        /* Sora2 每行5个优化 */
-        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 25px; }
-        .video-card { position: relative; background: #f5f5f7; border-radius: 25px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.4s; }
-        .video-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
-        .video-card video, .video-card img { width: 100%; height: 100%; object-fit: cover; }
+        .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+        .video-card { position: relative; background: #fbfbfd; border-radius: 22px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.3s; }
+        .video-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .video-card video, .video-card img { width: 100%; height: 100%; object-fit: cover; background: #000; }
 
-        /* 二维码显示比例修复 */
         .qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }
         .qr-container { background: #fff; padding: 30px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); text-align: center; }
-        .qr-container img { width: 260px; height: 260px; object-fit: contain; border-radius: 20px; }
+        .qr-container img { width: 260px; height: 260px; object-fit: contain; }
 
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; align-items: center; justify-content: center; }
-        .modal-body { width: 92%; max-width: 1300px; height: 85vh; background: #fff; border-radius: 40px; display: flex; overflow: hidden; }
-        .modal-left { flex: 1.5; background: #000; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }
+        .modal-body { width: 94%; max-width: 1200px; height: 85vh; background: #fff; border-radius: 40px; display: flex; overflow: hidden; }
+        .modal-left { flex: 1.4; background: #000; display: flex; align-items: center; justify-content: center; }
         .modal-right { flex: 1; padding: 50px; overflow-y: auto; }
 
         .more-trigger { grid-column: 1 / -1; text-align: center; padding: 40px; color: #86868b; font-weight: 600; cursor: pointer; }
-        .more-trigger:hover { color: var(--blue); }
-
-        @keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="hero" id="home">
-        <div class="liquid-container"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
         
-            <div class="float-img-container" style="top:47%; left:17%; animation-delay:0.0s;">
+            <div class="float-img-container" style="top:51%; left:17%; animation-delay:0.0s;">
                 <img src="头图/0 (1).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:47%; right:17%; animation-delay:0.6s;">
+            <div class="float-img-container" style="top:42%; right:18%; animation-delay:0.6s;">
                 <img src="头图/0 (10).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:33%; left:5%; animation-delay:1.2s;">
+            <div class="float-img-container" style="top:42%; left:12%; animation-delay:1.2s;">
                 <img src="头图/0 (11).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:27%; right:8%; animation-delay:1.7999999999999998s;">
+            <div class="float-img-container" style="top:60%; right:9%; animation-delay:1.7999999999999998s;">
                 <img src="头图/0 (12).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:71%; left:9%; animation-delay:2.4s;">
+            <div class="float-img-container" style="top:59%; left:18%; animation-delay:2.4s;">
                 <img src="头图/0 (14).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:73%; right:6%; animation-delay:3.0s;">
+            <div class="float-img-container" style="top:69%; right:12%; animation-delay:3.0s;">
                 <img src="头图/0 (15).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:46%; left:9%; animation-delay:3.5999999999999996s;">
+            <div class="float-img-container" style="top:68%; left:9%; animation-delay:3.5999999999999996s;">
                 <img src="头图/0 (17).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:19%; right:11%; animation-delay:4.2s;">
+            <div class="float-img-container" style="top:77%; right:18%; animation-delay:4.2s;">
                 <img src="头图/0 (18).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:66%; left:9%; animation-delay:4.8s;">
+            <div class="float-img-container" style="top:38%; left:2%; animation-delay:4.8s;">
                 <img src="头图/0 (19).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:57%; right:6%; animation-delay:5.3999999999999995s;">
+            <div class="float-img-container" style="top:54%; right:7%; animation-delay:5.3999999999999995s;">
                 <img src="头图/0 (22).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:63%; left:16%; animation-delay:6.0s;">
+            <div class="float-img-container" style="top:56%; left:5%; animation-delay:6.0s;">
                 <img src="头图/0 (25).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:20%; right:5%; animation-delay:6.6s;">
+            <div class="float-img-container" style="top:78%; right:13%; animation-delay:6.6s;">
                 <img src="头图/0 (5).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:55%; left:4%; animation-delay:7.199999999999999s;">
+            <div class="float-img-container" style="top:22%; left:13%; animation-delay:7.199999999999999s;">
                 <img src="头图/0 (6).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:69%; right:6%; animation-delay:7.8s;">
+            <div class="float-img-container" style="top:43%; right:12%; animation-delay:7.8s;">
                 <img src="头图/0 (8).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:44%; left:2%; animation-delay:8.4s;">
+            <div class="float-img-container" style="top:49%; left:15%; animation-delay:8.4s;">
                 <img src="头图/0 (9).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:42%; right:2%; animation-delay:9.0s;">
+            <div class="float-img-container" style="top:37%; right:13%; animation-delay:9.0s;">
                 <img src="头图/3127b9d3-4e37-4200-88a7-c1ec10bbf7b7.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:77%; left:9%; animation-delay:9.6s;">
+            <div class="float-img-container" style="top:38%; left:5%; animation-delay:9.6s;">
                 <img src="头图/4155587b-2910-4081-b21c-8a2622d423cc.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:69%; right:15%; animation-delay:10.2s;">
+            <div class="float-img-container" style="top:72%; right:15%; animation-delay:10.2s;">
                 <img src="头图/53abe51e-4442-49cf-ad7f-92d70e05cc16.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:76%; left:12%; animation-delay:10.799999999999999s;">
+            <div class="float-img-container" style="top:39%; left:12%; animation-delay:10.799999999999999s;">
                 <img src="头图/649e9501-d7b5-4c09-a871-b7382b2974dd.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:54%; right:9%; animation-delay:11.4s;">
+            <div class="float-img-container" style="top:18%; right:7%; animation-delay:11.4s;">
                 <img src="头图/6af7a75f-1bef-45c4-906a-04d2744ed7d0.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:50%; left:16%; animation-delay:12.0s;">
+            <div class="float-img-container" style="top:30%; left:16%; animation-delay:12.0s;">
                 <img src="头图/7465753c-2ebc-4f35-831a-e33a1641a4fc.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:67%; right:5%; animation-delay:12.6s;">
+            <div class="float-img-container" style="top:56%; right:10%; animation-delay:12.6s;">
                 <img src="头图/7f8abd12-2fa6-40cf-9c55-18aabf898659.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:15%; left:17%; animation-delay:13.2s;">
+            <div class="float-img-container" style="top:70%; left:4%; animation-delay:13.2s;">
                 <img src="头图/7月20日(1).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:26%; right:10%; animation-delay:13.799999999999999s;">
+            <div class="float-img-container" style="top:16%; right:4%; animation-delay:13.799999999999999s;">
                 <img src="头图/7月20日.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:29%; left:3%; animation-delay:14.399999999999999s;">
+            <div class="float-img-container" style="top:37%; left:10%; animation-delay:14.399999999999999s;">
                 <img src="头图/7月2日(1).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:61%; right:5%; animation-delay:15.0s;">
+            <div class="float-img-container" style="top:47%; right:17%; animation-delay:15.0s;">
                 <img src="头图/7月2日.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:79%; left:11%; animation-delay:15.6s;">
+            <div class="float-img-container" style="top:45%; left:13%; animation-delay:15.6s;">
                 <img src="头图/a (1).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:66%; right:2%; animation-delay:16.2s;">
+            <div class="float-img-container" style="top:56%; right:4%; animation-delay:16.2s;">
                 <img src="头图/a (2).png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:19%; left:13%; animation-delay:16.8s;">
+            <div class="float-img-container" style="top:79%; left:10%; animation-delay:16.8s;">
                 <img src="头图/a4bc100d-d0ac-4248-8a05-92a481e47209.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:61%; right:4%; animation-delay:17.4s;">
+            <div class="float-img-container" style="top:54%; right:13%; animation-delay:17.4s;">
                 <img src="头图/d2988fd7-d710-42c8-9698-2f6b82ac7aad.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:35%; left:3%; animation-delay:18.0s;">
+            <div class="float-img-container" style="top:68%; left:15%; animation-delay:18.0s;">
                 <img src="头图/PVVS.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:17%; right:7%; animation-delay:18.599999999999998s;">
+            <div class="float-img-container" style="top:52%; right:17%; animation-delay:18.599999999999998s;">
                 <img src="头图/PvwK.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:62%; left:15%; animation-delay:19.2s;">
+            <div class="float-img-container" style="top:31%; left:18%; animation-delay:19.2s;">
                 <img src="头图/pWGI.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:76%; right:18%; animation-delay:19.8s;">
+            <div class="float-img-container" style="top:34%; right:10%; animation-delay:19.8s;">
                 <img src="头图/Pxsk.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:72%; left:15%; animation-delay:20.4s;">
+            <div class="float-img-container" style="top:76%; left:12%; animation-delay:20.4s;">
                 <img src="头图/qaJS.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:74%; right:10%; animation-delay:21.0s;">
+            <div class="float-img-container" style="top:36%; right:15%; animation-delay:21.0s;">
                 <img src="头图/qilk.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:59%; left:15%; animation-delay:21.599999999999998s;">
+            <div class="float-img-container" style="top:73%; left:18%; animation-delay:21.599999999999998s;">
                 <img src="头图/wVnm.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:16%; right:12%; animation-delay:22.2s;">
+            <div class="float-img-container" style="top:43%; right:13%; animation-delay:22.2s;">
                 <img src="头图/xmbJ.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:28%; left:4%; animation-delay:22.8s;">
+            <div class="float-img-container" style="top:18%; left:5%; animation-delay:22.8s;">
                 <img src="头图/YOUv.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:44%; right:10%; animation-delay:23.4s;">
+            <div class="float-img-container" style="top:35%; right:2%; animation-delay:23.4s;">
                 <img src="头图/分镜3原图.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:56%; left:14%; animation-delay:24.0s;">
+            <div class="float-img-container" style="top:68%; left:10%; animation-delay:24.0s;">
                 <img src="头图/姿势图（1）.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:16%; right:11%; animation-delay:24.599999999999998s;">
+            <div class="float-img-container" style="top:60%; right:14%; animation-delay:24.599999999999998s;">
                 <img src="头图/姿势图（2）.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:36%; left:17%; animation-delay:25.2s;">
+            <div class="float-img-container" style="top:48%; left:8%; animation-delay:25.2s;">
                 <img src="头图/姿势图（3）.png" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:36%; right:16%; animation-delay:25.8s;">
+            <div class="float-img-container" style="top:57%; right:4%; animation-delay:25.8s;">
                 <img src="头图/白男 (139).jpeg" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:59%; left:11%; animation-delay:26.4s;">
+            <div class="float-img-container" style="top:37%; left:13%; animation-delay:26.4s;">
                 <img src="头图/白男 (143).jpeg" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
-            <div class="float-img-container" style="top:37%; right:12%; animation-delay:27.0s;">
+            <div class="float-img-container" style="top:48%; right:6%; animation-delay:27.0s;">
                 <img src="头图/白男 (159).jpeg" class="float-img">
-                <span class="ai-tag">AI UGC CHARACTER CASE</span>
+                <span class="ai-tag">AI UGC CASE</span>
             </div>
         <div class="hero-content">
             <h1>60节TikTok UGC带货<br>视频创作系统课</h1>
             <div class="hero-list">
-                <p>60节系统化UGC带货内容生成与AI创作</p>
-                <p>批量自产自然流橱窗矩阵与原生感UGC带货视频</p>
+                <p>60节系统化UGC带货内容生成与AI创作（持续更新中）</p>
+                <p>系统化AI生文/图/视频/音频从基础、实操到进阶</p>
+                <p>原生感TIKTOK UGC带货视频一键批量生成工具</p>
+                <p>批量自产自然流橱窗矩阵与原生感UGC带货视频创作</p>
             </div>
             <button class="contact-btn" onclick="toggleQR(true)">立即咨询加入 BlackWhale</button>
         </div>
@@ -284,7 +269,7 @@
         <div class="nav-item" onclick="showTab('course', this)">课程大纲详情</div>
     </div>
 
-    <div id="ugc" class="tab-content active" style="display:block; opacity:1;"><div class="grid"><div class="video-card" onclick="openModal('ugc/UGC实战案例8/-------------------------------------------------- (1).png', 'UGC实战案例8', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例8/-------------------------------------------------- (1).png" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例7/04.mp4', 'UGC实战案例7', `课程原创案例，详见视频课程讲解`, true)"><video preload="none" style="background:#000;"><source src="ugc/UGC实战案例7/04.mp4"></video></div><div class="video-card" onclick="openModal('ugc/UGC实战案例6/白男 (152).jpeg', 'UGC实战案例6', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例6/白男 (152).jpeg" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例5/UaJp.png', 'UGC实战案例5', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例5/UaJp.png" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例4/白男 (136).jpeg', 'UGC实战案例4', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例4/白男 (136).jpeg" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例3/镜头3_2.mp4', 'UGC实战案例3', `课程原创案例，详见视频课程讲解`, true)"><video preload="none" style="background:#000;"><source src="ugc/UGC实战案例3/镜头3_2.mp4"></video></div><div class="video-card" onclick="openModal('ugc/UGC实战案例2/镜头3_4.mp4', 'UGC实战案例2', `课程原创案例，详见视频课程讲解`, true)"><video preload="none" style="background:#000;"><source src="ugc/UGC实战案例2/镜头3_4.mp4"></video></div><div class="video-card" onclick="openModal('ugc/UGC实战案例1/镜头1.mp4', 'UGC实战案例1', `课程原创案例，详见视频课程讲解`, true)"><video preload="none" style="background:#000;"><source src="ugc/UGC实战案例1/镜头1.mp4"></video></div></div></div>
+    <div id="ugc" class="tab-content active" style="display:block; opacity:1;"><div class="grid"><div class="video-card" onclick="openModal('ugc/UGC实战案例8/-------------------------------------------------- (1).png', 'UGC实战案例8', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例8/-------------------------------------------------- (1).png" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例7/04.mp4', 'UGC实战案例7', `课程原创案例，详见视频课程讲解`, true)"><video poster="ugc/UGC实战案例7/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="ugc/UGC实战案例7/04.mp4"></video></div><div class="video-card" onclick="openModal('ugc/UGC实战案例6/白男 (152).jpeg', 'UGC实战案例6', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例6/白男 (152).jpeg" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例5/UaJp.png', 'UGC实战案例5', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例5/UaJp.png" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例4/白男 (136).jpeg', 'UGC实战案例4', `课程原创案例，详见视频课程讲解`, false)"><img src="ugc/UGC实战案例4/白男 (136).jpeg" loading="lazy"></div><div class="video-card" onclick="openModal('ugc/UGC实战案例3/镜头3_2.mp4', 'UGC实战案例3', `课程原创案例，详见视频课程讲解`, true)"><video poster="ugc/UGC实战案例3/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="ugc/UGC实战案例3/镜头3_2.mp4"></video></div><div class="video-card" onclick="openModal('ugc/UGC实战案例2/镜头3_4.mp4', 'UGC实战案例2', `课程原创案例，详见视频课程讲解`, true)"><video poster="ugc/UGC实战案例2/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="ugc/UGC实战案例2/镜头3_4.mp4"></video></div><div class="video-card" onclick="openModal('ugc/UGC实战案例1/镜头1.mp4', 'UGC实战案例1', `课程原创案例，详见视频课程讲解`, true)"><video poster="ugc/UGC实战案例1/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="ugc/UGC实战案例1/镜头1.mp4"></video></div></div></div>
     <div id="sora" class="tab-content"><div class="grid"><div class="video-card" onclick="openModal('sora2/Task_250_0109/video.mp4', 'Smoking Balaclava Tiktok Style Winter Snow Self Heating Mask 1', `**Style:** 现代社交媒体短视频风格，采用手机手持拍摄的写实主义。画面具有鲜明的冬季户外感，色彩自然，高光处呈现明亮的日光感。纹理清晰，滑雪面罩的织物纤维、护目镜表面的反射以及浓郁的白色蒸汽细节分明。整体视觉节奏快速且具有生活化气息，模仿TikTok等短视频平台的随机抓拍美学。
 
 **Cinematography:**
@@ -331,7 +316,7 @@ Scene:
 - 棕色手套再次出现，竖起大拇指表示赞赏。
 - 画面最后保持在男子戴着面罩的特写，随后切入TikTok品牌标志。
 Dialogue: &quot;它有呼吸阀，零雾气，视野清晰。&quot; 拍摄者惊叹：&quot;太酷了！在哪能买到？&quot; 男子回答：&quot;TikTok商店现在有活动，链接就在下面。&quot;
-Background Sound: 呼气时的气流声`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_250_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_242_0109/video.mp4', 'African American Woman Water Wave Hair Extensions Review', `[Type]: UGC Review
+Background Sound: 呼气时的气流声`, true)"><video poster="sora2/Task_250_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_250_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_242_0109/video.mp4', 'African American Woman Water Wave Hair Extensions Review', `[Type]: UGC Review
 [Structure]: intro hook → personal use moment → reaction or opinion → product in hand → call-to-action
 [Style]: 真实UGC风格，手持拍摄，色彩鲜艳且富有质感，强调发丝细节。
 [Environment]: 一个充满艺术气息的客厅，背景中有时尚装饰画和柔软的米色沙发，氛围温馨且私密。
@@ -351,7 +336,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
   Subject: &quot;The glow is real! It gives me that instant volume for a party or just a regular workday.&quot;
 - 快速剪辑展示她抓起头发尝试不同造型的小片段，展现产品的多功能性，最后她回到镜头前，调皮地抛了个媚眼，轻甩一头亮丽的卷发。
 - dialogue: 
-  Subject: &quot;If you want that`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_242_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_238_0109/video.mp4', 'Ugc Review Thai Woman Prawn Cracker Mixed Nuts Snack Selfie Style', `[Type]: UGC Review
+  Subject: &quot;If you want that`, true)"><video poster="sora2/Task_242_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_242_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_238_0109/video.mp4', 'Ugc Review Thai Woman Prawn Cracker Mixed Nuts Snack Selfie Style', `[Type]: UGC Review
 [Structure]: intro hook → personal use moment → reaction or opinion → product in hand → call-to-action
 [Style]: สไตล์ UGC ที่สมจริง, ถ่ายด้วยมือถือแบบ Selfie, สีโทนอุ่นและดูธรรมชาติ
 [Environment]: ห้องนั่งเล่นที่สว่างสดใส มีแสงแดดส่องผ่านหน้าต่าง มีต้นไม้สีเขียวและของตกแต่งบ้านที่ทันสมัยเป็นพื้นหลัง ให้ความรู้สึกผ่อนคลาย, มีการจัดวางสิ่งของไม่เป็นระเบียบเล็กน้อย
@@ -378,7 +363,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - ตัดต่อแบบ Jump cut เล็กน้อยตามสไตล์ TikTok เพื่อความกระชับ
 
 [Call to Action]:
-- หญิงสาวส่งจูบให้กล้องพร้อมรอยยิ้มกว้าง สื่อถึงความประทับใจในสินค้าก่อนคลิปจะจบลง`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_238_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_237_0109/video.mp4', 'Asian Girl Unboxing Soft Socks Vlog Bedroom Review', `[Type]: UGC Review
+- หญิงสาวส่งจูบให้กล้องพร้อมรอยยิ้มกว้าง สื่อถึงความประทับใจในสินค้าก่อนคลิปจะจบลง`, true)"><video poster="sora2/Task_238_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_238_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_237_0109/video.mp4', 'Asian Girl Unboxing Soft Socks Vlog Bedroom Review', `[Type]: UGC Review
 [Structure]: 真实好物开箱 → 细节触感展示 → 穿着效果与走动测试 → 情感反馈与推荐
 [Style]: 手机Vlog质感，自然真实，温暖生活化
 [Environment]: 阳光明媚的温馨卧室，床铺整洁，背景有时尚杂志和咖啡杯，充满生活气息
@@ -403,7 +388,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 快速的跳剪（Jump cuts）连接不同动作，保持视频的高能量和紧凑感。
 
 [Call to Action]:
-- 博主对着镜头点头示意，露出鼓励尝试的眼神，画面在温馨的笑容中定格。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_237_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_236_0109/video.mp4', 'American Male Model Jersey On Court', `An American male model pulled this jersey out of his backpack, put it on, and showcased it on the court.`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_236_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_235_0109/video.mp4', 'Ugc Review Asian Mom Kid Fleece Sweater Unboxing Try On Family Interaction', `[Type]: UGC Review
+- 博主对着镜头点头示意，露出鼓励尝试的眼神，画面在温馨的笑容中定格。`, true)"><video poster="sora2/Task_237_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_237_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_236_0109/video.mp4', 'American Male Model Jersey On Court', `An American male model pulled this jersey out of his backpack, put it on, and showcased it on the court.`, true)"><video poster="sora2/Task_236_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_236_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_235_0109/video.mp4', 'Ugc Review Asian Mom Kid Fleece Sweater Unboxing Try On Family Interaction', `[Type]: UGC Review
 [Structure]: 开箱展示 → 细节近摄 → 试穿效果 → 亲子互动 → 满意推荐
 [Style]: 真实自然，手机自拍感，生活化气息，高画质但非商业化精修。
 [Environment]: 充满生活气息的亚洲家庭客厅，有柔和的阳光从侧面射入，背景隐约可见书架和地毯上的积木。
@@ -429,7 +414,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 采用快速跳剪（Jump Cut）保持节奏感，确保每一帧都在展示关键卖点。
 
 [Call to Action]:
-- 妈妈和小女孩一起挥手告别，画面定格在两人温馨的笑脸上。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_235_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_231_0109/video.mp4', 'Ugc Review European Host First Aid Kit Camping Portable', `[Video Type]: UGC Review
+- 妈妈和小女孩一起挥手告别，画面定格在两人温馨的笑脸上。`, true)"><video poster="sora2/Task_235_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_235_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_231_0109/video.mp4', 'Ugc Review European Host First Aid Kit Camping Portable', `[Video Type]: UGC Review
 [Structure]: 开场展示产品，欧洲女主播介绍特性，特写关键细节，强调便携与实用。
 [Style]: 轻松自然，手持拍摄，阳光明媚的户外氛围。
 [Environment]: 阳光明媚的户外露营地，背景可见帐篷一角和木质野餐桌。
@@ -448,7 +433,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 轻松愉快的背景音乐，伴有微弱的鸟鸣声和户外环境音。
 
 [Call to Action (optional)]:
-- 女主播满意地对镜头微笑，并做出一个“点赞”的手势。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_231_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_228_0109/video.mp4', 'Ugc Review Dodo Gogo Rhinestone Headband Asian Woman Bedroom Tutorial', `[Type]: UGC Review
+- 女主播满意地对镜头微笑，并做出一个“点赞”的手势。`, true)"><video poster="sora2/Task_231_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_231_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_228_0109/video.mp4', 'Ugc Review Dodo Gogo Rhinestone Headband Asian Woman Bedroom Tutorial', `[Type]: UGC Review
 [Structure]: 痛点切入 → 产品展示 → 佩戴过程 → 效果对比 → 真实推荐
 [Style]: 真实生活感，手机自拍视角，自然肤质，清新写实
 [Environment]: 阳光明媚的现代公寓卧室，背景有绿植、香薰和时尚杂志，充满生活气息
@@ -473,7 +458,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 快速的跳剪（Jump cuts）连接试戴前后的状态，强调视觉上的瞬间提升感。
 
 [Call to Action]:
-- 博主向镜头挥手告别，笑容极具亲和力，画面在最自信的角度定格。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_228_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_223_0109/video.mp4', 'Outdoor Emergency Kit Demo Realistic Style Sunny Camping', `[Video Type]: 产品演示
+- 博主向镜头挥手告别，笑容极具亲和力，画面在最自信的角度定格。`, true)"><video poster="sora2/Task_228_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_228_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_223_0109/video.mp4', 'Outdoor Emergency Kit Demo Realistic Style Sunny Camping', `[Video Type]: 产品演示
 [Style]: 电影写实风格，自然光线，真实的人物和场景互动。
 [Scene]: 阳光明媚的户外露营地，绿草如茵，远处可见帐篷和茂密的树林。
 [Cinematography]: 镜头从应急包的特写开始，缓慢拉远展示其便携性，然后切换至小姐姐在户外使用应急包的半身镜头，最后再次聚焦产品细节。
@@ -488,7 +473,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 镜头再次回到应急包的特写，聚焦其登山扣和反光条等细节，强调其功能性和实用性。
 
 [Background Sound]:
-- 鸟鸣、微风吹过树叶的自然环境音，配合轻快、舒缓的背景音乐。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_223_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_219_0109/video.mp4', 'Ugc Review African American Man Baseball Cap Streetwear Skatepark', `[Type]: UGC Review
+- 鸟鸣、微风吹过树叶的自然环境音，配合轻快、舒缓的背景音乐。`, true)"><video poster="sora2/Task_223_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_223_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_219_0109/video.mp4', 'Ugc Review African American Man Baseball Cap Streetwear Skatepark', `[Type]: UGC Review
 [Structure]: 街头开场 → 细节展示 → 佩戴演示 → 场景融合 → 酷炫结尾
 [Style]: 真实UGC风格，手持拍摄，街头摄影感，色彩饱和且充满活力
 [Environment]: 充满活力的城市街头，背景是色彩斑斓的涂鸦墙和充满运动气息的滑板公园，下午的阳光洒在地面上。
@@ -504,7 +489,7 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 他展示帽子后方的可调节扣带，迅速将帽子从正戴切换为反戴，对着镜头露出自信的微笑并帅气地颔首。
   subject: &quot;Fully adjustable, fits perfectly every time. Rock it however you want.&quot;
 - 他走向旁边的滑板，单脚踩在板上做出准备滑行的姿势，帽子在动感中保持稳固，完美融入滑板运动场景。
-  subject: &quot;Stays on even when I'm hitting the park. It’s a`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_219_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_217_0109/video.mp4', 'Earrings On Ear No Price', `这是耳环，戴在耳朵上的，不要显示价格`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_217_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_213_0109/video.mp4', 'Ugc Review Asian Woman Bathroom Cleaner Demo Results', `[Type]: UGC Review
+  subject: &quot;Stays on even when I'm hitting the park. It’s a`, true)"><video poster="sora2/Task_219_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_219_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_217_0109/video.mp4', 'Earrings On Ear No Price', `这是耳环，戴在耳朵上的，不要显示价格`, true)"><video poster="sora2/Task_217_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_217_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_213_0109/video.mp4', 'Ugc Review Asian Woman Bathroom Cleaner Demo Results', `[Type]: UGC Review
 [Structure]: 痛点展示 → 产品亮相 → 使用演示 → 效果对比 → 真实反馈与推荐
 [Style]: 纪实生活化，手机自拍感，色彩自然真实，略带居家暖色调
 [Environment]: 一个典型的亚洲家庭浴室，台盆边缘有黄色水垢，淋浴玻璃上有白色干涸水渍，整体环境整洁但有生活使用的痕迹。
@@ -535,8 +520,8 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
 - 快速切镜，在喷洒泡沫和擦拭干净之间使用快速跳剪，增强视觉对比冲击力。
 
 [Call to Action]:
-- 女性将产品举到镜头前晃了晃，最后给了一个自信满意的wink，画面在温馨的居家氛围中自然结束。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_213_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_211_0109/video.mp4', 'Remove Nike Logo', `去掉nike logo`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_211_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_208_0109/video.mp4', 'Diy Car Mod Red Tire Paint Sora Video 1', `Sora 2 High-Fidelity Prompt
-A high-energy, commercial-style cinematic video focusing on a DIY car modification. The scene begins with an extreme close-up of a hand using a vibrant red oil-based paint marker to meticulously fill in the embossed &quot;CONTINENTAL&quot; lettering on a black rubber tire sidewall. The texture of the rubber is hyper-realistic, showing fine grooves and slight road wear. As the red ink is applied, it exhibits a glossy, wet sheen before drying to a bold matte finish. The camera transitions through a series of rapid, rhythmic cuts: a low-angle tracking shot follows the wheel as it spins at high speed, the red lettering blurring into a continuous ruby streak; then, a close-up shows the tire splashing through a puddle, with water beads and mud droplets realistically repelling off the fresh red paint. The final shot is a handheld, low-angle &quot;hero&quot; pull-away from the rear of a grey modern SUV parked on a damp urban street, revealing the finished look of the red-accented tires which pop against the desaturated pavement. The lighting is a mix of natural overcast daylight and sharp studio-style reflections on the car’s rim, creating a crisp, high-contrast look with deep blacks and saturated reds.`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_208_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_203_0109/video.mp4', 'Laundry Bags Organize Protect Delicate Clothes Latina Mom', `[Type]: Problem–Solution
+- 女性将产品举到镜头前晃了晃，最后给了一个自信满意的wink，画面在温馨的居家氛围中自然结束。`, true)"><video poster="sora2/Task_213_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_213_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_211_0109/video.mp4', 'Remove Nike Logo', `去掉nike logo`, true)"><video poster="sora2/Task_211_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_211_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_208_0109/video.mp4', 'Diy Car Mod Red Tire Paint Sora Video 1', `Sora 2 High-Fidelity Prompt
+A high-energy, commercial-style cinematic video focusing on a DIY car modification. The scene begins with an extreme close-up of a hand using a vibrant red oil-based paint marker to meticulously fill in the embossed &quot;CONTINENTAL&quot; lettering on a black rubber tire sidewall. The texture of the rubber is hyper-realistic, showing fine grooves and slight road wear. As the red ink is applied, it exhibits a glossy, wet sheen before drying to a bold matte finish. The camera transitions through a series of rapid, rhythmic cuts: a low-angle tracking shot follows the wheel as it spins at high speed, the red lettering blurring into a continuous ruby streak; then, a close-up shows the tire splashing through a puddle, with water beads and mud droplets realistically repelling off the fresh red paint. The final shot is a handheld, low-angle &quot;hero&quot; pull-away from the rear of a grey modern SUV parked on a damp urban street, revealing the finished look of the red-accented tires which pop against the desaturated pavement. The lighting is a mix of natural overcast daylight and sharp studio-style reflections on the car’s rim, creating a crisp, high-contrast look with deep blacks and saturated reds.`, true)"><video poster="sora2/Task_208_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_208_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_203_0109/video.mp4', 'Laundry Bags Organize Protect Delicate Clothes Latina Mom', `[Type]: Problem–Solution
 [Structure]: 混乱的洗衣困扰 → 繁琐的手洗过程 → 引入洗衣袋套装 → 轻松分类洗涤 → 完美洗护结果与情绪释放
 [Style]: 居家写实主义，温馨且具有生活气息，高饱和度的家庭暖色调
 [Environment]: 一个典型的美国中产家庭洗衣房，背景中有架子上的洗涤剂，侧面有一台正在工作的滚筒洗衣机，空间略显拥挤但充满生活痕迹。
@@ -559,7 +544,7 @@ A high-energy, commercial-style cinematic video focusing on a DIY car modificati
 - 开头是衣物翻动的杂乱声和沉重的叹气声；中间转为轻快的白噪音和拉链滑动的清脆声；结尾是洗衣机悦耳的提示音、洗衣房内的环境音和轻快的背景音乐。
 
 [Transition / Editing]:
-- 使用快速切场（Jump cuts）展示分类过程，增强效率感；最后展示结果时使用`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_203_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_190_0109/video.mp4', 'Modern Commercial Outdoor Jacket Review Lambswool Lining', `**Style:** 现代商业广告风格，结合了纪实感的手持拍摄与高质感的电商产品展示。整体色调温暖且明亮，室内场景呈现出高端零售店的精致感，户外场景则充满都市活力。画面清晰度极高，具有平滑的色彩过渡和自然的肤色表现，模仿现代数码电影的质感。
+- 使用快速切场（Jump cuts）展示分类过程，增强效率感；最后展示结果时使用`, true)"><video poster="sora2/Task_203_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_203_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_190_0109/video.mp4', 'Modern Commercial Outdoor Jacket Review Lambswool Lining', `**Style:** 现代商业广告风格，结合了纪实感的手持拍摄与高质感的电商产品展示。整体色调温暖且明亮，室内场景呈现出高端零售店的精致感，户外场景则充满都市活力。画面清晰度极高，具有平滑的色彩过渡和自然的肤色表现，模仿现代数码电影的质感。
 
 **Cinematography:**
 Camera: 混合镜头，包括手持中景以增加亲和力、固定的特写镜头以及平滑的环绕轨道运动
@@ -617,7 +602,7 @@ Scene:
 - 他竖起大拇指，眼神坚定且友好。
 - 摄像机跟随他的步调进行平稳的追踪拍摄。
 Dialogue: &quot;如果你想为自己买一件，现在正值黑色星期五促销，非常便宜。我会把链接放在这里，快去看看吧。&quot;
-Background Sound: 都市环境音，远处的车流声，风吹过树叶的细微声。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_190_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_186_0109/video.mp4', 'Ugc Review Asian Girl Hot Water Bottle Cozy Bedroom', `[Type]: UGC Review
+Background Sound: 都市环境音，远处的车流声，风吹过树叶的细微声。`, true)"><video poster="sora2/Task_190_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_190_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_186_0109/video.mp4', 'Ugc Review Asian Girl Hot Water Bottle Cozy Bedroom', `[Type]: UGC Review
 [Structure]: 晨起寒冷痛点 → 展示产品外观与触感 → 实际使用反馈 → 居家生活化场景 → 总结推荐
 [Style]: 手持自拍感，高保真生活纪实，色彩温暖明亮。
 [Environment]: 充满生活气息的少女卧室，床上铺着浅色被褥，阳光从窗帘缝隙透入，空气中仿佛有细小的微尘在光影里跳动。
@@ -643,7 +628,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 - 模拟手机录屏的自然剪辑，快节奏跳剪，保持UGC视频的真实节奏感。
 
 [Call to Action]:
-- 女生对着镜头挥挥手，抱着热水袋往被子里缩了缩，画面在温馨的笑容中淡出。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_186_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_184_0109/video.mp4', 'Ugc Review Loshall Finder Asian Woman Cafe Lost Items', `[Type]: UGC Review
+- 女生对着镜头挥挥手，抱着热水袋往被子里缩了缩，画面在温馨的笑容中淡出。`, true)"><video poster="sora2/Task_186_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_186_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_184_0109/video.mp4', 'Ugc Review Loshall Finder Asian Woman Cafe Lost Items', `[Type]: UGC Review
 [Structure]: 痛点自述 → 产品展示 → 功能演示 → 核心背书 → 情感收尾
 [Style]: 真实生活感，手持自拍风格，高饱和度色彩，充满活力的亚洲都市风格
 [Environment]: 阳光明媚的午后咖啡馆，背景有模糊的街景和行人，桌面摆放着拿铁和时尚背包
@@ -675,7 +660,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 - 快速跳剪（Jump Cut），配合清脆的转场音效，保持视频的高能量节奏。
 
 [Call to Action]:
-- 博主将寻物器贴近镜头，最后展示一个灿烂的定格笑容，眼神充满推荐的诚意。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_184_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_183_0109/video.mp4', 'Ugc Review Mini Heater Asian Woman Cozy Home', `[Type]: UGC Review
+- 博主将寻物器贴近镜头，最后展示一个灿烂的定格笑容，眼神充满推荐的诚意。`, true)"><video poster="sora2/Task_184_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_184_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_183_0109/video.mp4', 'Ugc Review Mini Heater Asian Woman Cozy Home', `[Type]: UGC Review
 [Structure]: 开箱展示 → 功能操作 → 真实体感反馈 → 使用场景融合 → 满意推荐
 [Style]: 真实生活感，手机自拍视角，色彩温暖且具有亲和力
 [Environment]: 亚洲都市公寓书房，夜晚，窗外有微弱的城市灯火，室内布置温馨，书桌上有学习办公用品
@@ -700,7 +685,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 - 采用快速跳剪（Jump cuts）保持视频紧凑感，模拟短视频平台的剪辑风格。
 
 [Call to Action]:
-- 博主对着镜头点点头，做一个“冲它”的手势，随后镜头黑屏。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_183_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_182_0109/video.mp4', 'Ugc Review Zhigao Lint Remover Asian Woman Bedroom', `[Type]: UGC Review
+- 博主对着镜头点点头，做一个“冲它”的手势，随后镜头黑屏。`, true)"><video poster="sora2/Task_183_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_183_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_182_0109/video.mp4', 'Ugc Review Zhigao Lint Remover Asian Woman Bedroom', `[Type]: UGC Review
 [Structure]: 痛点展示 → 产品亮相与充电细节 → 实际使用效果 → 清洁维护展示 → 前后对比与总结
 [Style]: 真实的生活记录感，手机拍摄质感，画面略带自然晃动，色调温暖柔和。
 [Environment]: 一个充满生活气息的现代中式卧室，阳光从侧面窗户洒进，背景有整洁的床铺和木质家具。
@@ -732,7 +717,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 - 快速跳剪，保持视频的紧凑感，在修剪前后对比处使用无缝衔接。
 
 [Call to Action]:
-- 她对着镜头挥挥手，比了一个“赞”的手势，眼神真诚且充满推荐欲。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_182_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_178_0109/video.mp4', 'Ugc Review Cross Bracelet Cafe Vlog Faith Inspiration', `[Type]: UGC Review
+- 她对着镜头挥挥手，比了一个“赞”的手势，眼神真诚且充满推荐欲。`, true)"><video poster="sora2/Task_182_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_182_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_178_0109/video.mp4', 'Ugc Review Cross Bracelet Cafe Vlog Faith Inspiration', `[Type]: UGC Review
 [Structure]: 咖啡馆自然开场 → 手链细节近景展示与经文朗读 → 材质与佩戴体验分享 → 情感共鸣与精神意义 → 微笑闭幕与行动号召。
 [Style]: 真实UGC风格，手持拍摄，手机自拍感，色彩温暖且自然。
 [Environment]: 阳光明媚的咖啡馆角落，背景可见模糊的绿植、书架和木质装潢，充满生活气息。
@@ -759,7 +744,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 - 简单的跳剪（Jump cuts），模仿短视频平台的剪辑节奏，保持真实感。
 
 [Call to Action]:
-- 她向镜头挥手告别，手链在阳光下划过一道柔和的光影，最后以一个充满力量的微笑结束。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_178_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_177_0109/video.mp4', 'Silicone Earbuds Product Features', `这是一款硅胶耳塞，请根据图片展示产品卖点，耳塞请勿描述降噪、隔音、护耳等个人防护类功能`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_177_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_176_0109/video.mp4', 'Ugc Review Hair Styler Tutorial Asian Girl Vlog', `[Type]: UGC Review
+- 她向镜头挥手告别，手链在阳光下划过一道柔和的光影，最后以一个充满力量的微笑结束。`, true)"><video poster="sora2/Task_178_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_178_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_177_0109/video.mp4', 'Silicone Earbuds Product Features', `这是一款硅胶耳塞，请根据图片展示产品卖点，耳塞请勿描述降噪、隔音、护耳等个人防护类功能`, true)"><video poster="sora2/Task_177_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_177_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_176_0109/video.mp4', 'Ugc Review Hair Styler Tutorial Asian Girl Vlog', `[Type]: UGC Review
 [Structure]: 痛点引入 → 产品开箱展示 → 卷直双重演示 → 效果对比与持妆反馈 → 情感共鸣与推荐
 [Style]: 生活方式 Vlogging，高能活力，具有电影感的真实性，色彩明亮清新
 [Environment]: 阳光明媚的创意工作室，背景有错落有致的绿植、艺术海报，光线通透且富有格调
@@ -782,7 +767,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 - 采用快速剪辑手法，配合卡点节奏。在功能切换处使用快速推拉镜头或遮罩转场，增强视觉张力。
 
 [Call to Action]:
-- 女生手持产品做出一个“嘘”的推荐手势，画面定格在她充满自信的笑容和完美的发型上。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_176_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_174_0109/video.mp4', 'Modern Commercial Outdoor Jacket Handheld Urban Promo', `**Style:** 现代商业广告风格，结合了纪实感的手持拍摄与高质感的电商产品展示。整体色调温暖且明亮，室内场景呈现出高端零售店的精致感，户外场景则充满都市活力。画面清晰度极高，具有平滑的色彩过渡和自然的肤色表现，模仿现代数码电影的质感。
+- 女生手持产品做出一个“嘘”的推荐手势，画面定格在她充满自信的笑容和完美的发型上。`, true)"><video poster="sora2/Task_176_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_176_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_174_0109/video.mp4', 'Modern Commercial Outdoor Jacket Handheld Urban Promo', `**Style:** 现代商业广告风格，结合了纪实感的手持拍摄与高质感的电商产品展示。整体色调温暖且明亮，室内场景呈现出高端零售店的精致感，户外场景则充满都市活力。画面清晰度极高，具有平滑的色彩过渡和自然的肤色表现，模仿现代数码电影的质感。
 
 **Cinematography:**
 Camera: 混合镜头，包括手持中景以增加亲和力、固定的特写镜头以及平滑的环绕轨道运动
@@ -826,7 +811,7 @@ Scene:
 - 他竖起大拇指，眼神坚定且友好。
 - 摄像机跟随他的步调进行平稳的追踪拍摄。
 Dialogue: &quot;如果你想为自己买一件，现在正值黑色星期五促销，非常便宜。我会把链接放在这里，快去看看吧。&quot;
-Background Sound: 都市环境音，远处的车流声，风吹过树叶的细微声。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_174_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_168_0109/video.mp4', 'Japanese Tatami Mat Room Makeover Tiles Flooring', `0–3秒｜全新开头（反差吸引）
+Background Sound: 都市环境音，远处的车流声，风吹过树叶的细微声。`, true)"><video poster="sora2/Task_174_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_174_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_168_0109/video.mp4', 'Japanese Tatami Mat Room Makeover Tiles Flooring', `0–3秒｜全新开头（反差吸引）
 
 画面：
 镜头从一块空地面开始
@@ -883,7 +868,7 @@ Background Sound: 都市环境音，远处的车流声，风吹过树叶的细�
 字幕（日语）：
 「冬はひんやりしにくく
 夏はさらっと
-毎日の暮らしにちょうどいい床」`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_168_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_166_0109/video.mp4', 'Man Smoking Balaclava Snowy Street Tiktok Ad', `**Shots**
+毎日の暮らしにちょうどいい床」`, true)"><video poster="sora2/Task_168_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_168_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_166_0109/video.mp4', 'Man Smoking Balaclava Snowy Street Tiktok Ad', `**Shots**
 
 Shot 1
 Duration: 0.0sec - 4.5sec
@@ -921,11 +906,11 @@ Scene:
 - 拍摄者的手再次出现，竖起大拇指表示赞赏。
 - 画面最后保持在男子戴着面罩的特写，随后切入TikTok品牌标志。
 Dialogue: &quot;它有编织网，零雾气，视野清晰。&quot; 拍摄者惊叹：&quot;太酷了！在哪能买到？&quot; 男子回答：&quot;TikTok商店现在有活动，链接就在下面。&quot;
-Background Sound: 呼气时的气流声`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_166_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_158_0109/video.mp4', 'Tiktok Shop Girl Testing Nico Dog Walking Paw Companion', `Haz un video para tiktok shop de una chica probando el perro Nico que anda, da la patita y hace mucha compañía`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_158_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_152_0109/video.mp4', 'Tiktok Malaysia Luxury Diamond Earrings Asian Model', `我一个Tiktok马来西亚区商家、这对美式轻奢风钻石耳环，帮我生成一条美式轻奢风格购买的视频，模特要气质高贵的亚洲女性，前三秒有吸引力，有刚需性！有卖点，抓住顾客心，视频要求高清质感，有大牌制作的效果，视频要有视觉冲击，对脸视角，视频15秒以内，11个镜头，切换运镜，每个镜头链接丝滑，让顾客有一直看下去欲望。有试戴效果，适合场景上班，逛街，聚会，拍照，旅游，突出产品细节，特写镜头，产品要有星光镜的闪亮效果不要太浮夸、视频尾部加触单话术。整体视频配马来西亚语旁白和视频下方文字解说，以及给视频配一首高级感以及适合马来西亚地区的吻合视频的卡点音乐`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_152_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_150_0109/video.mp4', 'Tiktok Shop Girl Testing Walking Dog Toy', `Haz un video para tiktok shop de una chica probando el perro dela imagen que anda, da la patita y hace mucha compañía`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_150_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_144_0109/video.mp4', 'Chanel Like Bag Under 10 Tiktok Shop Viral Video', `Bolso parecido Chanel por menos de 10€,  compralo ya en la Tik Tok Shop. haz video que se haga viral`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_144_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_129_0109/video.mp4', 'Translate Video Text To English 2', `把视频中的所以文字改成英文的`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_129_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_125_0109/video.mp4', 'Seamless Yoga Set Comfort Stretch Details', `0-2s: Close-up of a finger tracing the bra’s seamless armhole (UK-style home yoga mat backdrop, potted fern nearby) – zero stitching visible. (Voiceover: &quot;Seamless = total comfort.&quot;)
+Background Sound: 呼气时的气流声`, true)"><video poster="sora2/Task_166_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_166_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_158_0109/video.mp4', 'Tiktok Shop Girl Testing Nico Dog Walking Paw Companion', `Haz un video para tiktok shop de una chica probando el perro Nico que anda, da la patita y hace mucha compañía`, true)"><video poster="sora2/Task_158_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_158_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_152_0109/video.mp4', 'Tiktok Malaysia Luxury Diamond Earrings Asian Model', `我一个Tiktok马来西亚区商家、这对美式轻奢风钻石耳环，帮我生成一条美式轻奢风格购买的视频，模特要气质高贵的亚洲女性，前三秒有吸引力，有刚需性！有卖点，抓住顾客心，视频要求高清质感，有大牌制作的效果，视频要有视觉冲击，对脸视角，视频15秒以内，11个镜头，切换运镜，每个镜头链接丝滑，让顾客有一直看下去欲望。有试戴效果，适合场景上班，逛街，聚会，拍照，旅游，突出产品细节，特写镜头，产品要有星光镜的闪亮效果不要太浮夸、视频尾部加触单话术。整体视频配马来西亚语旁白和视频下方文字解说，以及给视频配一首高级感以及适合马来西亚地区的吻合视频的卡点音乐`, true)"><video poster="sora2/Task_152_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_152_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_150_0109/video.mp4', 'Tiktok Shop Girl Testing Walking Dog Toy', `Haz un video para tiktok shop de una chica probando el perro dela imagen que anda, da la patita y hace mucha compañía`, true)"><video poster="sora2/Task_150_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_150_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_144_0109/video.mp4', 'Chanel Like Bag Under 10 Tiktok Shop Viral Video', `Bolso parecido Chanel por menos de 10€,  compralo ya en la Tik Tok Shop. haz video que se haga viral`, true)"><video poster="sora2/Task_144_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_144_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_129_0109/video.mp4', 'Translate Video Text To English 2', `把视频中的所以文字改成英文的`, true)"><video poster="sora2/Task_129_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_129_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_125_0109/video.mp4', 'Seamless Yoga Set Comfort Stretch Details', `0-2s: Close-up of a finger tracing the bra’s seamless armhole (UK-style home yoga mat backdrop, potted fern nearby) – zero stitching visible. (Voiceover: &quot;Seamless = total comfort.&quot;)
 2-4s: Macro shot of the shorts’ fabric – finger presses gently, fabric compresses then bounces back (soft natural light). (No voiceover)
 4-6s: First-person hand stretches the bra’s shoulder strap to full length, then releases – instant rebound (neutral white background). (Voiceover: &quot;Stretches & stays put.&quot;)
 6-8s: Side shot of the set laid flat on a Manchester park bench – focus on the smooth waistband and fabric drape (background: green grass + distant lamp post). (No voiceover)
-8-10s: Close-up of the matte logo on the bra – finger brushes the print to show its flat, non-irritating finish. (Voiceover: &quot;Love these subtle details!&quot;)`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_125_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_112_0109/video.mp4', 'Ugc Airfryer Silicone Basket Review Easy Cleaning', `Typ: UGC Review
+8-10s: Close-up of the matte logo on the bra – finger brushes the print to show its flat, non-irritating finish. (Voiceover: &quot;Love these subtle details!&quot;)`, true)"><video poster="sora2/Task_125_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_125_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_112_0109/video.mp4', 'Ugc Airfryer Silicone Basket Review Easy Cleaning', `Typ: UGC Review
 Struktur: Schmerzpunkt-Darstellung → Lösungseinführung → Nutzungsvorführung → Effektvergleich → Reinigungsvorschau & Zusammenfassung
 Stil: Authentischer UGC-Stil, Handheld-Aufnahme, alltägliche Textur, lebendige Farben mit modernem Urban-Feeling
 Umgebung: Kompakte, moderne Stadtwohnungsküche mit matt-schwarzen Fitnessgeräten und frischen Bio-Gemüsen im Hintergrund – voller Lebensatmosphäre
@@ -963,7 +948,7 @@ Bild:
 Frau steht am Waschbecken, spült den Silikonkorb mit Wasser ab – Fettflecken laufen sofort ab, Korb ist in Sekunden sauber
 Sie hält den sauberen Korb hoch, strahlt und streicht über die glatte Oberfläche
 Dialog (erleichtert, überzeugt):
-Frau: &quot;Reinigen? Ein Kinderspiel! Einfach abspülen – fertig! Wenn ihr einen Airfryer habt, BRAUCHT ihr DIESEN Korb unbedingt!&quot; (Nickt heftig, Grinsen nicht von dem Gesicht)`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_112_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_103_0109/video.mp4', 'Ugc Review Black Badge Fleece Jacket Dtla Streetwear', `[Type]: UGC Review
+Frau: &quot;Reinigen? Ein Kinderspiel! Einfach abspülen – fertig! Wenn ihr einen Airfryer habt, BRAUCHT ihr DIESEN Korb unbedingt!&quot; (Nickt heftig, Grinsen nicht von dem Gesicht)`, true)"><video poster="sora2/Task_112_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_112_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_103_0109/video.mp4', 'Ugc Review Black Badge Fleece Jacket Dtla Streetwear', `[Type]: UGC Review
 [Structure]: 街头登场 → 整体穿搭展示 → 细节近景拆解 → 功能性演示 → 态度收尾
 [Style]: 街头纪实感，高饱和度色彩，手持拍摄的轻微晃动营造真实感，洛杉矶都市潮流风。
 [Environment]: 洛杉矶市中心（DTLA）街头，背景是色彩斑斓的艺术涂鸦墙，地面有斑驳的阳光阴影，捕捉到路人经过的自然动态。
@@ -989,9 +974,9 @@ Frau: &quot;Reinigen? Ein Kinderspiel! Einfach abspülen – fertig! Wenn ihr ei
 - 快速跳剪（Jump cuts）配合音乐鼓点，细节处伴有轻微的变焦放大，以及模仿真实拍摄的快速推拉镜头。
 
 [Call to Action]:
-- 博主指向镜头下方，做一个“点击”的动作，随后酷酷地走出画面，留下涂鸦墙背景，镜头跟随他的背影移动。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_103_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_102_0109/video.mp4', 'Gray Oversized T Shirt Cat Soda Dun Dun', `この商品はグレー系のオーバーサイズ T シャツで、可愛らしいデザインが最大の特徴です。正面には、「DUN DUN」という擬音語と、ソーダ瓶（ラベルに「加新氷」の文字がプリント）に顔を埋めて飲んでいる三毛猫のイラストが大きくプリントされており、くだけた可愛らしさが満載です。
+- 博主指向镜头下方，做一个“点击”的动作，随后酷酷地走出画面，留下涂鸦墙背景，镜头跟随他的背影移动。`, true)"><video poster="sora2/Task_103_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_103_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_102_0109/video.mp4', 'Gray Oversized T Shirt Cat Soda Dun Dun', `この商品はグレー系のオーバーサイズ T シャツで、可愛らしいデザインが最大の特徴です。正面には、「DUN DUN」という擬音語と、ソーダ瓶（ラベルに「加新氷」の文字がプリント）に顔を埋めて飲んでいる三毛猫のイラストが大きくプリントされており、くだけた可愛らしさが満載です。
 素材は肌触りの柔らかい綿混生地を使用し、オーバーサイズのシルエットで身体に優しく包み込むため、日常のくつろぎ時間やカジュアルな外出に最適です。落ち着いたグレーのベースカラーなので、デニムやスウェットパンツなどどんな下着とも相性が良く、単品でもインナーとしても活用しやすい実用的なアイテムです。
-特に猫好きや可愛らしいグラフィックが好きな方に人気を集めるでしょう。着心地の良さと個性的なデザインを兼ね備えた、日常のコーディネートに彩りを添える T シャツです制作一个不低于15秒的介绍视频`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_102_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_098_0109/video.mp4', 'German Woman Airfryer Cleaning Nightmare Silicone Basket Solution', `总时长：15s（黄金带货时长，节奏紧凑无冗余）
+特に猫好きや可愛らしいグラフィックが好きな方に人気を集めるでしょう。着心地の良さと個性的なデザインを兼ね備えた、日常のコーディネートに彩りを添える T シャツです制作一个不低于15秒的介绍视频`, true)"><video poster="sora2/Task_102_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_102_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_098_0109/video.mp4', 'German Woman Airfryer Cleaning Nightmare Silicone Basket Solution', `总时长：15s（黄金带货时长，节奏紧凑无冗余）
 0-3s：痛点爆发（优化版）
 核心场景聚焦 “清洁崩溃瞬间”，画面快节奏切换：0-0.8s 先给炸锅内壁油垢特写，网状油污清晰可见且拉丝，一只海绵用力擦拭却瞬间粘住，油污紧紧附着在海绵上；0.8-1.5s 镜头快速拉远，30 岁德国女性入镜，双手紧握海绵狠狠捶打炸锅边缘，眉头紧锁，眼眶泛红，满脸不耐烦；1.5-2.2s 她侧身转向镜头，另一只手烦躁地抓扯头发，嘴角下撇，面部肌肉紧绷，随后将海绵狠狠摔在台面上；2.2-3s 给到她泛红的眼眶和颤抖嘴唇的特写，镜头轻微晃动，背景虚化突出人物激动情绪。口播采用嘶吼式抱怨，急促无停顿：“Nein nein nein! Jeden Tag das Gleiche – Fett, Kleber, unmöglich zu putzen! Ich verschwende stundenlang hier, und es bleibt immer schmutzig! Mein Airfryer ist ein Albtraum, ich hasse es!” 背景音从快速擦拭的 “沙沙” 声，过渡到海绵摔台面的 “啪” 声，再叠加人物急促的呼吸声和低音量、快节奏的焦虑感电子音效。字幕重点突出德语 “Fett! Kleber! Unmöglich zu putzen!” 和中文 “油污！粘腻！根本擦不干净！”。
 3-6s：产品救场 + 快速演示
@@ -1003,7 +988,7 @@ Frau: &quot;Reinigen? Ein Kinderspiel! Einfach abspülen – fertig! Wenn ihr ei
 13-15s：购买引导 + 行动指令
 13-14s 给到硅胶篮的产品特写，女性手指屏幕，眼神急切，传递紧迫感；14-15s 屏幕下方弹出购买链接按钮，女性比出 “冲” 的手势，笑容夸张有感染力，催促观众行动。口播采用催促式号召，语气急促带紧迫感：“Jetzt sichern – endlich Frieden mit Ihrem Airfryer! Klicken Sie unten, bevor es ausverkauft ist!” 背景音节奏加快，叠加 “倒计时” 滴答声，最后以购买按钮的 “点击” 音效收尾。字幕突出德语 “Jetzt kaufen → Sonderangebot!” 和中文 “立即购买→限时特惠！”。
 核心优化衔接说明
-痛点开头无缝衔接：3 秒情绪爆发后，通过 “镜头切产品 + 语气转折” 快速拉回观众注意力，避免情绪断层；2. 人物情绪连贯：从 0-3s 的愤怒崩溃，到 3-6s 的惊喜获救，再到 6-15s 的自信安利，情绪曲线符合用户心理变化，增强代入感；3. 口播节奏匹配：痛点段密集急促，产品段放缓清晰，引导段再次加快，贴合短视频 “抓注意力 - 传信息 - 促行动” 的节奏需求；4. 画面呼应：每段都有 “人物 + 产品” 同框，避免纯产品展示，通过女性的操作、演示和使用场景，让观众更易共情。`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_098_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_096_0109/video.mp4', 'Foreign Woman Explains Stainless Steel Electric Kettle Spanish Subtitles 1767892422407', `Una mujer extranjera explicó en español y añadió algunos subtítulos al vídeo. Este hervidor eléctrico de acero inoxidable, con una capacidad de 2L, admite el apagado automático, la protección contra quemaduras en seco y una rápida ebullición de agua.`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_096_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_094_0109/video.mp4', 'Ugc Review Southeast Asian Woman 5 Layer Storage Trolley', `[Type]: UGC Review
+痛点开头无缝衔接：3 秒情绪爆发后，通过 “镜头切产品 + 语气转折” 快速拉回观众注意力，避免情绪断层；2. 人物情绪连贯：从 0-3s 的愤怒崩溃，到 3-6s 的惊喜获救，再到 6-15s 的自信安利，情绪曲线符合用户心理变化，增强代入感；3. 口播节奏匹配：痛点段密集急促，产品段放缓清晰，引导段再次加快，贴合短视频 “抓注意力 - 传信息 - 促行动” 的节奏需求；4. 画面呼应：每段都有 “人物 + 产品” 同框，避免纯产品展示，通过女性的操作、演示和使用场景，让观众更易共情。`, true)"><video poster="sora2/Task_098_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_098_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_096_0109/video.mp4', 'Foreign Woman Explains Stainless Steel Electric Kettle Spanish Subtitles 1767892422407', `Una mujer extranjera explicó en español y añadió algunos subtítulos al vídeo. Este hervidor eléctrico de acero inoxidable, con una capacidad de 2L, admite el apagado automático, la protección contra quemaduras en seco y una rápida ebullición de agua.`, true)"><video poster="sora2/Task_096_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_096_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_094_0109/video.mp4', 'Ugc Review Southeast Asian Woman 5 Layer Storage Trolley', `[Type]: UGC Review
 [Structure]: intro hook → personal use moment → reaction or opinion → product in hand → call-to-action.
 [Style]: Real-life aesthetic, handheld smartphone POV, warm and authentic, slightly shaky camera for a genuine feel.
 [Environment]: Ruang tamu yang selesa di Asia Tenggara, dengan sofa fabrik kelabu, pokok hiasan hijau di tepi, dan cahaya matahari pagi yang lembut masuk melalui tingkap.
@@ -1029,11 +1014,11 @@ Frau: &quot;Reinigen? Ein Kinderspiel! Einfach abspülen – fertig! Wenn ihr ei
 - Potongan pantas (jump cuts) semasa proses pemasangan dan penyusunan barang untuk mengekalkan momentum penonton.
 
 [Call to Action]:
-- Wanita tersebut memegang bingkai troli sambil tersenyum manis ke arah kamera dan mengangguk tanda cadangan yang ikhlas.`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_094_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_092_0109/video.mp4', 'Malaysian Woman Shows Phone Case Samsung Review Soft Case Camera Protection', `禁止重新设计，禁止添加任何元素
+- Wanita tersebut memegang bingkai troli sambil tersenyum manis ke arah kamera dan mengangguk tanda cadangan yang ikhlas.`, true)"><video poster="sora2/Task_094_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_094_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_092_0109/video.mp4', 'Malaysian Woman Shows Phone Case Samsung Review Soft Case Camera Protection', `禁止重新设计，禁止添加任何元素
 禁止自动美化、重新设计、补细节
 不同镜头不允许自由想象，也不允许自动优化产品造型。
 要保持产品一致
-&quot;### 风格 这是一段生活化的、直接面向镜头的商品评测风格视频，采用清晰的数字拍摄手法。整体视觉美学呈现出明亮、欢快的氛围，带有温暖的色调和柔和的动感。色彩鲜艳，略显饱和，营造出一种亲切的消费品广告感。 ### 场景描述 (0s-15s): 一名留着深色长发的25岁左右的东南亚女子，在节庆气氛浓厚的红色布景前，热情洋溢地向镜头展示一款戴着手机壳的手机背面。她面带微笑，手持产品，仿佛正在向观众介绍这款戴着手机壳的手机背面。背景是带有白色、绿色和橙色节日主题装饰的红色布料，营造出温馨愉悦的氛围。 ### 摄影 - **镜头:** 中景特写，静态拍摄，固定在与人物视线平齐的水平。 - **镜头:** 手机标准镜头，中等景深，确保手机壳和人物清晰可见，背景略微柔和。 - **灯光:** 柔和均匀的正面照明，可能来自环形灯或柔和的窗户光，营造明亮诱人的效果。背景灯光温暖，与节日装饰相得益彰。 - **情绪:** 信息性、引人入胜、友好、宣传性。 ### 动作 - 女子将戴着手机壳的手机背面举起，面带微笑地展示给镜头。 - 她用手势指向戴着手机壳的手机的背面。 - 她将手机壳略微转动，展示其柔软的材质。 - 她用手指触摸戴着手机壳的手机背面的细节，并指明摄像头区域的保护。 - 她将手机壳侧面朝向镜头，展示其边缘设计。 - 她再次展示戴着手机壳的手机的背面，确认其。 ### 要求马来西亚语对话 “各位Samsung用户，这款是软壳。细节是这样的，侧边有很多可爱的图案看，就是这样。我们的摄像头也受到了保护，看，这里有覆盖。它有摄像头镜头保护。我们有8种颜色可选，这款是的绿色。” ### 背景音 安静的室内环境音，可能带有轻微的房间嗡嗡声。&quot; 禁止重新设计产品，禁止产品添加任何元素`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_092_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_072_0109/video.mp4', 'Smoking Balaclava Tiktok Style Winter Short Video', `**Style:** 现代社交媒体短视频风格，采用手机手持拍摄的写实主义。画面具有鲜明的冬季户外感，色彩自然，高光处呈现明亮的日光感。纹理清晰，滑雪面罩的织物纤维、护目镜表面的反射以及浓郁的白色蒸汽细节分明。整体视觉节奏快速且具有生活化气息，模仿TikTok等短视频平台的随机抓拍美学。
+&quot;### 风格 这是一段生活化的、直接面向镜头的商品评测风格视频，采用清晰的数字拍摄手法。整体视觉美学呈现出明亮、欢快的氛围，带有温暖的色调和柔和的动感。色彩鲜艳，略显饱和，营造出一种亲切的消费品广告感。 ### 场景描述 (0s-15s): 一名留着深色长发的25岁左右的东南亚女子，在节庆气氛浓厚的红色布景前，热情洋溢地向镜头展示一款戴着手机壳的手机背面。她面带微笑，手持产品，仿佛正在向观众介绍这款戴着手机壳的手机背面。背景是带有白色、绿色和橙色节日主题装饰的红色布料，营造出温馨愉悦的氛围。 ### 摄影 - **镜头:** 中景特写，静态拍摄，固定在与人物视线平齐的水平。 - **镜头:** 手机标准镜头，中等景深，确保手机壳和人物清晰可见，背景略微柔和。 - **灯光:** 柔和均匀的正面照明，可能来自环形灯或柔和的窗户光，营造明亮诱人的效果。背景灯光温暖，与节日装饰相得益彰。 - **情绪:** 信息性、引人入胜、友好、宣传性。 ### 动作 - 女子将戴着手机壳的手机背面举起，面带微笑地展示给镜头。 - 她用手势指向戴着手机壳的手机的背面。 - 她将手机壳略微转动，展示其柔软的材质。 - 她用手指触摸戴着手机壳的手机背面的细节，并指明摄像头区域的保护。 - 她将手机壳侧面朝向镜头，展示其边缘设计。 - 她再次展示戴着手机壳的手机的背面，确认其。 ### 要求马来西亚语对话 “各位Samsung用户，这款是软壳。细节是这样的，侧边有很多可爱的图案看，就是这样。我们的摄像头也受到了保护，看，这里有覆盖。它有摄像头镜头保护。我们有8种颜色可选，这款是的绿色。” ### 背景音 安静的室内环境音，可能带有轻微的房间嗡嗡声。&quot; 禁止重新设计产品，禁止产品添加任何元素`, true)"><video poster="sora2/Task_092_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_092_0109/video.mp4"></video></div><div class="video-card" onclick="openModal('sora2/Task_072_0109/video.mp4', 'Smoking Balaclava Tiktok Style Winter Short Video', `**Style:** 现代社交媒体短视频风格，采用手机手持拍摄的写实主义。画面具有鲜明的冬季户外感，色彩自然，高光处呈现明亮的日光感。纹理清晰，滑雪面罩的织物纤维、护目镜表面的反射以及浓郁的白色蒸汽细节分明。整体视觉节奏快速且具有生活化气息，模仿TikTok等短视频平台的随机抓拍美学。
 
 **Cinematography:**
 Camera: 手持跟拍，带有自然的晃动感，从中景切换至中景特写
@@ -1079,7 +1064,7 @@ Scene:
 - 棕色手套再次出现，竖起大拇指表示赞赏。
 - 画面最后保持在男子戴着面罩的特写，随后切入TikTok品牌标志。
 Dialogue: &quot;它有呼吸阀，零雾气，视野清晰。&quot; 拍摄者惊叹：&quot;太酷了！在哪能买到？&quot; 男子回答：&quot;TikTok商店现在有活动，链接就在下面。&quot;
-Background Sound: 呼气时的气流声`, true)"><video preload="none" style="background:#000;"><source src="sora2/Task_072_0109/video.mp4"></video></div><div class="more-trigger" onclick="toggleQR(true)">—— 点击获取更多案例 ——</div></div></div>
+Background Sound: 呼气时的气流声`, true)"><video poster="sora2/Task_072_0109/poster.jpg" preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="sora2/Task_072_0109/video.mp4"></video></div><div class="more-trigger" onclick="toggleQR(true)">—— 点击获取更多案例 ——</div></div></div>
     <div id="course" class="tab-content"><div style="max-width:1000px; margin:0 auto;"><img src="课程图/55节系统课程-长图（魏）.png" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.05);"></div></div>
 
     <div id="videoModal" class="modal" onclick="closeModal()">
@@ -1087,8 +1072,8 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
             <div class="modal-left" id="modalMedia"></div>
             <div class="modal-right">
                 <h2 id="mTitle" style="font-size:28px;"></h2>
-                <div style="color:var(--blue); font-weight:700; margin:20px 0 10px 0;">解析与提示词:</div>
-                <div id="mPrompt" style="background:#f5f5f7; padding:25px; border-radius:20px; white-space:pre-wrap;"></div>
+                <div style="color:var(--blue); font-weight:700; margin:25px 0 10px 0;">解析与提示词:</div>
+                <div id="mPrompt" style="background:#f5f5f7; padding:25px; border-radius:20px; white-space:pre-wrap; line-height:1.6;"></div>
             </div>
         </div>
     </div>
@@ -1106,13 +1091,13 @@ Background Sound: 呼气时的气流声`, true)"><video preload="none" style="ba
             target.style.display = 'block'; setTimeout(() => target.style.opacity = '1', 50);
             el.classList.add('active');
         }
-        // 商用级优化：点击后加载
+        // 商用级：点击后按需加载流
         function openModal(url, title, prompt, isVideo) {
             const container = document.getElementById('modalMedia');
             if(isVideo) {
-                container.innerHTML = `<video src="${url}" style="width:100%;height:100%;object-fit:contain;" controls autoplay></video>`;
+                container.innerHTML = `<video src="${url}" style="max-width:100%; max-height:100%;" controls autoplay></video>`;
             } else {
-                container.innerHTML = `<img src="${url}" style="width:100%;height:100%;object-fit:contain;">`;
+                container.innerHTML = `<img src="${url}" style="max-width:100%; max-height:100%;">`;
             }
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mPrompt').innerText = prompt;
