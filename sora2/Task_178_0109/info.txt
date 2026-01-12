@@ -1,0 +1,31 @@
+标题: Ugc Review Cross Bracelet Cafe Vlog Faith Inspiration
+
+提示词:
+[Type]: UGC Review
+[Structure]: 咖啡馆自然开场 → 手链细节近景展示与经文朗读 → 材质与佩戴体验分享 → 情感共鸣与精神意义 → 微笑闭幕与行动号召。
+[Style]: 真实UGC风格，手持拍摄，手机自拍感，色彩温暖且自然。
+[Environment]: 阳光明媚的咖啡馆角落，背景可见模糊的绿植、书架和木质装潢，充满生活气息。
+[Tone & Pacing]: 亲切、真诚、充满启发性；节奏舒缓自然，像是在和朋友面对面聊天。
+[Camera]: 手机前置摄像头自拍视角，配合手持近距离推焦（Macro focus），有轻微的自然晃动。
+[Lighting]: 柔和的侧向自然光，金发边缘有微光闪烁，营造温馨的午后氛围。
+
+[Actions]:
+- 一位20多岁的阳光白人女性坐在咖啡桌旁，手里拿着咖啡杯，手腕上自然露出银色的十字架不锈钢手链。她对着镜头灿烂一笑，开始分享。
+  subject: "Hey guys, I just wanted to share something really special that's been keeping me grounded lately."
+- 她将手腕靠近镜头，相机切换到微距感，清晰展示手链上的十字架设计和细腻的经文雕刻。她用指尖轻轻抚摸雕刻文字。
+  subject: "It’s this cross bracelet. Look at the beautiful scripture engraved here. 'I can do all things through Christ who strengthens me.' It’s a constant reminder of my faith."
+- 她调整了一下表带式的网带设计，展示其金属光泽和佩戴的贴合感，脸上露出满意的神情。
+  subject: "The stainless steel feels so smooth on my skin, and this mesh band is actually super stylish. It doesn't catch on my clothes at all."
+- 她放下咖啡杯，眼神变得温柔且坚定，分享手链带给她的情绪价值。
+  subject: "In the middle of a busy day, I just look down at my wrist and feel this instant sense of peace and strength."
+- 她再次举起手腕，让手链在阳光下闪烁，对着镜头露出鼓励的微笑。
+  subject: "If you're looking for a little daily inspiration to carry with you, this is definitely it."
+
+[Background Sound]:
+- 咖啡馆轻微的背景杂音（杯子碰撞声、低声交谈、轻柔的爵士乐），自然的房间环境音。
+
+[Transition / Editing]:
+- 简单的跳剪（Jump cuts），模仿短视频平台的剪辑节奏，保持真实感。
+
+[Call to Action]:
+- 她向镜头挥手告别，手链在阳光下划过一道柔和的光影，最后以一个充满力量的微笑结束。

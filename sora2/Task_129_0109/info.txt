@@ -1,0 +1,4 @@
+标题: Translate Video Text To English 2
+
+提示词:
+把视频中的所以文字改成英文的

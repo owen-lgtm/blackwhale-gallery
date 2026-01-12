@@ -1,0 +1,20 @@
+标题: Ugc Review African American Man Baseball Cap Streetwear Skatepark
+
+提示词:
+[Type]: UGC Review
+[Structure]: 街头开场 → 细节展示 → 佩戴演示 → 场景融合 → 酷炫结尾
+[Style]: 真实UGC风格，手持拍摄，街头摄影感，色彩饱和且充满活力
+[Environment]: 充满活力的城市街头，背景是色彩斑斓的涂鸦墙和充满运动气息的滑板公园，下午的阳光洒在地面上。
+[Tone & Pacing]: 自信、随性、快节奏的TikTok剪辑风格，充满地道的街头潮流气息。
+[Camera]: 手持镜头，伴随轻微的自然晃动，多采用中景和近写特写，视角略低以增强角色的气场。
+[Lighting]: 自然的下午阳光，侧光勾勒出人物轮廓，光影对比增强了都市的粗犷质感。
+
+[Actions]:
+- 一位25岁的非裔美国男性，身穿宽松的街头服饰，戴着印有趣味图案的棒球帽，酷酷地走进画面，一边走一边用手轻抚帽檐，展示其挺括的版型。
+  subject: "Yo, you guys gotta check this new drop. The design is straight fire."
+- 他停在涂鸦墙前，将头凑近镜头，展示帽子上精致的趣味印花，并用手指轻轻弹击侧面的透气网眼材质，体现其轻盈与舒适感。
+  subject: "Look at the detail on this print. And the mesh? Super breathable for the heat."
+- 他展示帽子后方的可调节扣带，迅速将帽子从正戴切换为反戴，对着镜头露出自信的微笑并帅气地颔首。
+  subject: "Fully adjustable, fits perfectly every time. Rock it however you want."
+- 他走向旁边的滑板，单脚踩在板上做出准备滑行的姿势，帽子在动感中保持稳固，完美融入滑板运动场景。
+  subject: "Stays on even when I'm hitting the park. It’s a

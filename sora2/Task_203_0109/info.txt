@@ -1,0 +1,27 @@
+标题: Laundry Bags Organize Protect Delicate Clothes Latina Mom
+
+提示词:
+[Type]: Problem–Solution
+[Structure]: 混乱的洗衣困扰 → 繁琐的手洗过程 → 引入洗衣袋套装 → 轻松分类洗涤 → 完美洗护结果与情绪释放
+[Style]: 居家写实主义，温馨且具有生活气息，高饱和度的家庭暖色调
+[Environment]: 一个典型的美国中产家庭洗衣房，背景中有架子上的洗涤剂，侧面有一台正在工作的滚筒洗衣机，空间略显拥挤但充满生活痕迹。
+[Tone & Pacing]: 节奏由起初的稍显急促、焦虑，转变为使用产品后的流畅、轻快，充满解脱感。
+[Camera]: 结合略带抖动的手持感（UGC风格）与浅景深特写镜头。从略微晃动俯视杂乱衣物的全景切换到人物面部表情，再到洗衣袋拉链和网格的极细微特写，期间略有追焦。
+
+[Actions]:
+- 一位约40岁的拉丁裔女性站在一堆杂乱的衣物前，略带局促地指着堆成小山的袜子和运动服，对着镜头叹气。
+  narration: "Laundry day for a big family? It’s a never-ending battle."
+- 镜头跟随她，特写她正试图在水槽里用力揉搓一件精细的内衣，水花溅出，她看起来疲惫不堪，额头有细微汗珠。
+  narration: "And keeping everything organized is impossible."
+- 画面明亮起来，女性拿起一套白色网格洗衣袋，镜头跟随手部动作平滑推向产品细节，展示顺滑的拉链封口和细密的透气网格。
+  narration: "These multi-size bags are a lifesaver for sorting."
+- 快速剪辑：她利索地将孩子的小袜子放入小袋，将丈夫的运动服放入大袋。略微手持感镜头特写拉链拉上的瞬间。
+- 滚筒洗衣机透明舱门内，装满衣物的洗衣袋随着水流有节奏地翻滚，网格纹理清晰可见，水流略有波纹。
+- 洗衣机停止，女性单手轻松地拎出几个洗衣袋，拉开拉链，衣物平整、没有缠绕，她展示一件完好如初的精细衣物，对着镜头露出灿烂且自信的笑容。
+  narration: "Everything’s protected, perfectly clean, and no more lost socks! Highly recommend!"
+
+[Background Sound]:
+- 开头是衣物翻动的杂乱声和沉重的叹气声；中间转为轻快的白噪音和拉链滑动的清脆声；结尾是洗衣机悦耳的提示音、洗衣房内的环境音和轻快的背景音乐。
+
+[Transition / Editing]:
+- 使用快速切场（Jump cuts）展示分类过程，增强效率感；最后展示结果时使用
