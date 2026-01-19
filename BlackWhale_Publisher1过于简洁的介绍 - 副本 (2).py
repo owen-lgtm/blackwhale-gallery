@@ -5,6 +5,9 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QPushButton, QVBoxLayo
 from PySide6.QtCore import QThread, Signal, Qt, QEventLoop
 from PySide6.QtGui import QFont, QColor
 
+# 版本号：v20.0.20260120.Aura_Sora_X
+# 更新内容：新增 Sora2 工具介绍页及跳转逻辑
+
 class DeployThread(QThread):
     log_signal = Signal(str)
     status_signal = Signal(dict)
@@ -22,9 +25,9 @@ class DeployThread(QThread):
             self._wait_loop.quit()
 
     def run(self):
-        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 启动：生成液态高光网页并等待审核...")
+        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 启动：构建数字化内容库与工具页...")
         counts = self.parent.build_index(self.log_signal)
-        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ 本地构建完成。")
+        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ 本地静态资源构建完成。")
         
         # 暂停点：人工确认
         self._wait_loop = QEventLoop()
@@ -32,7 +35,7 @@ class DeployThread(QThread):
         self._wait_loop.exec()
 
         if self._confirm_result:
-            self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 执行远程同步...")
+            self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 执行远程同步同步至 GitHub...")
             self.status_signal.emit({
                 "ugc": counts['ugc'], "sora": counts['sora'],
                 "time": datetime.now().strftime('%H:%M:%S')
@@ -45,7 +48,7 @@ class DeployThread(QThread):
 class PublisherTitanV23Liquid(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("BlackWhale Titan v2.3-Aura (人工审核)")
+        self.setWindowTitle("BlackWhale Titan v20.0.20260120.Aura_Sora_X")
         self.resize(1000, 850)
         self.setStyleSheet("background-color: #050505; color: #e0e0e0;")
         
@@ -72,8 +75,8 @@ class PublisherTitanV23Liquid(QMainWindow):
     def show_confirm_dialog(self):
         msg_box = QMessageBox(self)
         msg_box.setWindowTitle("Titan 部署确认")
-        msg_box.setText("网页预览已就绪！")
-        msg_box.setInformativeText("请检查本地 index.html 的视频加载与特效。\n是否立即推送到 GitHub？")
+        msg_box.setText("网页预览及工具页已就绪！")
+        msg_box.setInformativeText("请检查本地 index.html 与 toolweb 目录。\n是否立即推送到 GitHub？")
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.button(QMessageBox.Yes).setText("确认无误，开始发布")
         msg_box.button(QMessageBox.No).setText("取消")
@@ -111,10 +114,84 @@ class PublisherTitanV23Liquid(QMainWindow):
     def finalize_deploy(self):
         self.btn_go.setEnabled(True)
 
+    def build_tool_page(self, logger):
+        """构建专门的工具详情网页"""
+        TOOL_DIR = "toolweb"
+        if not os.path.exists(TOOL_DIR): os.makedirs(TOOL_DIR)
+        
+        tool_html = f"""<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackWhale | Sora2 一键无限生成工具</title>
+    <style>
+        :root {{ --primary: #0057ff; --bg: #ffffff; --card: #f5f5f7; }}
+        body {{ margin:0; padding:0; font-family: "SF Pro Display", -apple-system, sans-serif; background: var(--bg); color: #1d1d1f; line-height: 1.5; }}
+        .nav {{ height: 70px; display: flex; align-items: center; padding: 0 5%; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); position: sticky; top:0; z-index:100; border-bottom: 1px solid #eee; }}
+        .container {{ max-width: 1100px; margin: 0 auto; padding: 60px 20px; }}
+        .badge {{ display: inline-block; padding: 6px 16px; background: #e8f0fe; color: var(--primary); border-radius: 100px; font-size: 14px; font-weight: 600; margin-bottom: 20px; }}
+        h1 {{ font-size: 56px; font-weight: 800; letter-spacing: -2px; margin: 0 0 30px 0; }}
+        .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; }}
+        .feature-card {{ background: var(--card); padding: 40px; border-radius: 30px; transition: 0.3s; }}
+        .feature-card:hover {{ transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }}
+        .feature-card h3 {{ font-size: 24px; margin-top: 0; }}
+        .feature-card p {{ color: #86868b; font-size: 17px; }}
+        .img-box {{ width: 100%; border-radius: 20px; overflow: hidden; margin-top: 40px; border: 1px solid #eee; }}
+        .img-box img {{ width: 100%; display: block; }}
+        .footer-cta {{ background: #000; color: #fff; padding: 80px 40px; border-radius: 40px; text-align: center; margin-top: 80px; }}
+        .btn {{ display: inline-block; padding: 18px 45px; background: var(--primary); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 600; margin-top: 20px; }}
+    </style>
+</head>
+<body>
+    <div class="nav"><strong style="font-size: 20px;">BlackWhale SoraX</strong></div>
+    <div class="container">
+        <div class="badge">Professional Sora2 Toolset</div>
+        <h1>更高效、更纯净、更简单<br>专为批量创作者设计的 AI 工具</h1>
+        
+        <div class="grid">
+            <div class="feature-card">
+                <div style="font-size: 40px; margin-bottom: 20px;">💎</div>
+                <h3>全网最低更高清</h3>
+                <p>支持 15 秒高清视频生成，单条成本低至 0.07/条。在保持极致画质的同时，大幅压低运营成本。</p>
+            </div>
+            <div class="feature-card">
+                <div style="font-size: 40px; margin-bottom: 20px;">⚡</div>
+                <h3>无限并发</h3>
+                <p>一键批量提交任务，后端分布式处理实现无限并发无上限。告别排队，效率提升 1000%。</p>
+            </div>
+            <div class="feature-card">
+                <div style="font-size: 40px; margin-bottom: 20px;">📁</div>
+                <h3>一键批量管理</h3>
+                <p>批量下载文件自动命名归档，支持根目录上传多批次任务，图生视频自动裁切首2帧。专为工作室流程定制。</p>
+            </div>
+            <div class="feature-card">
+                <div style="font-size: 40px; margin-bottom: 20px;">🛡️</div>
+                <h3>AI 元数据抹除</h3>
+                <p>内置一键元数据清理引擎，彻底抹除 AI 强制标注信息。让视频更具原生感，轻松过审各大平台。</p>
+            </div>
+        </div>
+
+        <div class="img-box"><img src="tool1.png" alt="界面预览 1"></div>
+        <div class="img-box" style="margin-top: 30px;"><img src="tool2.png" alt="界面预览 2"></div>
+
+        <div class="footer-cta">
+            <h2>准备好开启高效创作了吗？</h2>
+            <p style="opacity: 0.7;">加入 BlackWhale，获取全套一键生成解决方案</p>
+            <a href="../index.html" class="btn">返回首页</a>
+        </div>
+    </div>
+</body>
+</html>"""
+        with open(os.path.join(TOOL_DIR, "index.html"), "w", encoding="utf-8") as f: f.write(tool_html)
+
     def build_index(self, logger):
         SORA_DIR, UGC_DIR, HEADER_DIR, COURSE_DIR = "sora2", "ugc", "头图", "课程图"
-        for d in [SORA_DIR, UGC_DIR, HEADER_DIR, COURSE_DIR]:
+        for d in [SORA_DIR, UGC_DIR, HEADER_DIR, COURSE_DIR, "toolweb"]:
             if not os.path.exists(d): os.makedirs(d)
+        
+        # 构建子工具页
+        self.build_tool_page(logger)
 
         hero_imgs = [f"头图/{f}" for f in os.listdir(HEADER_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))]
         hero_wall = "".join([f'''
@@ -126,7 +203,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         course_imgs = sorted([f"课程图/{f}" for f in os.listdir(COURSE_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))])
         course_html = "".join([f'<img src="{img}" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.05);">' for img in course_imgs])
 
-        # 回退至第一个附件脚本中的首页特效逻辑
         html_content = f"""<!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -137,7 +213,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         :root {{ --blue: #0057ff; }}
         body, html {{ background: #fff; color: #1d1d1f; font-family: "SF Pro Display", -apple-system, sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }}
         
-        /* 首页液态特效样式回退 */
         .hero {{ height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }}
         .liquid-container {{ position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.4; filter: url(#liquid-filter); }}
         .blob {{ position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(60px); animation: move 25s infinite alternate ease-in-out; }}
@@ -149,8 +224,10 @@ class PublisherTitanV23Liquid(QMainWindow):
         .hero h1 {{ font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; }}
         .hero-list p {{ font-size: 18px; color: #86868b; margin: 10px 0; font-weight: 400; }}
         
-        .contact-btn {{ display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; margin-top: 30px; }}
+        .contact-btn {{ display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; margin-top: 30px; text-decoration: none; }}
         .contact-btn:hover {{ background: var(--blue); transform: scale(1.05); }}
+        .tool-btn {{ background: transparent; color: #000; border: 2px solid #000; margin-left: 15px; }}
+        .tool-btn:hover {{ background: #f5f5f7; border-color: #f5f5f7; }}
 
         .float-img-container {{ position: absolute; z-index: 2; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }}
         .float-img {{ width: 150px; height: 150px; object-fit: cover; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: block; }}
@@ -195,7 +272,8 @@ class PublisherTitanV23Liquid(QMainWindow):
                 <p>原生感TIKTOK UGC带货视频一键批量生成工具</p>
                 <p>批量自产自然流橱窗矩阵与原生感UGC带货视频创作</p>
             </div>
-            <button class="contact-btn" onclick="toggleQR(true)">立即咨询加入 BlackWhale</button>
+            <a class="contact-btn" href="javascript:void(0)" onclick="toggleQR(true)">立即咨询加入 BlackWhale</a>
+            <a class="contact-btn tool-btn" href="toolweb/index.html">Sora2一键无限生成工具</a>
         </div>
     </div>
 
@@ -292,12 +370,12 @@ class PublisherTitanV23Liquid(QMainWindow):
 
     def git_sync(self, logger):
         try:
-            logger.emit("[同步] 推送中...")
+            logger.emit("[同步] 正在推送到远程 GitHub 仓库...")
             def run_git(args): return subprocess.run(args, capture_output=True, text=True, encoding='utf-8', errors='ignore')
             run_git(["git", "add", "."])
-            run_git(["git", "commit", "-m", f"Aura_V2.3_Final_{datetime.now().strftime('%m%d%H%M')}"])
+            run_git(["git", "commit", "-m", f"Aura_SoraX_Update_{datetime.now().strftime('%m%d%H%M')}"])
             res = run_git(["git", "push", "origin", "main"])
-            if res.returncode == 0: logger.emit("🎉 部署成功！特效已还原。")
+            if res.returncode == 0: logger.emit("🎉 部署成功！所有静态资源及工具页已上线。")
             else: logger.emit(f"❌ 推送失败: {res.stderr}")
         except Exception as e: logger.emit(f"❌ 异常: {str(e)}")
         finally: self.finalize_deploy()

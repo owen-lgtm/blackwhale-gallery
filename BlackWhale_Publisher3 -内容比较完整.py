@@ -5,6 +5,9 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QPushButton, QVBoxLayo
 from PySide6.QtCore import QThread, Signal, Qt, QEventLoop
 from PySide6.QtGui import QFont, QColor
 
+# 版本号：v20.0.20260121.Aura_Sora_Pro_Customized
+# 更新内容：按照用户要求优化 Toolweb 页面文案与结构，保持 QSS 样式及特效完全一致
+
 class DeployThread(QThread):
     log_signal = Signal(str)
     status_signal = Signal(dict)
@@ -22,17 +25,16 @@ class DeployThread(QThread):
             self._wait_loop.quit()
 
     def run(self):
-        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 启动：生成液态高光网页并等待审核...")
+        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 启动：构建数字化内容库与 SoraX 深度工具页...")
         counts = self.parent.build_index(self.log_signal)
-        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ 本地构建完成。")
+        self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] ✅ 高级静态页面构建完成。")
         
-        # 暂停点：人工确认
         self._wait_loop = QEventLoop()
         self.request_confirm_signal.emit()
         self._wait_loop.exec()
 
         if self._confirm_result:
-            self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 执行远程同步...")
+            self.log_signal.emit(f"[{datetime.now().strftime('%H:%M:%S')}] 🚀 执行远程同步同步至 GitHub...")
             self.status_signal.emit({
                 "ugc": counts['ugc'], "sora": counts['sora'],
                 "time": datetime.now().strftime('%H:%M:%S')
@@ -45,7 +47,7 @@ class DeployThread(QThread):
 class PublisherTitanV23Liquid(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("BlackWhale Titan v2.3-Aura (人工审核)")
+        self.setWindowTitle("BlackWhale Titan v20.0.20260121.Aura_Sora_Pro")
         self.resize(1000, 850)
         self.setStyleSheet("background-color: #050505; color: #e0e0e0;")
         
@@ -72,8 +74,8 @@ class PublisherTitanV23Liquid(QMainWindow):
     def show_confirm_dialog(self):
         msg_box = QMessageBox(self)
         msg_box.setWindowTitle("Titan 部署确认")
-        msg_box.setText("网页预览已就绪！")
-        msg_box.setInformativeText("请检查本地 index.html 的视频加载与特效。\n是否立即推送到 GitHub？")
+        msg_box.setText("Creaktok 风格页面已就绪！")
+        msg_box.setInformativeText("请检查 toolweb 目录下的跟随特效与悬停动效。\n是否立即推送到 GitHub？")
         msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
         msg_box.button(QMessageBox.Yes).setText("确认无误，开始发布")
         msg_box.button(QMessageBox.No).setText("取消")
@@ -111,10 +113,211 @@ class PublisherTitanV23Liquid(QMainWindow):
     def finalize_deploy(self):
         self.btn_go.setEnabled(True)
 
+    def build_tool_page(self, logger):
+        TOOL_DIR = "toolweb"
+        if not os.path.exists(TOOL_DIR): os.makedirs(TOOL_DIR)
+        
+        tool_html = f"""<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackWhale | 黑鲸千帆一键无限生成</title>
+    <style>
+        :root {{ --primary: #7928CA; --accent: #FF0080; --bg: #030303; }}
+        body {{ margin:0; padding:0; font-family: "SF Pro Display", sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }}
+        
+        #glow-bg {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: radial-gradient(circle at var(--x) var(--y), rgba(121, 40, 202, 0.15) 0%, transparent 40%); z-index: 0; }}
+
+        .nav {{ height: 80px; display: flex; align-items: center; padding: 0 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #1a1a1a; position: sticky; top:0; z-index:100; }}
+        .container {{ max-width: 1200px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1; }}
+
+        .hero-title {{ text-align: center; margin-bottom: 80px; }}
+        .hero-title h1 {{ font-size: 72px; font-weight: 800; background: linear-gradient(135deg, #fff 0%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -3px; }}
+        .hero-title p {{ font-size: 20px; color: #888; max-width: 700px; margin: 20px auto; }}
+
+        .feature-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 100px; }}
+        .card {{ background: rgba(13, 13, 13, 0.6); backdrop-filter: blur(10px); border: 1px solid #1a1a1a; padding: 40px; border-radius: 32px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }}
+        .card:hover {{ transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(121, 40, 202, 0.2); }}
+        .card h3 {{ font-size: 28px; margin-bottom: 15px; color: #fff; }}
+        .card p {{ color: #888; font-size: 16px; line-height: 1.6; }}
+        .card-icon {{ width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }}
+
+        /* 左右结构样式 */
+        .split-section {{ display: flex; align-items: center; gap: 60px; margin-bottom: 100px; }}
+        .split-text {{ flex: 1; }}
+        .split-text h2 {{ font-size: 48px; margin-bottom: 25px; background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
+        .split-text ul {{ list-style: none; padding: 0; }}
+        .split-text li {{ color: #aaa; font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; }}
+        .split-text li::before {{ content: "✦"; color: var(--accent); margin-right: 15px; font-size: 20px; }}
+        .split-img {{ flex: 1.2; border-radius: 32px; border: 1px solid #222; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }}
+        .split-img img {{ width: 100%; display: block; }}
+
+        /* 第五部分卡片组样式 */
+        .section-title {{ text-align: center; margin-bottom: 60px; }}
+        .section-title .badge {{ background: #222; padding: 6px 16px; border-radius: 100px; font-size: 14px; color: #888; margin-bottom: 20px; display: inline-block; }}
+        .section-title h2 {{ font-size: 56px; letter-spacing: -2px; margin: 0; }}
+        .section-title p {{ color: #888; margin-top: 15px; font-size: 18px; }}
+
+        .capability-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 80px; }}
+        .mini-card {{ background: rgba(13, 13, 13, 0.6); backdrop-filter: blur(10px); border: 1px solid #1a1a1a; padding: 35px; border-radius: 28px; transition: 0.4s; }}
+        .mini-card:hover {{ border-color: #00ffcc; transform: scale(1.02); }}
+        .mini-card .icon {{ font-size: 32px; margin-bottom: 20px; display: block; filter: hue-rotate(280deg); }}
+        .mini-card h4 {{ font-size: 22px; margin: 0 0 12px 0; color: #fff; }}
+        .mini-card p {{ font-size: 15px; color: #666; line-height: 1.6; margin: 0; }}
+
+        .cta-box {{ text-align: center; padding: 60px 0; }}
+        .btn-action {{ display: inline-block; padding: 22px 65px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 20px; transition: 0.4s; box-shadow: 0 20px 40px rgba(121,40,202,0.3); border:none; cursor:pointer; }}
+        .btn-action:hover {{ transform: scale(1.1) translateY(-5px); box-shadow: 0 30px 60px rgba(121,40,202,0.5); }}
+
+        /* 二维码弹窗样式 */
+        .qr-overlay {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 2000; align-items: center; justify-content: center; }}
+        .qr-card {{ background: #fff; padding: 40px; border-radius: 40px; text-align: center; color: #000; }}
+        .qr-card img {{ width: 280px; height: 280px; border-radius: 20px; }}
+    </style>
+</head>
+<body>
+    <div id="glow-bg"></div>
+    <div class="nav"><strong style="font-size: 24px; letter-spacing: -1px;">BlackWhale <span style="color:var(--accent)">SoraX</span></strong></div>
+    
+    <div class="container">
+        <div class="hero-title">
+            <h1>黑鲸千帆 重塑你的AI生产力</h1>
+            <p>专注AI UGC，无限并发一键生成管理工具</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="card">
+                <div class="card-icon">01</div>
+                <h3>全网最低 更高清</h3>
+                <p>生成更高清，15秒高清最低仅0.07/条，全网最低。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">02</div>
+                <h3>无限并发 批量无水印</h3>
+                <p>一键批量提交，无限并发无上限，无水印直出。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">03</div>
+                <h3>一键批量管理</h3>
+                <p>专为批量设计自动批量下载，多批次一次提交，自动裁剪首帧更省力。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">04</div>
+                <h3>AI元数据一键抹除直出</h3>
+                <p>告别AI强制标注，直写模拟iPhone手机拍摄元数据，彻底告别AI标记和限流。</p>
+            </div>
+        </div>
+
+        <div class="split-section">
+            <div class="split-text">
+                <h2>黑鲸千帆高级版</h2>
+                <ul>
+                    <li>无限并发，一键无水印直出</li>
+                    <li>永久有效，随时补充</li>
+                    <li>专为批量而生，支持手动模板批量和手动批量提交，自动归档多批次任务</li>
+                    <li>横竖屏时长自主选择</li>
+                    <li>超低价格，多档可选</li>
+                    <li>AI元数据一键抹除直出，告别AI强制标注</li>
+                </ul>
+            </div>
+            <div class="split-img">
+                <img src="tool1.png" alt="Advanced Version">
+            </div>
+        </div>
+
+        <div class="split-section" style="flex-direction: row-reverse;">
+            <div class="split-text">
+                <h2>黑鲸千帆旗舰版</h2>
+                <ul>
+                    <li>全网最低价，15秒高清0.07/条起</li>
+                    <li>无限并发，一键无水印直出</li>
+                    <li>专为批量而生，支持手动模板批量和手动批量提交，自动归档多批次任务</li>
+                    <li>横竖屏时长自主选择</li>
+                    <li>AI元数据一键抹除直出，告别AI强制标注</li>
+                </ul>
+            </div>
+            <div class="split-img">
+                <img src="tool2.png" alt="Flagship Version">
+            </div>
+        </div>
+
+        <div class="section-title">
+            <div class="badge">Sora 2 的突破</div>
+            <h2>前所未有的 AI 视频模型能力</h2>
+            <p>Sora 2 带来了最强大的 AI 视频生成能力，黑鲸千帆则负责把这些能力落地为稳定可靠的制作流程。</p>
+        </div>
+
+        <div class="capability-grid">
+            <div class="mini-card">
+                <span class="icon">📷</span>
+                <h4>真实感</h4>
+                <p>Sora 2 生成的人物、环境、动作、光影，都比以前更加逼真，毫无油腻感。</p>
+            </div>
+            <div class="mini-card">
+                <span class="icon">🔄</span>
+                <h4>动态物理世界</h4>
+                <p>Sora 2 在物体的动态物理规律表现上大幅提升。</p>
+            </div>
+            <div class="mini-card">
+                <span class="icon">🧠</span>
+                <h4>语义理解</h4>
+                <p>Sora 2 对视频意图理解更加准确，从而生成更符合预期的视频。</p>
+            </div>
+            <div class="mini-card">
+                <span class="icon">🎞️</span>
+                <h4>自主分镜</h4>
+                <p>Sora 2 支持分镜的生成，黑鲸千帆可以自动匹配分镜与视频内容。</p>
+            </div>
+            <div class="mini-card">
+                <span class="icon">🎧</span>
+                <h4>音乐与音效</h4>
+                <p>Sora 2 支持音乐与音效的生成，黑鲸千帆可以自动匹配音乐与视频内容。</p>
+            </div>
+            <div class="mini-card">
+                <span class="icon">💬</span>
+                <h4>对话生成</h4>
+                <p>Sora 2 支持对话的生成，黑鲸千帆可以自动匹配对话与视频内容。</p>
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <button class="btn-action" onclick="toggleQR(true)">联系试用</button>
+            <br><br>
+            <a href="../index.html" style="color:#666; text-decoration:none;">返回数字化内容库</a>
+        </div>
+    </div>
+
+    <div id="qrOverlay" class="qr-overlay" onclick="toggleQR(false)">
+        <div class="qr-card" onclick="event.stopPropagation()">
+            <img src="../qr.png" alt="QR Code">
+            <h3 style="margin-top:20px;">扫码联系黑鲸导师</h3>
+            <p style="color:#666;">获取试用名额与详细方案</p>
+        </div>
+    </div>
+
+    <script>
+        const bg = document.getElementById('glow-bg');
+        window.addEventListener('mousemove', (e) => {{
+            bg.style.setProperty('--x', e.clientX + 'px');
+            bg.style.setProperty('--y', e.clientY + 'px');
+        }});
+
+        function toggleQR(show) {{
+            const el = document.getElementById('qrOverlay');
+            el.style.display = show ? 'flex' : 'none';
+        }}
+    </script>
+</body>
+</html>"""
+        with open(os.path.join(TOOL_DIR, "index.html"), "w", encoding="utf-8") as f: f.write(tool_html)
+
     def build_index(self, logger):
         SORA_DIR, UGC_DIR, HEADER_DIR, COURSE_DIR = "sora2", "ugc", "头图", "课程图"
-        for d in [SORA_DIR, UGC_DIR, HEADER_DIR, COURSE_DIR]:
+        for d in [SORA_DIR, UGC_DIR, HEADER_DIR, COURSE_DIR, "toolweb"]:
             if not os.path.exists(d): os.makedirs(d)
+        
+        self.build_tool_page(logger)
 
         hero_imgs = [f"头图/{f}" for f in os.listdir(HEADER_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))]
         hero_wall = "".join([f'''
@@ -126,7 +329,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         course_imgs = sorted([f"课程图/{f}" for f in os.listdir(COURSE_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))])
         course_html = "".join([f'<img src="{img}" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.05);">' for img in course_imgs])
 
-        # 回退至第一个附件脚本中的首页特效逻辑
         html_content = f"""<!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -135,9 +337,8 @@ class PublisherTitanV23Liquid(QMainWindow):
     <title>BlackWhale | 数字化内容库</title>
     <style>
         :root {{ --blue: #0057ff; }}
-        body, html {{ background: #fff; color: #1d1d1f; font-family: "SF Pro Display", -apple-system, sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }}
+        body, html {{ background: #fff; color: #1d1d1f; font-family: "SF Pro Display", sans-serif; margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth; }}
         
-        /* 首页液态特效样式回退 */
         .hero {{ height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; background: #fff; overflow: hidden; }}
         .liquid-container {{ position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.4; filter: url(#liquid-filter); }}
         .blob {{ position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(60px); animation: move 25s infinite alternate ease-in-out; }}
@@ -149,14 +350,15 @@ class PublisherTitanV23Liquid(QMainWindow):
         .hero h1 {{ font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; }}
         .hero-list p {{ font-size: 18px; color: #86868b; margin: 10px 0; font-weight: 400; }}
         
-        .contact-btn {{ display: inline-block; padding: 22px 65px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; margin-top: 30px; }}
+        .contact-btn {{ display: inline-block; padding: 22px 55px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; margin-top: 30px; text-decoration: none; }}
         .contact-btn:hover {{ background: var(--blue); transform: scale(1.05); }}
+        .tool-btn {{ background: transparent; color: #000; border: 2px solid #000; margin-left: 15px; }}
+        .tool-btn:hover {{ background: #000; color: #fff; }}
 
         .float-img-container {{ position: absolute; z-index: 2; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }}
         .float-img {{ width: 150px; height: 150px; object-fit: cover; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: block; }}
         .float-img-container:hover {{ z-index: 100; }}
-        .float-img-container:hover .float-img {{ transform: scale(1.3); object-fit: contain; background: #fff; }}
-        .ai-tag {{ font-size: 8px; color: rgba(0,0,0,0.2); display: block; text-align: center; margin-top: 5px; font-family: monospace; opacity: 0; }}
+        .ai-tag {{ font-size: 8px; color: rgba(0,0,0,0.2); display: block; text-align: center; margin-top: 5px; opacity: 0; }}
         .float-img-container:hover .ai-tag {{ opacity: 1; }}
 
         .nav-bar {{ position: sticky; top: 0; background: rgba(255,255,255,0.75); backdrop-filter: blur(30px); display: flex; width: 100%; height: 95px; border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 1000; }}
@@ -167,12 +369,12 @@ class PublisherTitanV23Liquid(QMainWindow):
         .tab-content.active {{ display: block; opacity: 1; }}
 
         .grid {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }}
-        .video-card {{ position: relative; background: #fbfbfd; border-radius: 22px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.3s; }}
-        .video-card video, .video-card img {{ width: 100%; height: 100%; object-fit: cover; background: #000; }}
+        .video-card {{ background: #fbfbfd; border-radius: 22px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.3s; }}
+        .video-card video, .video-card img {{ width: 100%; height: 100%; object-fit: cover; }}
         
         .qr-modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }}
         .qr-container {{ background: #fff; padding: 30px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); text-align: center; }}
-        .qr-container img {{ width: 260px; height: 260px; object-fit: contain; }}
+        .qr-container img {{ width: 260px; height: 260px; }}
 
         .modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }}
         .modal-body {{ width: 94%; max-width: 1200px; height: 85vh; background: #fff; border-radius: 40px; display: flex; overflow: hidden; }}
@@ -195,7 +397,8 @@ class PublisherTitanV23Liquid(QMainWindow):
                 <p>原生感TIKTOK UGC带货视频一键批量生成工具</p>
                 <p>批量自产自然流橱窗矩阵与原生感UGC带货视频创作</p>
             </div>
-            <button class="contact-btn" onclick="toggleQR(true)">立即咨询加入 BlackWhale</button>
+            <a class="contact-btn" href="javascript:void(0)" onclick="toggleQR(true)">立即咨询加入 BlackWhale</a>
+            <a class="contact-btn tool-btn" href="toolweb/index.html">黑鲸千帆一键无限生成工具</a>
         </div>
     </div>
 
@@ -242,11 +445,8 @@ class PublisherTitanV23Liquid(QMainWindow):
         }}
         function openModal(url, title, prompt, isVideo) {{
             const container = document.getElementById('modalMedia');
-            if(isVideo) {{
-                container.innerHTML = `<video src="${{url}}" style="max-width:100%; max-height:100%;" controls autoplay></video>`;
-            }} else {{
-                container.innerHTML = `<img src="${{url}}" style="max-width:100%; max-height:100%;">`;
-            }}
+            if(isVideo) {{ container.innerHTML = `<video src="${{url}}" style="max-width:100%; max-height:100%;" controls autoplay></video>`; }}
+            else {{ container.innerHTML = `<img src="${{url}}" style="max-width:100%; max-height:100%;">`; }}
             document.getElementById('mTitle').innerText = title;
             document.getElementById('mPrompt').innerText = prompt;
             document.getElementById('videoModal').style.display = 'flex';
@@ -266,7 +466,6 @@ class PublisherTitanV23Liquid(QMainWindow):
             t_path = os.path.join(folder, t)
             video_file = next((f for f in os.listdir(t_path) if f.lower().endswith('.mp4')), None)
             img_file = next((f for f in os.listdir(t_path) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))), None)
-            
             poster_arg = ""
             if video_file:
                 poster_path = os.path.join(t_path, "poster.jpg")
@@ -274,11 +473,9 @@ class PublisherTitanV23Liquid(QMainWindow):
                     try: subprocess.run(["ffmpeg", "-y", "-i", os.path.join(t_path, video_file), "-ss", "00:00:00.5", "-vframes", "1", poster_path], capture_output=True)
                     except: pass
                 if os.path.exists(poster_path): poster_arg = f'poster="{folder}/{t}/poster.jpg"'
-
             file_url = f"{folder}/{t}/{video_file if video_file else img_file}"
             is_video = "true" if video_file else "false"
             display_html = f'<video {poster_arg} preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="{file_url}"></video>' if video_file else f'<img src="{file_url}" loading="lazy">'
-            
             title, prompt = t, fixed_prompt if fixed_prompt else "解析加载中..."
             info_p = os.path.join(t_path, "info.txt")
             if not fixed_prompt and os.path.exists(info_p):
@@ -286,18 +483,17 @@ class PublisherTitanV23Liquid(QMainWindow):
                     c = f.read()
                     if "标题:" in c: title = c.split("标题:")[1].split("提示词:")[0].strip()
                     if "提示词:" in c: prompt = c.split("提示词:")[1].strip().replace('"', '&quot;')
-
             cards += f'<div class="video-card" onclick="openModal(\'{file_url}\', \'{title}\', `{prompt}`, {is_video})">{display_html}</div>'
         return cards
 
     def git_sync(self, logger):
         try:
-            logger.emit("[同步] 推送中...")
+            logger.emit("[同步] 正在上传至 GitHub...")
             def run_git(args): return subprocess.run(args, capture_output=True, text=True, encoding='utf-8', errors='ignore')
             run_git(["git", "add", "."])
-            run_git(["git", "commit", "-m", f"Aura_V2.3_Final_{datetime.now().strftime('%m%d%H%M')}"])
+            run_git(["git", "commit", "-m", f"Aura_SoraPro_Update_{datetime.now().strftime('%m%d%H%M')}"])
             res = run_git(["git", "push", "origin", "main"])
-            if res.returncode == 0: logger.emit("🎉 部署成功！特效已还原。")
+            if res.returncode == 0: logger.emit("🎉 部署成功！黑鲸千帆高级工具页已上线。")
             else: logger.emit(f"❌ 推送失败: {res.stderr}")
         except Exception as e: logger.emit(f"❌ 异常: {str(e)}")
         finally: self.finalize_deploy()
