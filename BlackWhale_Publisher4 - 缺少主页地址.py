@@ -1,12 +1,12 @@
-import os, subprocess, sys, random, webbrowser
+import os, subprocess, sys, random
 from datetime import datetime
 from PySide6.QtWidgets import (QApplication, QMainWindow, QPushButton, QVBoxLayout, 
                              QHBoxLayout, QWidget, QTextEdit, QLabel, QFrame, QMessageBox)
 from PySide6.QtCore import QThread, Signal, Qt, QEventLoop
 from PySide6.QtGui import QFont, QColor
 
-# 版本号：v20.0.20260121.Aura_Sora_Pro_Titan_V2_Live
-# 更新内容：保持所有QSS与逻辑像素级一致，仅在面板增加“访问线上主页”跳转按钮。
+# 版本号：v20.0.20260121.Aura_Sora_Pro_Titan_V2
+# 更新内容：仅优化跳转页面（Toolweb）中图像/卡片的悬停放大与动画效果，其余所有QSS与逻辑保持像素级一致。
 
 class DeployThread(QThread):
     log_signal = Signal(str)
@@ -60,32 +60,16 @@ class PublisherTitanV23Liquid(QMainWindow):
         self.log.setStyleSheet("background: #0d0d0f; color: #00ffcc; border: 1px solid #1a1a1a; border-radius: 15px; padding: 15px; font-family: 'Consolas';")
         layout.addWidget(self.log)
 
-        # 按钮容器
-        btn_layout = QHBoxLayout()
-        
         self.btn_go = QPushButton("✨ 构建并预览 (完成后手动确认推送)")
         self.btn_go.setFixedHeight(85)
         self.btn_go.setStyleSheet("QPushButton { background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #7928CA, stop:1 #FF0080); color: white; font-size: 22px; font-weight: bold; border-radius: 20px; border: none; } QPushButton:hover { opacity: 0.9; }")
         self.btn_go.clicked.connect(self.start_deploy)
-        
-        self.btn_web = QPushButton("🌐 访问线上主页")
-        self.btn_web.setFixedWidth(200)
-        self.btn_web.setFixedHeight(85)
-        self.btn_web.setStyleSheet("QPushButton { background: #1a1a1a; color: #fff; font-size: 18px; font-weight: bold; border-radius: 20px; border: 1px solid #333; } QPushButton:hover { background: #333; }")
-        self.btn_web.clicked.connect(self.open_online_home)
-        
-        btn_layout.addWidget(self.btn_go, 7)
-        btn_layout.addWidget(self.btn_web, 3)
-        layout.addLayout(btn_layout)
+        layout.addWidget(self.btn_go)
 
         self.thread = DeployThread(self)
         self.thread.log_signal.connect(self.update_log)
         self.thread.status_signal.connect(self.update_status)
         self.thread.request_confirm_signal.connect(self.show_confirm_dialog)
-
-    def open_online_home(self):
-        # 自动跳转至部署后的 GitHub Pages 地址
-        webbrowser.open("https://blackwhale-ai.github.io/index.html")
 
     def show_confirm_dialog(self):
         msg_box = QMessageBox(self)
@@ -159,6 +143,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         .card p {{ color: #888; font-size: 16px; line-height: 1.6; }}
         .card-icon {{ width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }}
 
+        /* 左右结构样式 */
         .split-section {{ display: flex; align-items: center; gap: 60px; margin-bottom: 100px; }}
         .split-text {{ flex: 1; }}
         .split-text h2 {{ font-size: 48px; margin-bottom: 25px; background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
@@ -169,6 +154,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         .split-img:hover {{ transform: scale(1.02); }}
         .split-img img {{ width: 100%; display: block; }}
 
+        /* 第五部分卡片组样式 */
         .section-title {{ text-align: center; margin-bottom: 60px; }}
         .section-title .badge {{ background: #222; padding: 6px 16px; border-radius: 100px; font-size: 14px; color: #888; margin-bottom: 20px; display: inline-block; }}
         .section-title h2 {{ font-size: 56px; letter-spacing: -2px; margin: 0; }}
@@ -186,6 +172,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         .btn-action {{ display: inline-block; padding: 22px 65px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 20px; transition: 0.4s; box-shadow: 0 20px 40px rgba(121,40,202,0.3); border:none; cursor:pointer; }}
         .btn-action:hover {{ transform: scale(1.1) translateY(-5px); box-shadow: 0 30px 60px rgba(121,40,202,0.5); }}
 
+        /* 二维码弹窗样式 */
         .qr-overlay {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 2000; align-items: center; justify-content: center; }}
         .qr-card {{ background: #fff; padding: 40px; border-radius: 40px; text-align: center; color: #000; }}
         .qr-card img {{ width: 280px; height: 280px; border-radius: 20px; }}
