@@ -5,8 +5,8 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QPushButton, QVBoxLayo
 from PySide6.QtCore import QThread, Signal, Qt, QEventLoop
 from PySide6.QtGui import QFont, QColor
 
-# 版本号：v20.0.20260121.Aura_Sora_Pro_Titan_V2_SplitMode_Optimized
-# 更新内容：优化二维码弹窗尺寸，Sora页增加领取按钮，UGC末尾增加引导卡片。
+# 版本号：v20.0.20260121.Aura_Sora_Pro_Titan_V2_SplitMode
+# 更新内容：新增独立视频详情页以优化主页加载速度，主页改用图片预览。
 
 class DeployThread(QThread):
     log_signal = Signal(str)
@@ -323,6 +323,8 @@ class PublisherTitanV23Liquid(QMainWindow):
             if not os.path.exists(d): os.makedirs(d)
         
         self.build_tool_page(logger)
+        
+        # 构建独立视频详情页
         self.build_video_detail_page(SORA_DIR, logger)
 
         hero_imgs = [f"头图/{f}" for f in os.listdir(HEADER_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))]
@@ -335,10 +337,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         course_imgs = sorted([f"课程图/{f}" for f in os.listdir(COURSE_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))])
         course_html = "".join([f'<img src="{img}" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.05);">' for img in course_imgs])
 
-        # 获取UGC卡片并追加引导卡片
-        ugc_cards = self.gen_cards(UGC_DIR, "课程原创案例，详见视频课程讲解", logger, mode="full")
-        ugc_cards += '<div class="video-card" onclick="toggleQR(true)" style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f5f5f7; border:2px dashed #ddd;"><span style="font-size:40px; margin-bottom:15px;">🔍</span><span style="font-weight:700; color:#000;">查看更多课程实战案例</span><span style="font-size:12px; color:#888; margin-top:10px;">点击扫码咨询导师</span></div>'
-
+        # 主页HTML（包含仅预览逻辑）
         html_content = f"""<!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -384,7 +383,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         
         .qr-modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }}
         .qr-container {{ background: #fff; padding: 30px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); text-align: center; }}
-        .qr-container img {{ width: auto; height: auto; max-width: 80vw; max-height: 80vh; border-radius: 20px; }}
+        .qr-container img {{ width: 260px; height: 260px; }}
 
         .modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }}
         .modal-body {{ width: 94%; max-width: 1200px; height: 85vh; background: #fff; border-radius: 40px; display: flex; overflow: hidden; }}
@@ -393,10 +392,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         .more-trigger {{ grid-column: 1 / -1; text-align: center; padding: 40px; color: #86868b; font-weight: 600; cursor: pointer; }}
         .preview-alert {{ color: #FF0080; font-weight: bold; margin-top: 15px; display: block; }}
         .goto-btn {{ display: inline-block; margin-top: 20px; padding: 12px 25px; background: #000; color: #fff; border-radius: 12px; text-decoration: none; font-weight: 600; }}
-        
-        .sora-header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }}
-        .free-btn {{ padding: 12px 25px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; }}
-        .free-btn:hover {{ background: var(--blue); }}
     </style>
 </head>
 <body>
@@ -431,14 +426,8 @@ class PublisherTitanV23Liquid(QMainWindow):
         <div class="nav-item" onclick="showTab('course', this)">课程大纲详情</div>
     </div>
 
-    <div id="ugc" class="tab-content active" style="display:block; opacity:1;"><div class="grid">{ugc_cards}</div></div>
-    <div id="sora" class="tab-content">
-        <div class="sora-header">
-            <h2 style="font-size:32px; margin:0;">Sora 2.0 深度创作库</h2>
-            <button class="free-btn" onclick="toggleQR(true)">✨ 免费领取更多Sora 100+带货案例</button>
-        </div>
-        <div class="grid">{self.gen_cards(SORA_DIR, None, logger, mode="preview")}<div class="more-trigger" onclick="toggleQR(true)">—— 点击获取更多案例 ——</div></div>
-    </div>
+    <div id="ugc" class="tab-content active" style="display:block; opacity:1;"><div class="grid">{self.gen_cards(UGC_DIR, "课程原创案例，详见视频课程讲解", logger, mode="full")}</div></div>
+    <div id="sora" class="tab-content"><div class="grid">{self.gen_cards(SORA_DIR, None, logger, mode="preview")}<div class="more-trigger" onclick="toggleQR(true)">—— 点击获取更多案例 ——</div></div></div>
     <div id="course" class="tab-content"><div style="max-width:1000px; margin:0 auto;">{course_html}</div></div>
 
     <div id="videoModal" class="modal" onclick="closeModal()">
@@ -473,6 +462,7 @@ class PublisherTitanV23Liquid(QMainWindow):
             const container = document.getElementById('modalMedia');
             const notice = document.getElementById('previewNotice');
             if(isPreview && isVideo) {{
+                // 预览模式：即使是视频，也只加载海报图
                 const poster = url.substring(0, url.lastIndexOf("/")) + "/poster.jpg";
                 container.innerHTML = `<img src="${{poster}}" style="max-width:100%; max-height:100%;">`;
                 notice.style.display = 'block';
@@ -493,6 +483,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         return {'ugc': len(os.listdir(UGC_DIR)), 'sora': len(os.listdir(SORA_DIR))}
 
     def build_video_detail_page(self, folder, logger):
+        """构建全速视频播放详情页"""
         html_content = f"""<!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -564,6 +555,7 @@ class PublisherTitanV23Liquid(QMainWindow):
             poster_arg = ""
             poster_path = os.path.join(t_path, "poster.jpg")
             
+            # 始终确保生成海报图用于加速预览
             if video_file and not os.path.exists(poster_path):
                 try: subprocess.run(["ffmpeg", "-y", "-i", os.path.join(t_path, video_file), "-ss", "00:00:00.5", "-vframes", "1", poster_path], capture_output=True)
                 except: pass
@@ -575,6 +567,7 @@ class PublisherTitanV23Liquid(QMainWindow):
             is_preview = "true" if mode == "preview" else "false"
             
             if mode == "preview" and video_file:
+                # 预览模式：仅显示图片以加快速度
                 display_html = f'<img src="{folder}/{t}/poster.jpg" loading="lazy">'
             else:
                 display_html = f'<video {poster_arg} preload="none" muted loop onmouseover="this.play()" onmouseout="this.pause()"><source src="{file_url}"></video>' if video_file else f'<img src="{file_url}" loading="lazy">'
