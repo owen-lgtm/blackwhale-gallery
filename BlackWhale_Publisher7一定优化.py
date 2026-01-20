@@ -210,7 +210,7 @@ class PublisherTitanV23Liquid(QMainWindow):
             <div class="card">
                 <div class="card-icon">04</div>
                 <h3>AI元数据一键抹除直出</h3>
-                <p>告别AI强制标注，注入模拟iPhone手机拍摄元数据，彻底告别AI标记和限流。</p>
+                <p>告告别AI强制标注，直写模拟iPhone手机拍摄元数据，彻底告别AI标记和限流。</p>
             </div>
         </div>
 
@@ -281,8 +281,8 @@ class PublisherTitanV23Liquid(QMainWindow):
             </div>
             <div class="mini-card">
                 <span class="icon">💬</span>
-                <h4>角色调用</h4>
-                <p>Sora 2 支持对生成角色调用，黑鲸千帆可以自动调用角色生成一致性视频内容。</p>
+                <h4>对话生成</h4>
+                <p>Sora 2 支持对话的生成，黑鲸千帆可以自动匹配对话与视频内容。</p>
             </div>
         </div>
 
@@ -296,8 +296,8 @@ class PublisherTitanV23Liquid(QMainWindow):
     <div id="qrOverlay" class="qr-overlay" onclick="toggleQR(false)">
         <div class="qr-card" onclick="event.stopPropagation()">
             <img src="../qr.png" alt="QR Code">
-            <h3 style="margin-top:20px;">扫码联系我们</h3>
-            <p style="color:#666;">获取试用名额</p>
+            <h3 style="margin-top:20px;">扫码联系黑鲸导师</h3>
+            <p style="color:#666;">获取试用名额与详细方案</p>
         </div>
     </div>
 
@@ -337,7 +337,7 @@ class PublisherTitanV23Liquid(QMainWindow):
 
         # 获取UGC卡片并追加引导卡片
         ugc_cards = self.gen_cards(UGC_DIR, "课程原创案例，详见视频课程讲解", logger, mode="full")
-        ugc_cards += '<div class="video-card" onclick="toggleQR(true)" style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f5f5f7; border:2px dashed #ddd;"><span style="font-size:40px; margin-bottom:15px;">🔍</span><span style="font-weight:700; color:#000;">查看更多课程实战案例</span><span style="font-size:12px; color:#888; margin-top:10px;">扫码咨询</span></div>'
+        ugc_cards += '<div class="video-card" onclick="toggleQR(true)" style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f5f5f7; border:2px dashed #ddd;"><span style="font-size:40px; margin-bottom:15px;">🔍</span><span style="font-weight:700; color:#000;">查看更多课程实战案例</span><span style="font-size:12px; color:#888; margin-top:10px;">点击扫码咨询导师</span></div>'
 
         html_content = f"""<!DOCTYPE html>
 <html lang="zh">
@@ -447,8 +447,8 @@ class PublisherTitanV23Liquid(QMainWindow):
             <div class="modal-right">
                 <h2 id="mTitle" style="font-size:28px;"></h2>
                 <div id="previewNotice" style="display:none;">
-                    <span class="preview-alert">⚠️ 当前仅预览，前往观看完整视频</span>
-                    <a href="videos.html" class="goto-btn">🎥 查看更多视频</a>
+                    <span class="preview-alert">⚠️ 仅预览，前往观看完整视频</span>
+                    <a href="videos.html" class="goto-btn">🎥 进入独立视频空间</a>
                 </div>
                 <div style="color:var(--blue); font-weight:700; margin:25px 0 10px 0;">解析与提示词:</div>
                 <div id="mPrompt" style="background:#f5f5f7; padding:25px; border-radius:20px; white-space:pre-wrap; line-height:1.6;"></div>
