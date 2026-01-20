@@ -6,7 +6,8 @@ from PySide6.QtCore import QThread, Signal, Qt, QEventLoop
 from PySide6.QtGui import QFont, QColor
 
 # 版本号：v20.0.20260121.Aura_Sora_Pro_Titan_V2_SplitMode_Optimized_Pricing
-# 更新内容：1.迁移Sora2标题至详情页；2.首页按钮3D毛玻璃+垂直化；3.新增免费工具双栏展示弹窗。
+# 更新内容：优化二维码弹窗尺寸，Sora页增加领取按钮，UGC末尾增加引导卡片。新增Toolweb定价动态卡片系统。
+# 特别修改：移除toolweb标题栏，增加鼠标跟踪、3D毛玻璃卡片、走马灯流光边框及图片悬停特效。
 
 class DeployThread(QThread):
     log_signal = Signal(str)
@@ -261,7 +262,7 @@ class PublisherTitanV23Liquid(QMainWindow):
     <div class="container">
         <div class="hero-title">
             <h1 style="margin-top:0;">黑鲸千帆 重塑你的AI生产力</h1>
-            <p>专注SORA 2，无限并发一键生成管理工具</p>
+            <p>专注SORA 2，无限并发一键生成管理工具,无需部署本地一键运行</p>
         </div>
 
         <div class="feature-grid">
@@ -283,7 +284,7 @@ class PublisherTitanV23Liquid(QMainWindow):
             <div class="card">
                 <div class="card-icon">04</div>
                 <h3>AI元数据一键抹除直出</h3>
-                <p>告告别AI强制标注，注入仿真iPhone手机拍摄元数据，彻底告别AI标记。</p>
+                <p>告别AI强制标注，注入仿真iPhone手机拍摄元数据，彻底告别AI标记。</p>
             </div>
         </div>
 
@@ -561,21 +562,10 @@ class PublisherTitanV23Liquid(QMainWindow):
         .hero h1 {{ font-size: 72px; font-weight: 800; margin: 0 0 25px 0; letter-spacing: -3.5px; line-height: 1.05; color: #000; }}
         .hero-list p {{ font-size: 18px; color: #86868b; margin: 10px 0; font-weight: 400; }}
         
-        /* 垂直排列按钮组 3D 毛玻璃效果 */
-        .btn-group {{ display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px; perspective: 1000px; }}
-        .contact-btn {{ 
-            width: 320px; text-align: center; padding: 18px 0; 
-            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); 
-            color: #fff; border-radius: 18px; font-weight: 700; font-size: 17px; 
-            cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid rgba(255,255,255,0.1); text-decoration: none; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); transform-style: preserve-3d;
-        }}
-        .contact-btn:hover {{ 
-            background: var(--blue); transform: translateY(-5px) rotateX(10deg); 
-            box-shadow: 0 20px 40px rgba(0, 87, 255, 0.3); border-color: rgba(255,255,255,0.3);
-        }}
-        .contact-btn:active {{ transform: scale(0.98); }}
+        .contact-btn {{ display: inline-block; padding: 22px 55px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; font-size: 18px; cursor: pointer; transition: 0.4s; border: none; margin-top: 30px; text-decoration: none; }}
+        .contact-btn:hover {{ background: var(--blue); transform: scale(1.05); }}
+        .tool-btn {{ background: transparent; color: #000; border: 2px solid #000; margin-left: 15px; }}
+        .tool-btn:hover {{ background: #000; color: #fff; }}
 
         .float-img-container {{ position: absolute; z-index: 2; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }}
         .float-img {{ width: 150px; height: 150px; object-fit: cover; border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); display: block; }}
@@ -596,25 +586,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         
         .qr-modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: 0.3s; }}
         .qr-container {{ background: #fff; padding: 30px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.1); text-align: center; }}
-        .qr-container img {{ width: 220px; height: 220px; border-radius: 20px; }}
-
-        /* 工具双栏展示弹窗样式 */
-        .tool-modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.9); backdrop-filter: blur(30px); z-index: 10001; align-items: center; justify-content: center; }}
-        .tool-panel {{ display: flex; gap: 40px; width: 90%; max-width: 1100px; padding: 40px; background: #fff; border-radius: 45px; box-shadow: 0 50px 100px rgba(0,0,0,0.15); }}
-        .tool-item {{ flex: 1; text-align: center; position: relative; }}
-        .tool-img-wrap {{ 
-            width: 100%; aspect-ratio: 16/10; border-radius: 25px; overflow: hidden; 
-            margin-bottom: 20px; position: relative; border: 1px solid #eee;
-        }}
-        .tool-img-wrap img {{ width: 100%; height: 100%; object-fit: cover; }}
-        .tool-img-wrap::after {{
-            content: ""; position: absolute; inset: 0; border: 3px solid transparent; border-radius: 25px;
-            background: linear-gradient(90deg, transparent, var(--blue), transparent) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude; animation: slide 3s infinite linear;
-        }}
-        @keyframes slide {{ 0% {{ background-position: -200% 0; }} 100% {{ background-position: 200% 0; }} }}
-        .tool-item p {{ font-weight: 700; color: #000; font-size: 16px; margin: 0; }}
+        .qr-container img {{ width: auto; height: auto; max-width: 80vw; max-height: 80vh; border-radius: 20px; }}
 
         .modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }}
         .modal-body {{ width: 94%; max-width: 1200px; height: 85vh; background: #fff; border-radius: 40px; display: flex; overflow: hidden; }}
@@ -623,6 +595,10 @@ class PublisherTitanV23Liquid(QMainWindow):
         .more-trigger {{ grid-column: 1 / -1; text-align: center; padding: 40px; color: #86868b; font-weight: 600; cursor: pointer; }}
         .preview-alert {{ color: #FF0080; font-weight: bold; margin-top: 15px; display: block; }}
         .goto-btn {{ display: inline-block; margin-top: 20px; padding: 12px 25px; background: #000; color: #fff; border-radius: 12px; text-decoration: none; font-weight: 600; }}
+        
+        .sora-header {{ display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }}
+        .free-btn {{ padding: 12px 25px; background: #000; color: #fff; border-radius: 100px; font-weight: 600; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; }}
+        .free-btn:hover {{ background: var(--blue); }}
     </style>
 </head>
 <body>
@@ -639,12 +615,8 @@ class PublisherTitanV23Liquid(QMainWindow):
                 <p>原生感TIKTOK UGC带货视频一键批量生成工具</p>
                 <p>批量自产自然流橱窗矩阵与原生感UGC带货视频创作</p>
             </div>
-            <div class="btn-group">
-                <a class="contact-btn" href="javascript:void(0)" onclick="toggleQR(true)">立即加入 BlackWhale</a>
-                <a class="contact-btn" href="toolweb/index.html">Sora2 一键无限生成工具</a>
-                <a class="contact-btn" href="javascript:void(0)" onclick="toggleTool(true)">（免费）sora一键批量去水印</a>
-                <a class="contact-btn" href="javascript:void(0)" onclick="toggleTool(true)">（免费）AI 元数据清除工具</a>
-            </div>
+            <a class="contact-btn" href="javascript:void(0)" onclick="toggleQR(true)">立即咨询加入 BlackWhale</a>
+            <a class="contact-btn tool-btn" href="toolweb/index.html">黑鲸千帆一键无限生成工具</a>
         </div>
     </div>
 
@@ -652,19 +624,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         <div class="qr-container" onclick="event.stopPropagation()">
             <img src="qr.png" alt="QR">
             <p style="font-weight:700; margin-top:15px;">扫码咨询 BlackWhale 导师</p>
-        </div>
-    </div>
-
-    <div id="toolModal" class="tool-modal" onclick="toggleTool(false)">
-        <div class="tool-panel" onclick="event.stopPropagation()">
-            <div class="tool-item">
-                <div class="tool-img-wrap"><img src="工具注释图/tool3.png"></div>
-                <p>黑鲸千帆免费sora一键批量去水印</p>
-            </div>
-            <div class="tool-item">
-                <div class="tool-img-wrap"><img src="工具注释图/tool4.png"></div>
-                <p>黑鲸千帆免费元数据清除，仿真IPHONE实拍元数据</p>
-            </div>
         </div>
     </div>
 
@@ -676,6 +635,10 @@ class PublisherTitanV23Liquid(QMainWindow):
 
     <div id="ugc" class="tab-content active" style="display:block; opacity:1;"><div class="grid">{ugc_cards}</div></div>
     <div id="sora" class="tab-content">
+        <div class="sora-header">
+            <h2 style="font-size:32px; margin:0;">Sora 2.0 深度创作库</h2>
+            <button class="free-btn" onclick="toggleQR(true)">✨ 免费领取更多Sora 100+带货案例</button>
+        </div>
         <div class="grid">{self.gen_cards(SORA_DIR, None, logger, mode="preview")}<div class="more-trigger" onclick="toggleQR(true)">—— 点击获取更多案例 ——</div></div>
     </div>
     <div id="course" class="tab-content"><div style="max-width:1000px; margin:0 auto;">{course_html}</div></div>
@@ -700,10 +663,6 @@ class PublisherTitanV23Liquid(QMainWindow):
             const m = document.getElementById('qrModal');
             if(show) {{ m.style.display='flex'; setTimeout(()=>m.style.opacity='1',10); }}
             else {{ m.style.opacity='0'; setTimeout(()=>m.style.display='none',300); }}
-        }}
-        function toggleTool(show) {{
-            const m = document.getElementById('toolModal');
-            m.style.display = show ? 'flex' : 'none';
         }}
         function showTab(id, el) {{
             document.querySelectorAll('.tab-content').forEach(t => {{ t.style.display='none'; t.style.opacity='0'; }});
@@ -748,8 +707,6 @@ class PublisherTitanV23Liquid(QMainWindow):
         .header {{ padding: 40px 5%; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1a1a1a; }}
         .back-link {{ color: #888; text-decoration: none; font-size: 16px; transition: 0.3s; }}
         .back-link:hover {{ color: #fff; }}
-        .free-btn {{ padding: 12px 25px; background: #fff; color: #000; border-radius: 100px; font-weight: 700; text-decoration: none; transition: 0.3s; border: none; cursor: pointer; }}
-        .free-btn:hover {{ background: var(--blue); color: #fff; }}
         .grid {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; padding: 40px 5%; }}
         .video-card {{ background: #111; border-radius: 22px; overflow: hidden; aspect-ratio: 9/16; cursor: pointer; transition: 0.3s; border: 1px solid #222; }}
         .video-card:hover {{ border-color: var(--blue); transform: scale(1.02); }}
@@ -759,19 +716,12 @@ class PublisherTitanV23Liquid(QMainWindow):
         .modal-left {{ flex: 1.4; background: #000; display: flex; align-items: center; justify-content: center; }}
         .modal-right {{ flex: 1; padding: 50px; overflow-y: auto; color: #eee; }}
         #mPrompt {{ background:#1a1a1a; padding:25px; border-radius:20px; white-space:pre-wrap; line-height:1.6; border: 1px solid #333; }}
-        
-        .qr-modal {{ display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 10000; align-items: center; justify-content: center; }}
-        .qr-card {{ background: #fff; padding: 30px; border-radius: 30px; text-align: center; color: #000; }}
-        .qr-card img {{ width: 220px; height: 220px; border-radius: 15px; }}
     </style>
 </head>
 <body>
     <div class="header">
-        <h1 style="margin:0; font-size:32px;">Sora 2.0 深度创作库</h1>
-        <div>
-            <button class="free-btn" onclick="toggleQR(true)" style="margin-right:20px;">✨ 免费领取更多Sora 100+案例</button>
-            <a href="index.html" class="back-link">← 返回主页</a>
-        </div>
+        <h1 style="margin:0; font-size:32px;">Sora2 高清视频全集</h1>
+        <a href="index.html" class="back-link">← 返回主页</a>
     </div>
     <div class="grid">{self.gen_cards(folder, None, logger, mode="full")}</div>
     
@@ -784,13 +734,6 @@ class PublisherTitanV23Liquid(QMainWindow):
                 <div id="mPrompt"></div>
                 <button onclick="copyPrompt()" style="margin-top:20px; padding:10px 20px; border-radius:10px; border:none; background:var(--blue); color:white; cursor:pointer;">复制提示词</button>
             </div>
-        </div>
-    </div>
-
-    <div id="qrModal" class="qr-modal" onclick="toggleQR(false)">
-        <div class="qr-card" onclick="event.stopPropagation()">
-            <img src="qr.png">
-            <p style="font-weight:700; margin-top:15px;">扫码领取更多案例</p>
         </div>
     </div>
 
@@ -807,7 +750,6 @@ class PublisherTitanV23Liquid(QMainWindow):
             const text = document.getElementById('mPrompt').innerText;
             navigator.clipboard.writeText(text).then(() => alert('提示词已复制'));
         }}
-        function toggleQR(show) {{ document.getElementById('qrModal').style.display = show ? 'flex' : 'none'; }}
     </script>
 </body>
 </html>"""
