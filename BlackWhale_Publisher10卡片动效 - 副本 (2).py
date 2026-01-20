@@ -262,7 +262,7 @@ class PublisherTitanV23Liquid(QMainWindow):
     <div class="container">
         <div class="hero-title">
             <h1 style="margin-top:0;">黑鲸千帆 重塑你的AI生产力</h1>
-            <p>专注SORA 2，无限并发一键生成管理工具</p>
+            <p>专注AI UGC，无限并发一键生成管理工具</p>
         </div>
 
         <div class="feature-grid">
@@ -284,7 +284,7 @@ class PublisherTitanV23Liquid(QMainWindow):
             <div class="card">
                 <div class="card-icon">04</div>
                 <h3>AI元数据一键抹除直出</h3>
-                <p>告别AI强制标注，注入仿真iPhone手机拍摄元数据，彻底告别AI标记。</p>
+                <p>告别AI强制标注，注入模拟iPhone手机拍摄元数据，彻底告别AI标记和限流。</p>
             </div>
         </div>
 
@@ -295,9 +295,9 @@ class PublisherTitanV23Liquid(QMainWindow):
                     <li>无限并发，一键无水印直出</li>
                     <li>永久有效，随时补充</li>
                     <li>专为批量而生，支持手动模板批量和手动批量提交，自动归档多批次任务</li>
-                    <li>横竖屏普清、时长自主选择</li>
+                    <li>横竖屏时长自主选择</li>
                     <li>超低价格，多档可选</li>
-                    <li>AI元数据一键抹除直出，彻底告别AI强制标注</li>
+                    <li>AI元数据一键抹除直出，告告别AI强制标注</li>
                 </ul>
             </div>
             <div class="split-img">
@@ -324,7 +324,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         <div class="section-title">
             <div class="badge">Sora 2 的突破</div>
             <h2>前所未有的 AI 视频模型能力</h2>
-            <p>黑鲸千帆始终专注高质量AI UGC，Sora 2 带来了最强大的 AI 视频生成能力，我们提供一键批量的流程和管理方案。</p>
+            <p>Sora 2 带来了最强大的 AI 视频生成能力，黑鲸千帆则负责把这些能力落地为稳定可靠的制作流程。</p>
         </div>
 
         <div class="capability-grid">
@@ -377,7 +377,6 @@ class PublisherTitanV23Liquid(QMainWindow):
                         <ul class="p-features">
                             <li>永久有效，不限有效期</li>
                             <li>无限并发，一键批量提交</li>
-                            <li>横竖屏-10s/15s普清</li>
                             <li>一键元数据抹除，告别AI强制标注</li>
                             <li>一键批量去水印</li>
                             <li>批量下载，文件自动命名归档</li>
@@ -393,7 +392,6 @@ class PublisherTitanV23Liquid(QMainWindow):
                         <ul class="p-features">
                             <li>永久有效，不限有效期</li>
                             <li>无限并发，一键批量提交</li>
-                            <li>横竖屏-10s/15s普清</li>
                             <li>一键元数据抹除，告别AI强制标注</li>
                             <li>一键批量去水印</li>
                             <li>批量下载，文件自动命名归档</li>
@@ -409,7 +407,6 @@ class PublisherTitanV23Liquid(QMainWindow):
                         <ul class="p-features">
                             <li>永久有效，不限有效期</li>
                             <li>无限并发，一键批量提交</li>
-                            <li>横竖屏-10s/15s普清</li>
                             <li>一键元数据抹除，告别AI强制标注</li>
                             <li>一键批量去水印</li>
                             <li>批量下载，文件自动命名归档</li>
@@ -426,7 +423,7 @@ class PublisherTitanV23Liquid(QMainWindow):
                         <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
                         <div class="p-sub">500条+额外赠送50条</div>
                         <ul class="p-features">
-                            <li>15s竖屏带货视频，更高清</li>
+                            <li>15s更高清</li>
                             <li>无限并发，一键批量提交</li>
                             <li>一键元数据抹除，告别AI强制标注</li>
                             <li>一键批量去水印</li>
@@ -441,7 +438,7 @@ class PublisherTitanV23Liquid(QMainWindow):
                         <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
                         <div class="p-sub">1000条+额外赠送100条</div>
                         <ul class="p-features">
-                            <li>15s竖屏带货视频，更高清</li>
+                            <li>15s更高清</li>
                             <li>无限并发，一键批量提交</li>
                             <li>一键元数据抹除，告别AI强制标注</li>
                             <li>一键批量去水印</li>
@@ -456,7 +453,7 @@ class PublisherTitanV23Liquid(QMainWindow):
                         <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
                         <div class="p-sub">5000条+额外赠送200条</div>
                         <ul class="p-features">
-                            <li>15s竖屏带货视频，更高清</li>
+                            <li>15s更高清</li>
                             <li>无限并发，一键批量提交</li>
                             <li>一键元数据抹除，告别AI强制标注</li>
                             <li>一键批量去水印</li>
