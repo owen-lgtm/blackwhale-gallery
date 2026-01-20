@@ -7,7 +7,6 @@ from PySide6.QtGui import QFont, QColor
 
 # 版本号：v20.0.20260121.Aura_Sora_Pro_Titan_V2_SplitMode_Optimized_Pricing
 # 更新内容：优化二维码弹窗尺寸，Sora页增加领取按钮，UGC末尾增加引导卡片。新增Toolweb定价动态卡片系统。
-# 特别修改：移除toolweb标题栏，增加鼠标跟踪、3D毛玻璃卡片、走马灯流光边框及图片悬停特效。
 
 class DeployThread(QThread):
     log_signal = Signal(str)
@@ -132,43 +131,20 @@ class PublisherTitanV23Liquid(QMainWindow):
     <title>BlackWhale | 黑鲸千帆一键无限生成</title>
     <style>
         :root {{ --primary: #7928CA; --accent: #FF0080; --bg: #030303; }}
-        body {{ margin:0; padding:0; font-family: "SF Pro Display", sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; perspective: 1500px; }}
+        body {{ margin:0; padding:0; font-family: "SF Pro Display", sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }}
         
-        #glow-bg {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: radial-gradient(circle at var(--x) var(--y), rgba(121, 40, 202, 0.18) 0%, transparent 50%); z-index: 0; }}
+        #glow-bg {{ position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: radial-gradient(circle at var(--x) var(--y), rgba(121, 40, 202, 0.15) 0%, transparent 40%); z-index: 0; }}
 
+        .nav {{ height: 80px; display: flex; align-items: center; padding: 0 5%; background: rgba(0,0,0,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid #1a1a1a; position: sticky; top:0; z-index:100; }}
         .container {{ max-width: 1200px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1; }}
 
-        .hero-title {{ text-align: center; margin-bottom: 80px; padding-top: 40px; }}
+        .hero-title {{ text-align: center; margin-bottom: 80px; }}
         .hero-title h1 {{ font-size: 72px; font-weight: 800; background: linear-gradient(135deg, #fff 0%, #888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -3px; }}
         .hero-title p {{ font-size: 20px; color: #888; max-width: 700px; margin: 20px auto; }}
 
         .feature-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 100px; }}
-        
-        /* 通用卡片样式增强：3D、毛玻璃、走马灯边框 */
-        .card {{ 
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            padding: 40px; 
-            border-radius: 32px; 
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); 
-            position: relative; 
-            overflow: hidden;
-            transform-style: preserve-3d;
-        }}
-        .card::before {{
-            content: ""; position: absolute; inset: 0; padding: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            opacity: 0; transition: 0.5s;
-            background-size: 200% 100%;
-        }}
-        .card:hover::before {{ opacity: 1; animation: slide 2s linear infinite; }}
-        @keyframes slide {{ from {{ background-position: 200% 0; }} to {{ background-position: -200% 0; }} }}
-
-        .card:hover {{ transform: translateY(-12px) rotateX(4deg) rotateY(-2deg); border-color: transparent; box-shadow: 0 25px 50px rgba(121, 40, 202, 0.25); }}
+        .card {{ background: rgba(13, 13, 13, 0.6); backdrop-filter: blur(10px); border: 1px solid #1a1a1a; padding: 40px; border-radius: 32px; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); position: relative; overflow: hidden; }}
+        .card:hover {{ transform: translateY(-12px) scale(1.03); border-color: var(--primary); box-shadow: 0 25px 50px rgba(121, 40, 202, 0.25); }}
         .card h3 {{ font-size: 28px; margin-bottom: 15px; color: #fff; }}
         .card p {{ color: #888; font-size: 16px; line-height: 1.6; }}
         .card-icon {{ width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; }}
@@ -179,12 +155,8 @@ class PublisherTitanV23Liquid(QMainWindow):
         .split-text ul {{ list-style: none; padding: 0; }}
         .split-text li {{ color: #aaa; font-size: 18px; margin-bottom: 12px; display: flex; align-items: center; }}
         .split-text li::before {{ content: "✦"; color: var(--accent); margin-right: 15px; font-size: 20px; }}
-        
-        /* 图片悬停流光放大特效 */
-        .split-img {{ flex: 1.2; border-radius: 32px; border: 1px solid #222; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; }}
-        .split-img::after {{ content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg); transition: 0.8s; pointer-events: none; }}
-        .split-img:hover {{ transform: scale(1.05); border-color: var(--primary); box-shadow: 0 0 40px rgba(121, 40, 202, 0.4); }}
-        .split-img:hover::after {{ left: 100%; }}
+        .split-img {{ flex: 1.2; border-radius: 32px; border: 1px solid #222; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.5); transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); }}
+        .split-img:hover {{ transform: scale(1.02); }}
         .split-img img {{ width: 100%; display: block; }}
 
         .section-title {{ text-align: center; margin-bottom: 60px; }}
@@ -193,7 +165,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         .section-title p {{ color: #888; margin-top: 15px; font-size: 18px; }}
 
         .capability-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-bottom: 80px; }}
-        .mini-card {{ background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(10px); border: 1px solid #1a1a1a; padding: 35px; border-radius: 28px; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); position: relative; }}
+        .mini-card {{ background: rgba(13, 13, 13, 0.6); backdrop-filter: blur(10px); border: 1px solid #1a1a1a; padding: 35px; border-radius: 28px; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); }}
         .mini-card:hover {{ border-color: #00ffcc; transform: scale(1.05) translateY(-5px); box-shadow: 0 15px 30px rgba(0, 255, 204, 0.1); }}
         .mini-card .icon {{ font-size: 32px; margin-bottom: 20px; display: block; filter: hue-rotate(280deg); transition: transform 0.4s ease; }}
         .mini-card:hover .icon {{ transform: scale(1.2) rotate(5deg); }}
@@ -208,35 +180,15 @@ class PublisherTitanV23Liquid(QMainWindow):
         .toggle-slider {{ position: absolute; height: calc(100% - 12px); width: calc(50% - 6px); background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 100px; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); left: 6px; z-index: 0; }}
         .flagship-mode .toggle-slider {{ transform: translateX(100%); }}
 
-        .price-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }}
-        .price-card {{ 
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255,255,255,0.08); 
-            border-radius: 35px; padding: 45px 30px; 
-            backdrop-filter: blur(25px); 
-            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); 
-            position: relative; overflow: hidden; 
-            display: flex; flex-direction: column; align-items: center;
-            transform-style: preserve-3d;
-        }}
-        .price-card::before {{
-            content: ""; position: absolute; inset: 0; padding: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-            opacity: 0; transition: 0.5s;
-            background-size: 200% 100%;
-        }}
-        .price-card:hover::before {{ opacity: 1; animation: slide 2.5s linear infinite; }}
-        
-        .price-card:hover {{ transform: translateY(-15px) rotateX(6deg) rotateY(-2deg); border-color: transparent; box-shadow: 0 40px 80px rgba(0,0,0,0.5); }}
+        .price-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; perspective: 1000px; }}
+        .price-card {{ background: rgba(20, 20, 20, 0.5); border: 1px solid #222; border-radius: 35px; padding: 45px 30px; backdrop-filter: blur(20px); transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }}
+        .price-card:hover {{ transform: translateY(-15px) rotateX(5deg); border-color: var(--primary); box-shadow: 0 40px 80px rgba(0,0,0,0.4); }}
         
         .price-card .p-title {{ font-size: 18px; color: #888; margin-bottom: 10px; }}
         .price-card .p-main {{ font-size: 52px; font-weight: 800; margin: 15px 0; color: #fff; letter-spacing: -2px; }}
         .price-card .p-sub {{ font-size: 14px; color: var(--accent); margin-bottom: 30px; font-weight: 600; }}
         
-        .p-btn {{ width: 80%; padding: 16px; border-radius: 15px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid #333; font-weight: 700; cursor: pointer; transition: 0.3s; margin-bottom: 35px; letter-spacing: 1px; }}
+        .p-btn {{ width: 80%; padding: 16px; border-radius: 15px; background: #222; color: #fff; border: 1px solid #333; font-weight: 700; cursor: pointer; transition: 0.3s; margin-bottom: 35px; letter-spacing: 1px; }}
         .price-card:hover .p-btn {{ background: linear-gradient(135deg, var(--primary), var(--accent)); border:none; transform: scale(1.05); box-shadow: 0 10px 20px rgba(121, 40, 202, 0.3); }}
         
         .p-features {{ width: 100%; text-align: left; list-style: none; padding: 0; margin: 0; }}
@@ -258,10 +210,11 @@ class PublisherTitanV23Liquid(QMainWindow):
 </head>
 <body>
     <div id="glow-bg"></div>
+    <div class="nav"><strong style="font-size: 24px; letter-spacing: -1px;">BlackWhale <span style="color:var(--accent)">SoraX</span></strong></div>
     
     <div class="container">
         <div class="hero-title">
-            <h1 style="margin-top:0;">黑鲸千帆 重塑你的AI生产力</h1>
+            <h1>黑鲸千帆 重塑你的AI生产力</h1>
             <p>专注AI UGC，无限并发一键生成管理工具</p>
         </div>
 
@@ -297,7 +250,7 @@ class PublisherTitanV23Liquid(QMainWindow):
                     <li>专为批量而生，支持手动模板批量和手动批量提交，自动归档多批次任务</li>
                     <li>横竖屏时长自主选择</li>
                     <li>超低价格，多档可选</li>
-                    <li>AI元数据一键抹除直出，告告别AI强制标注</li>
+                    <li>AI元数据一键抹除直出，告别AI强制标注</li>
                 </ul>
             </div>
             <div class="split-img">
@@ -535,6 +488,7 @@ class PublisherTitanV23Liquid(QMainWindow):
         course_imgs = sorted([f"课程图/{f}" for f in os.listdir(COURSE_DIR) if f.lower().endswith(('.png','.jpg','.jpeg','.webp'))])
         course_html = "".join([f'<img src="{img}" style="width:100%; margin-bottom:40px; border-radius:25px; box-shadow:0 20px 50px rgba(0,0,0,0.05);">' for img in course_imgs])
 
+        # 获取UGC卡片并追加引导卡片
         ugc_cards = self.gen_cards(UGC_DIR, "课程原创案例，详见视频课程讲解", logger, mode="full")
         ugc_cards += '<div class="video-card" onclick="toggleQR(true)" style="display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f5f5f7; border:2px dashed #ddd;"><span style="font-size:40px; margin-bottom:15px;">🔍</span><span style="font-weight:700; color:#000;">查看更多课程实战案例</span><span style="font-size:12px; color:#888; margin-top:10px;">扫码咨询</span></div>'
 
