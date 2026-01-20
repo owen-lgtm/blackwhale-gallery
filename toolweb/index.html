@@ -47,6 +47,33 @@
         .mini-card h4 { font-size: 22px; margin: 0 0 12px 0; color: #fff; }
         .mini-card p { font-size: 15px; color: #666; line-height: 1.6; margin: 0; }
 
+        /* --- Pricing Card System Start --- */
+        .pricing-section { padding: 100px 0; text-align: center; }
+        .toggle-container { display: inline-flex; background: #111; padding: 6px; border-radius: 100px; margin-bottom: 60px; border: 1px solid #222; position: relative; }
+        .toggle-btn { padding: 12px 35px; border-radius: 100px; cursor: pointer; font-weight: 600; font-size: 15px; color: #666; transition: 0.3s; z-index: 1; border:none; background:none; }
+        .toggle-btn.active { color: #fff; }
+        .toggle-slider { position: absolute; height: calc(100% - 12px); width: calc(50% - 6px); background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 100px; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); left: 6px; z-index: 0; }
+        .flagship-mode .toggle-slider { transform: translateX(100%); }
+
+        .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; perspective: 1000px; }
+        .price-card { background: rgba(20, 20, 20, 0.5); border: 1px solid #222; border-radius: 35px; padding: 45px 30px; backdrop-filter: blur(20px); transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+        .price-card:hover { transform: translateY(-15px) rotateX(5deg); border-color: var(--primary); box-shadow: 0 40px 80px rgba(0,0,0,0.4); }
+        
+        .price-card .p-title { font-size: 18px; color: #888; margin-bottom: 10px; }
+        .price-card .p-main { font-size: 52px; font-weight: 800; margin: 15px 0; color: #fff; letter-spacing: -2px; }
+        .price-card .p-sub { font-size: 14px; color: var(--accent); margin-bottom: 30px; font-weight: 600; }
+        
+        .p-btn { width: 80%; padding: 16px; border-radius: 15px; background: #222; color: #fff; border: 1px solid #333; font-weight: 700; cursor: pointer; transition: 0.3s; margin-bottom: 35px; letter-spacing: 1px; }
+        .price-card:hover .p-btn { background: linear-gradient(135deg, var(--primary), var(--accent)); border:none; transform: scale(1.05); box-shadow: 0 10px 20px rgba(121, 40, 202, 0.3); }
+        
+        .p-features { width: 100%; text-align: left; list-style: none; padding: 0; margin: 0; }
+        .p-features li { font-size: 14px; color: #aaa; margin-bottom: 15px; display: flex; align-items: center; }
+        .p-features li::before { content: "✓"; color: #00ffcc; margin-right: 12px; font-weight: bold; }
+        
+        .price-content { display: none; width: 100%; }
+        .price-content.active { display: contents; }
+        /* --- Pricing Card System End --- */
+
         .cta-box { text-align: center; padding: 60px 0; }
         .btn-action { display: inline-block; padding: 22px 65px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 20px; transition: 0.4s; box-shadow: 0 20px 40px rgba(121,40,202,0.3); border:none; cursor:pointer; }
         .btn-action:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 30px 60px rgba(121,40,202,0.5); }
@@ -161,6 +188,111 @@
             </div>
         </div>
 
+        <div class="pricing-section">
+            <div class="toggle-container" id="pricingToggle">
+                <div class="toggle-slider" id="slider"></div>
+                <button class="toggle-btn active" onclick="switchPricing('adv')">高级版 Advanced</button>
+                <button class="toggle-btn" onclick="switchPricing('fla')">旗舰版 Flagship</button>
+            </div>
+
+            <div class="price-grid">
+                <div class="price-content active" id="advGroup">
+                    <div class="price-card">
+                        <div class="p-title">初航版</div>
+                        <div class="p-main">0.4元/条</div>
+                        <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
+                        <div class="p-sub">3000条+额外赠送100条</div>
+                        <ul class="p-features">
+                            <li>永久有效，不限有效期</li>
+                            <li>无限并发，一键批量提交</li>
+                            <li>一键元数据抹除，告别AI强制标注</li>
+                            <li>一键批量去水印</li>
+                            <li>批量下载，文件自动命名归档</li>
+                            <li>专为批量设计，一键根目录上传多批次任务</li>
+                            <li>（图生）自动裁剪首2帧</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <div class="p-title">领航版</div>
+                        <div class="p-main">0.24元/条</div>
+                        <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
+                        <div class="p-sub">8000条+额外赠送200条</div>
+                        <ul class="p-features">
+                            <li>永久有效，不限有效期</li>
+                            <li>无限并发，一键批量提交</li>
+                            <li>一键元数据抹除，告别AI强制标注</li>
+                            <li>一键批量去水印</li>
+                            <li>批量下载，文件自动命名归档</li>
+                            <li>专为批量设计，一键根目录上传多批次任务</li>
+                            <li>（图生）自动裁剪首2帧</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <div class="p-title">巅峰版</div>
+                        <div class="p-main">0.19元/条</div>
+                        <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
+                        <div class="p-sub">15000条+额外赠送500条</div>
+                        <ul class="p-features">
+                            <li>永久有效，不限有效期</li>
+                            <li>无限并发，一键批量提交</li>
+                            <li>一键元数据抹除，告别AI强制标注</li>
+                            <li>一键批量去水印</li>
+                            <li>批量下载，文件自动命名归档</li>
+                            <li>专为批量设计，一键根目录上传多批次任务</li>
+                            <li>（图生）自动裁剪首2帧</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="price-content" id="flaGroup">
+                    <div class="price-card">
+                        <div class="p-title">初航版</div>
+                        <div class="p-main">2.3元/条</div>
+                        <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
+                        <div class="p-sub">500条+额外赠送50条</div>
+                        <ul class="p-features">
+                            <li>15s更高清</li>
+                            <li>无限并发，一键批量提交</li>
+                            <li>一键元数据抹除，告别AI强制标注</li>
+                            <li>一键批量去水印</li>
+                            <li>批量下载，文件自动命名归档</li>
+                            <li>专为批量设计，一键根目录上传多批次任务</li>
+                            <li>（图生）自动裁剪首2帧</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <div class="p-title">领航版</div>
+                        <div class="p-main">1.8元/条</div>
+                        <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
+                        <div class="p-sub">1000条+额外赠送100条</div>
+                        <ul class="p-features">
+                            <li>15s更高清</li>
+                            <li>无限并发，一键批量提交</li>
+                            <li>一键元数据抹除，告别AI强制标注</li>
+                            <li>一键批量去水印</li>
+                            <li>批量下载，文件自动命名归档</li>
+                            <li>专为批量设计，一键根目录上传多批次任务</li>
+                            <li>（图生）自动裁剪首2帧</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <div class="p-title">巅峰版</div>
+                        <div class="p-main">0.5元/条</div>
+                        <button class="p-btn" onclick="toggleQR(true)">SELECT</button>
+                        <div class="p-sub">5000条+额外赠送200条</div>
+                        <ul class="p-features">
+                            <li>15s更高清</li>
+                            <li>无限并发，一键批量提交</li>
+                            <li>一键元数据抹除，告别AI强制标注</li>
+                            <li>一键批量去水印</li>
+                            <li>批量下载，文件自动命名归档</li>
+                            <li>专为批量设计，一键根目录上传多批次任务</li>
+                            <li>（图生）自动裁剪首2帧</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="cta-box">
             <button class="btn-action" onclick="toggleQR(true)">联系试用</button>
             <br><br>
@@ -186,6 +318,27 @@
         function toggleQR(show) {
             const el = document.getElementById('qrOverlay');
             el.style.display = show ? 'flex' : 'none';
+        }
+
+        function switchPricing(mode) {
+            const toggle = document.getElementById('pricingToggle');
+            const btns = document.querySelectorAll('.toggle-btn');
+            const adv = document.getElementById('advGroup');
+            const fla = document.getElementById('flaGroup');
+
+            if(mode === 'adv') {
+                toggle.classList.remove('flagship-mode');
+                btns[0].classList.add('active');
+                btns[1].classList.remove('active');
+                adv.classList.add('active');
+                fla.classList.remove('active');
+            } else {
+                toggle.classList.add('flagship-mode');
+                btns[0].classList.remove('active');
+                btns[1].classList.add('active');
+                adv.classList.remove('active');
+                fla.classList.add('active');
+            }
         }
     </script>
 </body>
