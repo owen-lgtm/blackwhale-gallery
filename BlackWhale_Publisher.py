@@ -262,7 +262,7 @@ class PublisherTitanV23Liquid(QMainWindow):
     <div class="container">
         <div class="hero-title">
             <h1 style="margin-top:0;">黑鲸千帆 重塑你的AI生产力</h1>
-            <p>专注SORA 2，无限并发一键生成管理工具</p>
+            <p>专注SORA 2，无限并发一键生成管理工具,无需部署本地一键运行</p>
         </div>
 
         <div class="feature-grid">
