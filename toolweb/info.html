@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑鲸千帆SORA2 一键生成系统 | 使用教程</title>
+    <style>
+        :root { --primary: #7928CA; --accent: #FF0080; --bg: #030303; --blue: #0057ff; }
+        body { margin:0; padding:0; font-family: "SF Pro Display", sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
+        #glow-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(121, 40, 202, 0.15) 0%, transparent 70%); z-index: 0; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; }
+        .nav-links { display: flex; gap: 15px; }
+        .dl-btn { padding: 10px 20px; background: rgba(255,255,255,0.05); border: 1px solid #333; color: #fff; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .dl-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+
+        .hero-section { text-align: left; margin-bottom: 80px; border-bottom: 1px solid #222; padding-bottom: 40px; }
+        .hero-section h1 { font-size: 48px; margin: 0; background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .video-link { display: inline-block; margin-top: 20px; color: var(--accent); text-decoration: none; font-weight: 700; font-size: 18px; }
+        .video-link:hover { text-decoration: underline; }
+
+        .content-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            padding: 40px; border-radius: 32px; margin-bottom: 40px;
+            position: relative; overflow: hidden;
+        }
+        .content-card h2 { font-size: 28px; margin-top: 0; color: #fff; display: flex; align-items: center; gap: 15px; }
+        .content-card h2::before { content: ""; width: 4px; height: 28px; background: var(--primary); border-radius: 4px; display: inline-block; }
+        
+        .step-box { margin-bottom: 30px; }
+        .step-box h3 { color: #00ffcc; font-size: 20px; }
+        .step-box p { color: #aaa; line-height: 1.8; font-size: 16px; }
+        .step-img { width: 100%; border-radius: 20px; border: 1px solid #333; margin: 20px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        
+        .highlight-box { 
+            background: linear-gradient(135deg, rgba(121, 40, 202, 0.1), rgba(255, 0, 128, 0.1)); 
+            border: 1px solid var(--accent); padding: 25px; border-radius: 20px; 
+            font-weight: 800; font-size: 18px; color: #fff; text-align: center; margin: 40px 0;
+        }
+        .footer { text-align: center; padding: 40px; border-top: 1px solid #222; color: #666; }
+    </style>
+</head>
+<body>
+    <div id="glow-bg"></div>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" style="color:#fff; text-decoration:none; font-weight:800;">← BACK</a>
+            <div class="nav-links">
+                <a href="../exe/高级版.zip" class="dl-btn">高级版下载</a>
+                <a href="../exe/旗舰版.zip" class="dl-btn">旗舰版下载</a>
+                <a href="../exe/模板.zip" class="dl-btn">模板下载</a>
+            </div>
+        </div>
+
+        <div class="hero-section">
+            <h1>黑鲸千帆SORA2 一键生成系统</h1>
+            <a href="http://xhslink.com/o/1FfOk9IGULR" class="video-link">▶ 查看视频演示</a>
+        </div>
+
+        <div class="content-card">
+            <h2>1. 环境准备</h2>
+            <div class="step-box">
+                <p><strong>安装位置：</strong>建议将软件放在非系统盘根目录下，如 D:lackwhale</p>
+                <p><strong>网络要求：</strong>无需设置代理，国内网络即可</p>
+                <p>（仅）旗舰版支持下载网络检测和手动切换。建议按本地宽带网络选择，香港节点可能较快但不稳定，建议作为备选</p>
+                <img src="../exe/pg1.png" class="step-img" alt="环境准备">
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h2>2. 任务提交方式</h2>
+            <div class="step-box">
+                <p>支持挂载目录和手动批量提交，支持多批次提交</p>
+                <h3>挂载目录提交</h3>
+                <p>自动检测提供的目录（根目录或子目录）下存有生成模板的子目录并读取模板中的所有生成任务。模板中存在图生任务的需在对应文件夹中存放图像（自定义文件名）。</p>
+                <img src="../exe/pg2.png" class="step-img">
+                
+                <h3>提交模板说明</h3>
+                <p>高级版支持横竖屏/10s-15s/图生-文生设置，旗舰版默认为竖屏/15s，仅支持图生/文生设置。</p>
+                <img src="../exe/pg4.png" class="step-img">
+
+                <h3>手动提交</h3>
+                <p>支持手动批量提交，图生视频需指定图片。可提交多批次任务加入任务列表。模式设置栏未按0-1设置，或者图生模式但文件夹中无图片均会弹窗报错。</p>
+                <img src="../exe/pg3.png" class="step-img">
+            </div>
+            
+            <div class="highlight-box">
+                每次提交点击确定后将直接开始生成，已提交任务无法取消！仅提交失败（不计数）或者制作失败（返还计数）不计入额度。
+            </div>
+            <p style="color:#888; text-align:center;">任务完结后将自动归档至对应子文件夹并按提示词顺序命名</p>
+        </div>
+
+        <div class="content-card">
+            <h2>3. 报错处理/特殊情况处理</h2>
+            <div class="step-box">
+                <p>即使生成至99%的任务也有可能失败，请确定任务确定制作失败后再关闭面板，否则已计数额度不会返还。</p>
+                <p><strong>制作失败归因：</strong>除接口错误外，禁止上传包含真人(人脸、身体部位)版权侵权或其他违规内容的图片及违反sora规则的提示词。</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 BlackWhale Digital Content Lab. All rights reserved.
+        </div>
+    </div>
+    <script>
+        window.addEventListener('mousemove', (e) => {
+            const bg = document.getElementById('glow-bg');
+            bg.style.background = `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(121, 40, 202, 0.15) 0%, transparent 70%)`;
+        });
+    </script>
+</body>
+</html>
