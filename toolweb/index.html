@@ -122,8 +122,10 @@
         /* --- Pricing Card System End --- */
 
         .cta-box { text-align: center; padding: 60px 0; }
-        .btn-action { display: inline-block; padding: 22px 65px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 20px; transition: 0.4s; box-shadow: 0 20px 40px rgba(121,40,202,0.3); border:none; cursor:pointer; margin: 0 10px; }
+        .btn-action { display: inline-block; padding: 22px 65px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 20px; transition: 0.4s; box-shadow: 0 20px 40px rgba(121,40,202,0.3); border:none; cursor:pointer; }
         .btn-action:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 30px 60px rgba(121,40,202,0.5); }
+        .btn-secondary { display: inline-block; margin-top: 20px; padding: 15px 40px; background: rgba(255,255,255,0.05); color: #fff; border-radius: 100px; text-decoration: none; font-weight: 600; transition: 0.3s; border: 1px solid #333; }
+        .btn-secondary:hover { background: #222; border-color: var(--primary); }
 
         .qr-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); z-index: 2000; align-items: center; justify-content: center; }
         .qr-card { background: #fff; padding: 40px; border-radius: 40px; text-align: center; color: #000; }
@@ -198,7 +200,7 @@
         <div class="section-title">
             <div class="badge">Sora 2 的突破</div>
             <h2>前所未有的 AI 视频模型能力</h2>
-            <p>黑鲸千帆始终专注高质量AI UGC，Sora 2 带来了最强大的 AI 视频生成能力，我们提供一键批量的流程和管理方案。</p>
+            <p>黑鲸千帆始终专注高质量AI UGC，Sora 2 带来了最强大的 AI 视频生成能力，我们 provide 一键批量的流程和管理方案。</p>
         </div>
 
         <div class="capability-grid">
@@ -344,7 +346,8 @@
         </div>
         <div class="cta-box">
             <button class="btn-action" onclick="toggleQR(true)">联系试用</button>
-            <a href="tutorial.html" class="btn-action" style="background: rgba(255,255,255,0.1); border: 1px solid #444;">使用教程</a>
+            <br>
+            <a href="into.html" class="btn-secondary">📖 使用教程</a>
             <br><br>
             <a href="../index.html" style="color:#666; text-decoration:none;">返回数字化内容库</a>
         </div>
