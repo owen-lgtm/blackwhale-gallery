@@ -383,46 +383,77 @@
         </div>
 
         <div class="tutorial-section">
-            <h2>1. 环境准备</h2>
+            <h2>环境准备</h2>
             <div class="content-box">
                 <ul>
-                    <li><strong>安装位置：</strong>建议将软件放在非系统盘根目录下，如 D:\blackwhale</li>
-                    <li><strong>网络要求：</strong>无需设置代理，国内网络即可</li>
-                    <li><strong>下载节点选择：</strong>（仅）旗舰版支持下载网络检测和手动切换。建议按本地宽带网络选择电信、联通，注意香港/移动节点通常波动较大，建议作为备选。</li>
+                    <li><strong>1，网络设置：</strong>无需魔法，国内直连可用（运行时请保持网路稳定，运行时若需开启魔法请选择非全局模式）</li>
+                    <li><strong>2，安装位置：</strong>建议将软件放在非系统盘根目录下，如 D:lackwhale，请勿直接放在桌面（可以创建快捷方式或固定任务栏快捷启动）</li>
                 </ul>
                 <img src="../exe/pg1.png" class="step-img" alt="环境准备">
             </div>
 
-            <h2>2. 任务提交方式</h2>
+            <h2>兑换及开通</h2>
             <div class="content-box">
+                <p>兑换码一次有效，仅限一机一码使用</p>
+                <p>旗舰版支持高清 15s-竖屏-文/图生视频，高级版支持普清 10s/15s-横/竖屏-文/图生视频</p>
+                <p><strong>下载节点选择：</strong>（仅）旗舰版支持下载网络检测和手动切换（提交任务前）。建议按本地宽带网络选择电信、联通，注意香港/移动节点通常波动较大，建议作为备选。</p>
+                <img src="../exe/pg2.png" class="step-img" alt="兑换及开通">
+            </div>
+
+            <h2>任务提交方式</h2>
+            <div class="content-box">
+                <p>建议在普通免费账户中调试好提示词及产品图后再批量生成，关于 sora 提示词创作的几种方式以及产品图的预处理请查看》》》第五十九节 sora2 带货视频创作技巧分享。</p>
+                <p style="color:var(--accent);">注意近期 SORA 服务器经常过载，建议在非繁忙时段提交（繁忙时段 12:00-18:00）</p>
                 <h3>挂载目录提交</h3>
                 <ul>
-                    <li>自动检测提供的目录下存有生成模板的子目录并读取任务。</li>
-                    <li>可以一次提交单个/多个批次生成任务。</li>
+                    <li>- 自动检测根目录下存有生成模板的所有子目录并自动读取汇总任务。</li>
+                    <li>- 可以多次提交生成任务并累计进任务池。</li>
                 </ul>
-                <img src="../exe/pg2.png" class="step-img" alt="挂载目录">
+                <img src="../exe/pg3.png" class="step-img" alt="挂载目录">
             </div>
 
             <div class="content-box">
                 <h3>手动提交</h3>
                 <ul>
-                    <li>支持手动批量输入提示词，图生视频需手动指定对应图片路径。</li>
-                    <li>模式设置栏未按0-1设置，或者图生模式但文件夹中无图片均会弹窗报错。</li>
+                    <li>- 支持手动批量输入提示词，图生视频需手动指定对应图片路径。</li>
+                    <li>- 模式设置栏未按 0-1 设置，或者图生模式但文件夹中无图片均会弹窗报错。</li>
                 </ul>
-                <img src="../exe/pg3.png" class="step-img" alt="手动提交">
+                <div class="warning-box">
+                    <strong>⚠️ 重要提示：</strong>
+                    <p>每次提交点击确定后将直接开始生成，已提交任务无法取消！任务完结后将自动归档至对应子文件夹并按提示词顺序命名。</p>
+                </div>
+                <img src="../exe/pg1.png" class="step-img" alt="手动提交">
             </div>
 
-            <div class="warning-box">
-                <strong>⚠️ 重要提示：</strong>
-                <p>每次提交点击确定后将直接开始生成，已提交任务无法取消！任务完结后将自动归档至对应子文件夹并按提示词顺序命名。</p>
-            </div>
-
-            <h2 style="margin-top:40px;">3. 报错处理/特殊情况处理</h2>
+            <h2>一键自动归档处理</h2>
             <div class="content-box">
                 <ul>
-                    <li><strong>制作失败归因：</strong>除接口错误外，禁止上传包含真人或违规内容的图片。</li>
-                    <li><strong>下载延迟：</strong>由于服务器抖动，可能造成部分任务下载缓慢，系统会自动重试。</li>
+                    <li>自动命名并归档所属任务文件夹</li>
+                    <li>一键自动裁切首 2 帧</li>
+                    <li>一键元数据清除及仿真写入</li>
                 </ul>
+                <img src="../exe/pg4.png" class="step-img" alt="自动归档">
+            </div>
+
+            <h2>报错处理/特殊情况处理</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>制作失败归因：</strong>服务器繁忙导致提交失败 / 上传包含真人或违规内容的图片 / 提示词违反平台规则（建议在普通免费账户中调试好提示词后再批量生成。）</li>
+                    <li><strong>下载延迟：</strong>由于服务器抖动，可能造成部分任务下载缓慢，请勿关闭面板等待系统自动重试。</li>
+                </ul>
+                <img src="../exe/pg5.png" class="step-img" alt="报错处理">
+            </div>
+
+            <h2>注意事项</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>关于额度：</strong>工具包含购买额度和赠送额度，赠送额度已包含一些可能由于网络波动等原因造成的高清失败等次数。</li>
+                    <li><strong>关于生成：</strong>建议单次提交不超过 200 个，可分多批次提交。</li>
+                    <li><strong>关于任务取消：</strong>任务提交生成后无法取消，只有提交/制作失败的任务不会被计入额度。</li>
+                    <li><strong>关于任务失败：</strong>标注制作失败的任务不会被计算额度，制作失败通常与提交的产品图和提示词违反 sora 规则，请注意调整，但是有时也有一定几率出现同样的任务出现部分违规情况。</li>
+                    <li><strong>关于授权码：</strong>配置码请妥善保管，工具仅限一机一码即只能在一个设备上使用，不支持分享。</li>
+                </ul>
+                <img src="../exe/pg6.png" class="step-img" alt="注意事项">
             </div>
         </div>
 
