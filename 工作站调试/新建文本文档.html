@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackWhale | 黑鲸千帆一键无限生成</title>
+    <style>
+        :root { 
+            --primary: #7928CA; 
+            --accent: #FF0080; 
+            --accent-cyan: #00FFD1;
+            --bg: #030303; 
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --glass: blur(20px);
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+        }
+        
+        #glow-bg { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            pointer-events: none; 
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(121, 40, 202, 0.15) 0%, transparent 50%); 
+            z-index: 0; 
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+        /* Hero Section */
+        .hero-title { text-align: center; padding: 120px 0 80px; }
+        .hero-title h1 { 
+            font-size: clamp(40px, 8vw, 72px); 
+            font-weight: 800; 
+            background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5) 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -0.04em; 
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+        .hero-title p { 
+            font-size: clamp(16px, 4vw, 20px); 
+            color: var(--text-dim); 
+            max-width: 600px; 
+            margin: 0 auto 40px; 
+        }
+
+        .top-nav-box { display: flex; justify-content: center; gap: 24px; align-items: center; flex-wrap: wrap; }
+        .nav-dl-btn { 
+            padding: 14px 32px; border-radius: 14px; background: #fff; color: #000; 
+            text-decoration: none; font-weight: 600; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            font-size: 16px; border: 1px solid #fff;
+        }
+        .nav-dl-btn:hover { background: transparent; color: #fff; transform: translateY(-4px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+        .video-demo-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.3s; }
+        .video-demo-link:hover { opacity: 0.8; text-decoration: underline; }
+
+        /* Feature Cards */
+        .feature-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 24px; 
+            margin: 80px 0; 
+        }
+        
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: var(--glass); 
+            border: 1px solid var(--border); 
+            padding: 40px; 
+            border-radius: 28px; 
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--primary); 
+            box-shadow: 0 20px 40px rgba(121, 40, 202, 0.15); 
+        }
+        .card-icon { 
+            width: 48px; height: 48px; 
+            background: linear-gradient(135deg, var(--primary), var(--accent)); 
+            border-radius: 12px; margin-bottom: 24px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 18px; 
+        }
+        .card h3 { font-size: 22px; margin: 0 0 12px 0; letter-spacing: -0.02em; }
+        .card p { color: var(--text-dim); font-size: 15px; margin: 0; line-height: 1.6; }
+
+        /* Split Section */
+        .split-section { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 80px; 
+            align-items: center; 
+            margin: 120px 0; 
+        }
+        .split-text h2 { 
+            font-size: 42px; margin-bottom: 32px; letter-spacing: -0.03em;
+            background: linear-gradient(to right, #fff, #888); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .split-text ul { list-style: none; padding: 0; }
+        .split-text li { 
+            color: #ccc; font-size: 17px; margin-bottom: 18px; 
+            display: flex; align-items: flex-start; 
+        }
+        .split-text li::before { 
+            content: "✦"; color: var(--accent); margin-right: 14px; 
+            font-size: 14px; margin-top: 4px; 
+        }
+        
+        .split-img { 
+            border-radius: 24px; border: 1px solid #222; overflow: hidden; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4); transition: 0.6s; 
+        }
+        .split-img img { width: 100%; height: auto; display: block; }
+        .split-img:hover { transform: scale(1.02); border-color: var(--primary); }
+
+        /* Pricing & Table Section */
+        .pricing-section { padding: 60px 0 100px; text-align: center; }
+        
+        .price-grid { 
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            gap: 40px; 
+        }
+
+        .price-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 32px; 
+            padding: 48px; 
+            width: 100%; 
+            max-width: 800px;
+            transition: 0.5s; 
+            position: relative;
+            backdrop-filter: var(--glass);
+        }
+        .price-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .p-title { font-size: 16px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; }
+        
+        /* 价格重点样式 */
+        .price-hero {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: 800;
+            color: #fff;
+            margin: 20px 0 10px;
+            letter-spacing: -0.02em;
+        }
+        .price-desc {
+            font-size: 16px;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        /* Table Styles */
+        .cost-table { width: 100%; border-collapse: collapse; margin-top: 20px; color: #fff; text-align: left; }
+        .cost-table th { padding: 18px; color: var(--accent-cyan); border-bottom: 2px solid var(--border); font-size: 15px; }
+        .cost-table td { padding: 18px; border-bottom: 1px solid var(--border); font-size: 15px; }
+        .cost-tag { color: var(--accent-cyan); font-weight: bold; background: rgba(0, 255, 209, 0.1); padding: 4px 10px; border-radius: 4px; }
+        .time-tag { color: #F1C40F; }
+
+        .p-features { text-align: left; list-style: none; padding: 0; margin: 32px 0; }
+        .p-features li { 
+            font-size: 15px; color: #bbb; margin-bottom: 16px; 
+            display: flex; align-items: flex-start; line-height: 1.5;
+        }
+        .p-features li::before { content: "✓"; color: #00ffcc; margin-right: 12px; font-weight: bold; }
+
+        /* Tutorial Section */
+        .tutorial-section { 
+            max-width: 900px; margin: 100px auto; 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid #1a1a1a; padding: 60px; border-radius: 40px; 
+        }
+        .tutorial-section h2 { 
+            font-size: 32px; color: #fff; margin: 60px 0 30px; 
+            display: flex; align-items: center; gap: 16px;
+        }
+        .tutorial-section h2:first-child { margin-top: 0; }
+        .tutorial-section h2::before { 
+            content: ""; width: 4px; height: 32px; 
+            background: linear-gradient(to bottom, var(--primary), var(--accent)); 
+            border-radius: 4px; 
+        }
+        .content-box { margin-bottom: 48px; }
+        .content-box h3 { color: #eee; font-size: 20px; margin-bottom: 16px; }
+        .content-box p, .content-box ul { color: #888; margin-bottom: 16px; }
+        .content-box ul { padding-left: 20px; }
+        .step-img { 
+            width: 100%; border-radius: 16px; border: 1px solid #333; 
+            margin: 24px 0; filter: grayscale(0.2); transition: 0.4s;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .step-img:hover { filter: grayscale(0); border-color: #555; }
+        
+        .warning-box { 
+            background: rgba(255, 0, 128, 0.05); border: 1px solid rgba(255, 0, 128, 0.3); 
+            padding: 32px; border-radius: 20px; margin: 32px 0; 
+        }
+        .warning-box strong { color: var(--accent); font-size: 18px; display: block; margin-bottom: 8px; }
+
+        /* Footer & Misc */
+        .qr-overlay { 
+            display: none; position: fixed; inset: 0; 
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); 
+            z-index: 2000; align-items: center; justify-content: center; 
+        }
+        .qr-card { background: #fff; padding: 40px; border-radius: 32px; text-align: center; color: #000; }
+        .qr-card img { width: 240px; height: 240px; }
+
+        @media (max-width: 768px) {
+            .hero-title h1 { font-size: 48px; }
+            .split-section { grid-template-columns: 1fr; gap: 40px; }
+            .tutorial-section { padding: 30px; }
+            .price-card { padding: 30px; }
+            .cost-table { font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="glow-bg"></div>
+    
+    <div class="container">
+        <header class="hero-title">
+            <h1>黑鲸千帆 重塑你的AI生产力</h1>
+            <p>无需配置，本地一键运行。专注AI UGC，<br>针对专业创作者设计的无限并发管理工具。</p>
+            <div class="top-nav-box">
+                <a href="http://xhslink.com/o/1FfOk9IGULR" class="video-demo-link">▶ 查看视频演示</a>
+                <a href="https://pan.baidu.com/s/1JcG_f3YL5erm7nJo2jpVXQ?pwd=hjqf" class="nav-dl-btn">批量工作站旗舰版下载</a>
+            </div>
+        </header>
+
+        <section class="feature-grid">
+            <div class="card">
+                <div class="card-icon">01</div>
+                <h3>超低成本 无限生成</h3>
+                <p>2分钟内时长，15秒视频约仅0.1元/条</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">02</div>
+                <h3>无限并发 批量无水印</h3>
+                <p>一键批量提交，无限并发无上限，无水印直出。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">03</div>
+                <h3>一键批量管理</h3>
+                <p>专为批量设计自动批量下载，多批次一次提交，自动处理更省力。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">04</div>
+                <h3>AI元数据一键抹除</h3>
+                <p>注入仿真iPhone手机拍摄元数据，彻底告别AI标记。</p>
+            </div>
+        </section>
+
+        <section class="split-section">
+            <div class="split-text">
+                <h2>黑鲸千帆高级版</h2>
+                <ul>
+                    <li>无限并发，一键无水印直出</li>
+                    <li>永久有效，随时补充</li>
+                    <li>专为批量而生，支持手动模板批量和手动批量提交</li>
+                    <li>自动归档多批次任务，横竖屏普清、时长自主选择</li>
+                    <li>超低价格，多档可选</li>
+                    <li>AI元数据一键抹除直出，彻底告别AI强制标注</li>
+                </ul>
+            </div>
+            <div class="split-img">
+                <img src="tool1.png" alt="Advanced Version">
+            </div>
+        </section>
+
+        <section class="pricing-section">
+            <div class="price-grid">
+                <div class="price-card">
+                    <div class="p-title">批量工作站高级版</div>
+                    
+                    <div class="price-hero">社员: 798元 / 非社员: 980元 / 限时: 1680元</div>
+                    <div class="price-desc">赠送60节AI UGC创作课程社群永久更新</div>
+
+                    <ul class="p-features" style="border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                        <li>永久有效，不限有效期</li>
+                        <li>无限并发，一键批量提交</li>
+                        <li>一键元数据抹除，告别AI强制标注</li>
+                        <li>一键批量去水印</li>
+                        <li>批量下载，文件自动命名归档</li>
+                        <li>专为批量设计，一键根目录上传多批次任务</li>
+                    </ul>
+                </div>
+
+                <div class="price-card">
+                    <div class="p-title">BlackWhale Titan 成本看板</div>
+                    <table class="cost-table">
+                        <thead>
+                            <tr>
+                                <th>成品视频时长</th>
+                                <th>预计生成时长</th>
+                                <th>对应成本 (RMB)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10s - 15s</td>
+                                <td>约 5 分钟</td>
+                                <td><span class="cost-tag">¥ 0.10</span></td>
+                            </tr>
+                            <tr>
+                                <td>30s - 50s</td>
+                                <td><span class="time-tag">15 - 25 分钟</span></td>
+                                <td><span class="cost-tag">¥ 0.25 - 0.30</span></td>
+                            </tr>
+                            <tr>
+                                <td>100s - 120s</td>
+                                <td><span class="time-tag">45 - 60 分钟</span></td>
+                                <td><span class="cost-tag">¥ 0.80 - 1.20</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="color:#888; margin-top:30px; font-size:14px; text-align: left;">※ 旗舰版支持高清 15s-竖屏-文/图生视频等进阶功能</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="tutorial-section">
+            <h2>环境准备</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>1，网络设置：</strong>无需魔法，国内直连可用（运行时请保持网路稳定，运行时若需开启魔法请选择非全局模式）</li>
+                    <li><strong>2，安装位置：</strong>建议将软件放在非系统盘根目录下，如 D:\blackwhale，请勿直接放在桌面（可以创建快捷方式或固定任务栏快捷启动）</li>
+                </ul>
+                <img src="../exe/pg1.png" class="step-img" alt="环境准备">
+            </div>
+
+            <h2>兑换及开通</h2>
+            <div class="content-box">
+                <p>兑换码一次有效，仅限一机一码使用</p>
+                <p>旗舰版支持高清 15s-竖屏-文/图生视频，高级版支持普清 10s/15s-横/竖屏-文/图生视频</p>
+                <p><strong>下载节点选择：</strong>（仅）旗舰版支持下载网络检测和手动切换（提交任务前）。建议按本地宽带网络选择电信、联通，注意香港/移动节点通常波动较大，建议作为备选。</p>
+                <img src="../exe/pg2.png" class="step-img" alt="兑换及开通">
+            </div>
+
+            <h2>任务提交方式</h2>
+            <div class="content-box">
+                <p>建议在普通免费账户中调试好提示词及产品图后再批量生成，关于 sora 提示词创作的几种方式以及产品图的预处理请查看》》》第五十九节 sora2 带货视频创作技巧分享。</p>
+                <p style="color:var(--accent); font-weight: 600;">注意近期 SORA 服务器经常过载，建议在非繁忙时段提交（繁忙时段 12:00-18:00）</p>
+                
+                <h3>挂载目录提交</h3>
+                <p>自动检测根目录下存有生成模板的所有子目录并自动读取汇总任务。可以多次提交生成任务并累计进任务池。</p>
+                <img src="../exe/pg3.png" class="step-img" alt="挂载目录">
+            </div>
+
+            <div class="content-box">
+                <h3>手动提交</h3>
+                <p>支持手动批量输入提示词，图生视频需手动指定对应图片路径。模式设置栏未按 0-1 设置，或者图生模式但文件夹中无图片均会弹窗报错。</p>
+                <div class="warning-box">
+                    <strong>⚠️ 重要提示：</strong>
+                    <p>每次提交点击确定后将直接开始生成，已提交任务无法取消！任务完结后将自动归档至对应子文件夹并按提示词顺序命名。</p>
+                </div>
+                <img src="../exe/pg1.png" class="step-img" alt="手动提交">
+            </div>
+
+            <h2>一键自动归档处理</h2>
+            <div class="content-box">
+                <ul>
+                    <li>自动命名并归档所属任务文件夹</li>
+                    <li>一键自动裁切首 2 帧</li>
+                    <li>一键元数据清除及仿真写入</li>
+                </ul>
+                <img src="../exe/pg4.png" class="step-img" alt="自动归档">
+            </div>
+
+            <h2>报错/特殊情况处理</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>制作失败归因：</strong>服务器繁忙导致提交失败 / 上传包含真人或违规内容的图片 / 提示词违反平台规则</li>
+                    <li><strong>下载延迟：</strong>由于服务器抖动，可能造成部分任务下载缓慢，请勿关闭面板等待系统自动重试。</li>
+                </ul>
+                <img src="../exe/pg5.png" class="step-img" alt="报错处理">
+            </div>
+
+            <h2>注意事项</h2>
+            <div class="content-box">
+                <ul style="color: #888;">
+                    <li><strong>关于额度：</strong>工具包含购买额度和赠送额度，赠送额度已包含一些可能由于网络波动等原因造成的高清失败等次数。</li>
+                    <li><strong>关于生成：</strong>建议单次提交不超过 200 个，可分多批次提交。</li>
+                    <li><strong>关于任务取消：</strong>任务提交生成后无法取消，只有提交/制作失败的任务不会被计入额度。</li>
+                    <li><strong>关于任务失败：</strong>标注制作失败的任务不会被计算额度。</li>
+                    <li><strong>关于授权码：</strong>配置码请妥善保管，工具仅限一机一码，不支持分享。</li>
+                </ul>
+                <img src="../exe/pg6.png" class="step-img" alt="注意事项">
+            </div>
+        </section>
+
+        <footer style="text-align:center; padding: 40px 0 80px; opacity: 0.5;">
+            <a href="../index.html" style="color:#fff; text-decoration:none; font-size: 14px;">← 返回数字化内容库</a>
+        </footer>
+    </div>
+
+    <div id="qrOverlay" class="qr-overlay" onclick="toggleQR(false)">
+        <div class="qr-card" onclick="event.stopPropagation()">
+            <img src="../qr.png" alt="QR Code">
+            <h3 style="margin-top:24px; font-size: 20px;">扫码联系我们</h3>
+            <p style="color:#666; margin-top:8px;">获取试用名额</p>
+        </div>
+    </div>
+
+    <script>
+        const bg = document.getElementById('glow-bg');
+        window.addEventListener('mousemove', (e) => {
+            bg.style.setProperty('--x', e.clientX + 'px');
+            bg.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        function toggleQR(show) {
+            const el = document.getElementById('qrOverlay');
+            el.style.display = show ? 'flex' : 'none';
+        }
+    </script>
+</body>
+</html>

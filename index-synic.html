@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackWhale | 黑鲸千帆一键批量无限生成</title>
+    <style>
+        :root { 
+            --primary: #7928CA; 
+            --accent: #FF0080; 
+            --accent-cyan: #00FFD1;
+            --bg: #030303; 
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-dim: #888888;
+            --glass: blur(20px);
+        }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: "SF Pro Display", "PingFang SC", "Helvetica Neue", sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            line-height: 1.7;
+            letter-spacing: 0.02em;
+        }
+        
+        #glow-bg { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            pointer-events: none; 
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(121, 40, 202, 0.15) 0%, transparent 50%); 
+            z-index: 0; 
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+        /* Hero Section */
+        .hero-title { text-align: center; padding: 120px 0 80px; }
+        .hero-title h1 { 
+            font-size: clamp(40px, 8vw, 72px); 
+            font-weight: 800; 
+            background: linear-gradient(180deg, #fff 30%, rgba(255,255,255,0.5) 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -0.04em; 
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+        .hero-title p { 
+            font-size: clamp(16px, 4vw, 20px); 
+            color: var(--text-dim); 
+            max-width: 600px; 
+            margin: 0 auto 40px; 
+        }
+
+        .top-nav-box { display: flex; justify-content: center; gap: 24px; align-items: center; flex-wrap: wrap; }
+        .nav-dl-btn { 
+            padding: 14px 32px; border-radius: 14px; background: #fff; color: #000; 
+            text-decoration: none; font-weight: 600; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            font-size: 16px; border: 1px solid #fff;
+        }
+        .nav-dl-btn:hover { background: transparent; color: #fff; transform: translateY(-4px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+        .video-demo-link { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.3s; }
+        .video-demo-link:hover { opacity: 0.8; text-decoration: underline; }
+
+        /* Feature Cards */
+        .feature-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 24px; 
+            margin: 80px 0; 
+        }
+        
+        .card { 
+            background: var(--card-bg); 
+            backdrop-filter: var(--glass); 
+            border: 1px solid var(--border); 
+            padding: 40px; 
+            border-radius: 28px; 
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--primary); 
+            box-shadow: 0 20px 40px rgba(121, 40, 202, 0.15); 
+        }
+        .card-icon { 
+            width: 48px; height: 48px; 
+            background: linear-gradient(135deg, var(--primary), var(--accent)); 
+            border-radius: 12px; margin-bottom: 24px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-weight: 800; font-size: 18px; 
+        }
+        .card h3 { font-size: 22px; margin: 0 0 12px 0; letter-spacing: -0.02em; }
+        .card p { color: var(--text-dim); font-size: 15px; margin: 0; line-height: 1.6; }
+
+        /* Split Section */
+        .split-section { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 80px; 
+            align-items: center; 
+            margin: 120px 0; 
+        }
+        .split-text h2 { 
+            font-size: 42px; margin-bottom: 32px; letter-spacing: -0.03em;
+            background: linear-gradient(to right, #fff, #888); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .split-text ul { list-style: none; padding: 0; }
+        .split-text li { 
+            color: #ccc; font-size: 17px; margin-bottom: 18px; 
+            display: flex; align-items: flex-start; 
+        }
+        .split-text li::before { 
+            content: "✦"; color: var(--accent); margin-right: 14px; 
+            font-size: 14px; margin-top: 4px; 
+        }
+        
+        .split-img { 
+            border-radius: 24px; border: 1px solid #222; overflow: hidden; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4); transition: 0.6s; 
+        }
+        .split-img img { width: 100%; height: auto; display: block; }
+        .split-img:hover { transform: scale(1.02); border-color: var(--primary); }
+
+        /* Pricing & Table Section */
+        .pricing-section { padding: 60px 0 100px; text-align: center; }
+        
+        .price-grid { 
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+            gap: 40px; 
+        }
+
+        .price-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 32px; 
+            padding: 48px; 
+            width: 100%; 
+            max-width: 800px;
+            transition: 0.5s; 
+            position: relative;
+            backdrop-filter: var(--glass);
+        }
+        .price-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .p-title { font-size: 16px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 24px; }
+        
+        /* 价格重点样式 */
+        .price-hero {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: 800;
+            color: #fff;
+            margin: 20px 0 10px;
+            letter-spacing: -0.02em;
+        }
+        .price-desc {
+            font-size: 16px;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+
+        /* Table Styles */
+        .cost-table { width: 100%; border-collapse: collapse; margin-top: 20px; color: #fff; text-align: left; }
+        .cost-table th { padding: 18px; color: var(--accent-cyan); border-bottom: 2px solid var(--border); font-size: 15px; }
+        .cost-table td { padding: 18px; border-bottom: 1px solid var(--border); font-size: 15px; }
+        .cost-tag { color: var(--accent-cyan); font-weight: bold; background: rgba(0, 255, 209, 0.1); padding: 4px 10px; border-radius: 4px; }
+        .time-tag { color: #F1C40F; }
+
+        .p-features { text-align: left; list-style: none; padding: 0; margin: 32px 0; }
+        .p-features li { 
+            font-size: 15px; color: #bbb; margin-bottom: 16px; 
+            display: flex; align-items: flex-start; line-height: 1.5;
+        }
+        .p-features li::before { content: "✓"; color: #00ffcc; margin-right: 12px; font-weight: bold; }
+
+        /* Tutorial Section */
+        .tutorial-section { 
+            max-width: 900px; margin: 100px auto; 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid #1a1a1a; padding: 60px; border-radius: 40px; 
+        }
+        .tutorial-section h2 { 
+            font-size: 32px; color: #fff; margin: 60px 0 30px; 
+            display: flex; align-items: center; gap: 16px;
+        }
+        .tutorial-section h2:first-child { margin-top: 0; }
+        .tutorial-section h2::before { 
+            content: ""; width: 4px; height: 32px; 
+            background: linear-gradient(to bottom, var(--primary), var(--accent)); 
+            border-radius: 4px; 
+        }
+        .content-box { margin-bottom: 48px; }
+        .content-box h3 { color: #eee; font-size: 20px; margin-bottom: 16px; }
+        .content-box p, .content-box ul { color: #888; margin-bottom: 16px; }
+        .content-box ul { padding-left: 20px; }
+        .step-img { 
+            width: 100%; border-radius: 16px; border: 1px solid #333; 
+            margin: 24px 0; filter: grayscale(0.2); transition: 0.4s;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .step-img:hover { filter: grayscale(0); border-color: #555; }
+        
+        /* 提交方式卡片容器 - 优化并排及配图完整度 */
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 强制三列平分宽度 */
+            gap: 16px;
+            margin: 32px 0;
+            width: 100%;
+        }
+        .method-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* 改为顶部对齐，确保文字对齐 */
+            transition: 0.3s;
+        }
+        .method-card h4 {
+            font-size: 15px;
+            color: var(--accent-cyan);
+            margin: 0 0 10px;
+        }
+        .method-card p {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            flex-grow: 0; /* 不强制撑开文字区 */
+        }
+        .method-img {
+            width: 100%;
+            height: auto; /* 关键：改为 auto 确保长度完全显示不被裁剪 */
+            object-fit: contain; /* 关键：确保图片完整显示在容器内 */
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: auto; /* 将图片推向底部对齐，可选 */
+        }
+
+        .warning-box { 
+            background: rgba(255, 0, 128, 0.05); border: 1px solid rgba(255, 0, 128, 0.3); 
+            padding: 32px; border-radius: 20px; margin: 32px 0; 
+        }
+        .warning-box strong { color: var(--accent); font-size: 18px; display: block; margin-bottom: 8px; }
+
+        /* Footer & Misc */
+        .qr-overlay { 
+            display: none; position: fixed; inset: 0; 
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(20px); 
+            z-index: 2000; align-items: center; justify-content: center; 
+        }
+        .qr-card { background: #fff; padding: 40px; border-radius: 32px; text-align: center; color: #000; }
+        .qr-card img { width: 240px; height: 240px; }
+
+        @media (max-width: 768px) {
+            .hero-title h1 { font-size: 48px; }
+            .split-section { grid-template-columns: 1fr; gap: 40px; }
+            .tutorial-section { padding: 30px; }
+            .price-card { padding: 30px; }
+            .cost-table { font-size: 13px; }
+            .method-grid { grid-template-columns: 1fr; } /* 移动端保持单列 */
+        }
+    </style>
+</head>
+<body>
+    <div id="glow-bg"></div>
+    
+    <div class="container">
+        <header class="hero-title">
+            <h1>黑鲸千帆 重塑你的AI生产力</h1>
+            <p>无需配置，本地一键运行。专注真实感AI UGC批量生成，<br>针对AI创作者设计的批量生成和管理工具。</p>
+            <div class="top-nav-box">
+                <a href="http://xhslink.com/o/1FfOk9IGULR" class="video-demo-link">▶ 查看视频演示</a>
+                <a href="https://pan.baidu.com/s/1JcG_f3YL5erm7nJo2jpVXQ?pwd=hjqf" class="nav-dl-btn">批量工作站PRO下载</a>
+            </div>
+        </header>
+
+        <section class="feature-grid">
+            <div class="card">
+                <div class="card-icon">01</div>
+                <h3>超低成本 无限生成</h3>
+                <p>直出最长2分钟，15秒视频约仅0.1元/条，60秒视频约0.4元/条</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">02</div>
+                <h3>自购积分 自有账户 批量无水印</h3>
+                <p>一键批量提交，无水印直出。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">03</div>
+                <h3>一键批量管理</h3>
+                <p>专为批量设计自动批量下载，多批次一次提交，自动处理更省力。</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">04</div>
+                <h3>AI元数据一键抹除</h3>
+                <p>注入仿真iPhone手机拍摄元数据，彻底告别AI标记。</p>
+            </div>
+        </section>
+
+        <section class="split-section">
+            <div class="split-text">
+                <h2>批量工作站PRO</h2>
+                <ul>
+                    <li>无限提交，一键无水印直出</li>
+                    <li>本地软件，永久有效，包含后期更新</li>
+                    <li>专为批量而生，一键批量提交</li>
+                    <li>超低价格，适合多场景试用，30秒直出仅需0.2元</li>
+                    <li>AI元数据一键抹除直出，彻底告别AI强制标注</li>
+                </ul>
+            </div>
+            <div class="split-img">
+                <img src="轮播图/p1.png" class="step-img" alt="软件介绍">
+            </div>
+        </section>
+
+        <section class="pricing-section">
+            <div class="price-grid">
+                <div class="price-card">
+                    <div class="p-title">批量工作站PRO</div>
+                    <div class="price-hero">社员: 798元 / 非社员: 980元  </div>
+                    <div class="price-desc"><p style="color:var(--accent); font-weight: 600;">限时: 1680元，额外赠送原价1680元60节AI UGC创作课程（含社群永久更新）</p>
+</div>
+                </div>
+
+                <div class="price-card">
+                    <div class="p-title">BlackWhale PRO 生成时长及成本看板</div>
+                    <table class="cost-table">
+                        <thead>
+                            <tr>
+                                <th>成品视频时长</th>
+                                <th>预计生成时长</th>
+                                <th>对应成本 (RMB)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>10s - 15s</td>
+                                <td><span class="time-tag">3 - 5 分钟 </span></td>
+                                <td><span class="cost-tag">¥ 0.10</span></td>
+                            </tr>
+                            <tr>
+                                <td>30s - 50s</td>
+                                <td><span class="time-tag">15 - 25 分钟</span></td>
+                                <td><span class="cost-tag">¥ 0.25 - 0.30</span></td>
+                            </tr>
+                            <tr>
+                                <td>100s - 120s</td>
+                                <td><span class="time-tag">45 - 60 分钟</span></td>
+                                <td><span class="cost-tag">¥ 0.80 - 1.00</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="color:#888; margin-top:30px; font-size:14px; text-align: left;">※ 区间时间参考，高峰期（14：00-17：00）生成时间可能不准确</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="tutorial-section">
+            <h2>环境准备</h2>
+            <div class="content-box">
+                <ul>
+                    <li><strong>1，网络设置：</strong>无需魔法，国内直连可用（运行时请保持网路稳定，运行时若需开启魔法请选择非全局模式）</li>
+                    <li><strong>2，安装位置：</strong>建议将软件解压至非系统盘根目录下，如 D:\blackwhale，请勿直接放在桌面（可以创建快捷方式或固定任务栏快捷启动）</li>
+                    <li><strong>3，API配置：</strong>runninghub官网自主购买（推荐99元套餐）获取api key（请妥善保存自己的api key）并在首次运行面板时首次配置（本地保存更安全）</li>
+                    <p style="color:var(--accent); font-weight: 600;">每个账户/api key支持3任务并发（即最多同时生成3个任务），24小时全自动运行. 可按需求配置多个账户/api key，如购买两个账户会员，可实现6任务并发，key数量无上限</p>
+                </ul>
+               <img src="轮播图/p2.png" class="step-img" alt="api配置">
+            </div>
+
+            <h2>兑换及开通</h2>
+            <div class="content-box">
+                <p>首次运行需输入兑换码，兑换码一次有效，仅限一机一码使用</p>
+                <p><strong>一次兑换 永久有效</strong> 一个兑换码只能兑换一次，请妥善保存。</p>
+            </div>
+
+            <h2>批量任务提交方式</h2>
+            <div class="content-box">
+                <p>在面板中挂载“根目录文件夹“，工具采用递归文件夹索引方式，将会在根目录下的“所有层级子文件夹”中自动检索符合任务判定条件的所有子文件夹。（根目录下建议按照形象/音色/设备等划分子文件夹，任务完成后将自动归档至源文件夹）</p>
+                <p style="color:var(--accent); font-weight: 600;">注意任务检索将按照子文件夹中的文件结构自动识别，请按照以下方式正确放置文件</p>
+                
+                <div class="method-grid">
+                    <div class="method-card">
+                        <h4>方式一</h4>
+                        <p>首帧图 + 自生成音频<br>（需命名为“口播文案”）</p>
+                        <img src="轮播图/p4-1.png" class="method-img" alt="方式一">
+                    </div>
+                    <div class="method-card">
+                        <h4>方式二</h4>
+                        <p>首帧图 + 原始音频及替换音色<br>（需命名为“原始文案”/“音色”）</p>
+                        <img src="轮播图/p4-2.png" class="method-img" alt="方式二">
+                    </div>
+                    <div class="method-card">
+                        <h4>方式三</h4>
+                        <p>首帧图 + 自生成音频 + 音色裂变<br>（需命名为“原始文案”/“音色”）</p>
+                        <img src="轮播图/p4-3.png" class="method-img" alt="方式三">
+                    </div>
+                </div>
+
+                <p style="color:var(--accent); font-weight: 600;">真实感人像生成建议查看课程第十二节-真实感人像生图/第四十七节-类UGC带货视频创作/第五十六节-一致性生图与nano banana pro，真实感语音生成建议查看课程第四十三节-真实感语音生成</p>
+            </div>
+
+            <h2>一键自动归档处理</h2>
+            <div class="content-box">
+                <ul>
+                    <li>自动命名并归档所属任务文件夹</li>
+                    <li>一键自动裁切去尾及随机模拟自然抖动效果（原始文件保留）</li>
+                    <li>一键元数据清除及仿真iPhone数据写入</li>
+                </ul>
+            </div>
+
+            <h2>报错/特殊情况处理</h2>
+            <div class="content-box">
+                <ul>
+                    <p style="color:var(--accent); font-weight: 600;">任务提交失败或其他错误情况下任务将会等待自动重试。若要取消已经提交的任务，可直接在runninghub后台取消正在生成的任务，注意只要任务未生成直接取消都不会扣费</p>
+                    <li><strong>可以随时在runninghub后台取消正在生成的任务，并关闭面板。重新提交根目录/任务，已经完成的任务会自动跳过不会重复生成。（该情况下必须取消后台所有在生成任务，以免造成任务并行计算错误）</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer style="text-align:center; padding: 40px 0 80px; opacity: 0.5;">
+            <a href="../index.html" style="color:#fff; text-decoration:none; font-size: 14px;">← 返回数字化内容库</a>
+        </footer>
+    </div>
+
+    <div id="qrOverlay" class="qr-overlay" onclick="toggleQR(false)">
+        <div class="qr-card" onclick="event.stopPropagation()">
+            <img src="../qr.png" alt="QR Code">
+            <h3 style="margin-top:24px; font-size: 20px;">扫码联系我们</h3>
+            <p style="color:#666; margin-top:8px;">获取试用名额</p>
+        </div>
+    </div>
+
+    <script>
+        const bg = document.getElementById('glow-bg');
+        window.addEventListener('mousemove', (e) => {
+            bg.style.setProperty('--x', e.clientX + 'px');
+            bg.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        function toggleQR(show) {
+            const el = document.getElementById('qrOverlay');
+            el.style.display = show ? 'flex' : 'none';
+        }
+    </script>
+</body>
+</html>
